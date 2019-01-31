@@ -1,35 +1,21 @@
-# MySneaker
-打造年轻人的鞋文化社区
----
-## 技术栈
-- UI：[iView官网使用教程](http://v1.iviewui.com/docs/guide/install)
-- 数据请求：Axios
-- CSS：Sass
----
+# mysneaker
 
-### iView使用实例
-**在某个vue文件下**
-```
-<template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
-    <!-- 使用UI组件时可以加i也可不加 -->
-    <i-button>123</i-button>
-    <i-switch />
-  </div>
-</template>
+> A Vue.js project
 
-<script>
-//先引入相关插件，具体需要哪些上官网查看
-import { Button,Switch } from 'iview';
-export default {
-  name: 'App',
-  //然后注册局部组件
-  components:{
-    Button,
-    Switch
-  }
-}
-</script>
+## Build Setup
+
+``` bash
+# install dependencies
+npm install
+
+# serve with hot reload at localhost:8080
+npm run dev
+
+# build for production with minification
+npm run build
+
+# build for production and view the bundle analyzer report
+npm run build --report
 ```
+
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
