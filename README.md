@@ -2,20 +2,35 @@
 
 > A Vue.js project
 
-## Build Setup
+## 技术栈
 
-``` bash
-# install dependencies
-npm install
+- UI框架：[iView官网](https://www.iviewui.com/docs/guide/start)
+- 数据请求：Axios
+- css：Sass
+- Vue + Vue cli + vuex + vue router + webpack
+- 后端：Node.js + Express
+- 数据库：MySQL
 
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+### iView使用实例
 ```
+<template>
+  <div id="app">
+    <img src="./assets/logo.png">
+    <router-view/>
+    //使用UI组件
+    <Button>123</Button>
+  </div>
+</template>
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+<script>
+//引入组件
+import { Button } from '@iview'
+export default {
+  name: 'App',
+  //注册局部组件
+  components:{
+    Button
+  }
+}
+</script>
+```
