@@ -6,7 +6,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state:{
         isLogin:false,
-        tabShow:true
+        tabShow:true,
+        
     },
     mutations:{
         loginState(state){

@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <Com-Tab v-show="tabState"></Com-Tab>
-    <router-view></router-view>
+    <router-view/>
+    
   </div>
 </template>
 
@@ -9,18 +10,24 @@
 import  ComTab  from './components/ComTab';
 export default {
   name: 'App',
+  data() {
+    return {
+        transitionName:''
+    }
+  },
   computed: {
     tabState(){
           return this.$store.state.tabShow
       },
   },
+  
   components:{
     ComTab
   }
 }
 </script>
 
-<style>
+<style lang='scss'>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -30,4 +37,5 @@ export default {
   height: 100%;
   /* margin-top: 60px; */
 }
+
 </style>

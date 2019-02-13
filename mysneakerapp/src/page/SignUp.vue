@@ -1,29 +1,32 @@
 <template>
   <div class="wrapper">
-    <Cell-group>
-        <Field
-            type="tel"
-            placeholder="请输入手机号码"
-            label="+86"
-        />
-        <Field
-            center
-            type="text"
-            label="密码"
-            placeholder="请输入密码"
-        />
-        <Field
-            center
-            type="text"
-            label="密码"
-            placeholder="请输入密码"
-        />
+    <Popup v-model="show" position="right" overlay="true">
+        <Cell-group>
+            <Field
+                type="tel"
+                placeholder="请输入手机号码"
+                label="+86"
+            />
+            <Field
+                center
+                type="text"
+                label="密码"
+                placeholder="请输入密码"
+            />
+            <Field
+                center
+                type="text"
+                label="密码"
+                placeholder="请输入密码"
+            />
     </Cell-group>
+    </Popup>
+    
   </div>
 </template>
 
 <script>
-import { Tabbar, TabbarItem, NavBar, Uploader, Icon , Button, Field, CellGroup } from 'vant';
+import { Tabbar, TabbarItem, NavBar, Uploader, Icon , Button, Field, CellGroup,Popup } from 'vant';
 export default {
   name: 'Login',
   data () {
@@ -32,13 +35,17 @@ export default {
       active:0,
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      show:true
     }
   },
   computed:{
       loginState(){
           return this.$store.state.isLogin
       },
+    //   signUp_show(){
+    //       return this.$store.state.signUp_show
+    //   }
   },
   methods: {
     
@@ -59,7 +66,8 @@ export default {
     Icon,
     Button,
     Field,
-    CellGroup
+    CellGroup,
+    Popup
   }
 }
 </script>
