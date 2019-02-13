@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { Tabbar, TabbarItem, NavBar, Uploader, Icon , Button, Field, CellGroup } from 'vant';
+import { Tabbar, TabbarItem, NavBar, Uploader, Icon , Button, Field, CellGroup ,Toast } from 'vant';
 export default {
   name: 'Login',
   data () {
@@ -51,7 +51,16 @@ export default {
     signIn(){
         axios.post('https://www.gooomi.cn/signIn',this.user)
         .then((res)=>{
-            console.log(res.data)
+            Toast.loading({
+                duration: 0,
+                mask: false,
+                message: '登录中...'
+            });
+            
+            console.log(res.data);
+            this.$router.push('/My');
+            this.$store.commit('loginState');
+            Toast.clear()
         })
         // axios({
         //     method: 'post',
@@ -74,7 +83,8 @@ export default {
     Icon,
     Button,
     Field,
-    CellGroup
+    CellGroup,
+    Toast
   }
 }
 </script>

@@ -2,9 +2,7 @@
   <div class="wrapper">
     <!-- 顶部导航栏 -->
     <Nav-bar title="标题" fixed>
-      <Uploader slot="right">
-        <Icon name="photograph" />
-      </Uploader>
+      <Icon slot="right" name="photograph" />
     </Nav-bar>
     <!-- 顶部导航栏 -->
     
@@ -159,53 +157,54 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
 
-@mixin flex-al-center {
-  display: flex;
-  align-items: center;
-}
-@mixin flex-between {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.wrapper {
-  margin-top: 50px;
-  .dynamic {
-    margin: 10px auto;
+  @mixin flex-al-center {
+    display: flex;
+    align-items: center;
   }
-  .user-head {
-  @include flex-al-center;
-  padding: 5px;
-  height: 50px;
-  .user-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+  @mixin flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
-  .user-name {
-    font-weight: bold;
-  }
-}
-  .content-text {
-    @include flex-al-center();
-    padding:5px;
-  }
-  .bottom-action {
-    @include flex-between();
-    padding:5px;
+  .wrapper {
+    margin-top: 50px;
+    .dynamic {
+      margin: 10px auto;
+    }
     
-    .bottom-action-left {
+    .user-head {
+    @include flex-al-center;
+    padding: 5px;
+    height: 50px;
+    .user-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    .user-name {
+      font-weight: bold;
+    }
+  }
+    .content-text {
+      @include flex-al-center();
+      padding:5px;
+    }
+    .bottom-action {
+      @include flex-between();
+      padding:5px;
+      
+      .bottom-action-left {
+        
+      }
+      .bottom-action-left,.bottom-action-right {
+        @include flex-between();
+      }
       
     }
-    .bottom-action-left,.bottom-action-right {
-      @include flex-between();
+    img {
+      width:100%;
     }
-    
   }
-  img {
-    width:100%;
-  }
-}
 
 
 </style>

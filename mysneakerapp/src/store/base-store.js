@@ -12,8 +12,9 @@ const store = new Vuex.Store({
     mutations:{
         loginState(state){
             if(state.isLogin == false){
-                state.isLogin = true
+                state.isLogin = true;
             }
+            
         },
         tabState(state){
             state.tabShow = false;
