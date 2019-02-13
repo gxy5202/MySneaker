@@ -1,10 +1,10 @@
 <template>
   <div class="hello">
     <Tabbar v-model="active">
-      <TabbarItem icon="home-o" @click="toHome" >标签</TabbarItem>
-      <TabbarItem icon="search" dot @click="toShop">标签</TabbarItem>
-      <TabbarItem icon="friends-o" info="5" @click="toMap">标签</TabbarItem>
-      <TabbarItem icon="setting-o" info="20" @click="toMy">标签</TabbarItem>
+      <TabbarItem icon="home-o" @click="toHome" >鞋圈</TabbarItem>
+      <TabbarItem icon="search" dot @click="toShop">购物</TabbarItem>
+      <TabbarItem icon="friends-o" info="5" @click="toMap">附近</TabbarItem>
+      <TabbarItem icon="setting-o" info="20" @click="toMy">我的</TabbarItem>
     </Tabbar>
   </div>
 </template>
@@ -19,6 +19,14 @@ export default {
       active:0
     }
   },
+  computed:{
+      loginState(){
+          return this.$store.state.isLogin
+      },
+      tabState(){
+          return this.$store.state.tabState
+      }
+  },
   methods: {
     toHome(){
       this.$router.push('/Home')
@@ -30,7 +38,15 @@ export default {
       this.$router.push('/Map')
     },
     toMy(){
-      this.$router.push('/My')
+      if(this.loginState == false){
+        this.$router.push('/Login');
+        this.$store.commit('tabState')
+      }else {
+        this.$router.push('/My')
+      };
+      
+
+      
     },
   },
   components:{
