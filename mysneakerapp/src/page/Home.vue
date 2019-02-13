@@ -2,7 +2,7 @@
   <div class="wrapper">
     <!-- 顶部导航栏 -->
     <Nav-bar title="标题" fixed>
-      <Icon slot="right" name="photograph" />
+      <Icon slot="right" name="photograph" size="20px" color="black" @click="toUpload"/>
     </Nav-bar>
     <!-- 顶部导航栏 -->
     
@@ -135,6 +135,9 @@ export default {
           }
       }
       
+    },
+    toUpload(){
+      this.$router.push('/Upload')
     }
   },
   components:{

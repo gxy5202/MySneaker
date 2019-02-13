@@ -58,8 +58,8 @@ export default {
             });
             
             console.log(res.data);
+            this.$store.commit('tabState');
             this.$router.push('/My');
-            this.$store.commit('loginState');
             Toast.clear()
         })
         // axios({

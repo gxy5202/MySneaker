@@ -13,11 +13,13 @@ const store = new Vuex.Store({
         loginState(state){
             if(state.isLogin == false){
                 state.isLogin = true;
+            }else {
+                state.isLogin = false;
             }
             
         },
         tabState(state){
-            state.tabShow = false;
+            state.tabShow = !state.tabShow 
         }
        
     },

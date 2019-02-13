@@ -7,7 +7,8 @@ import Map from '@/page/Map'
 import My from '@/page/My';
 import Login from '@/page/Login';
 import SignUp from '@/page/SignUp';
-import SignIn from '@/page/SignIn'
+import SignIn from '@/page/SignIn';
+import Upload from '@/page/Upload';
 Vue.use(Router)
 
 export default new Router({
@@ -59,6 +60,12 @@ export default new Router({
       name: 'SignIn',
       meta:{index:1},
       component: SignIn,
+    },
+    {
+      path: '/Upload',
+      name: 'Upload',
+      meta:{index:1},
+      component: Upload,
     },
   ]
 })
