@@ -137,7 +137,8 @@ export default {
       
     },
     toUpload(){
-      this.$router.push('/Upload')
+      this.$router.push('/Upload');
+      this.$store.commit('tabState');
     }
   },
   components:{
