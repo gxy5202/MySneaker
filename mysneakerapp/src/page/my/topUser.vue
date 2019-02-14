@@ -4,7 +4,7 @@
     <div class="box2">
       <p class="time">加入毒5天</p>
       <div class="message">
-        <div class="user-img"></div>
+        <div @click="setup" class="user-img"></div>
         <p class="name">天价腰花</p>
         <p class="jianjie">这个人很懒，什么也没留下</p>
       </div>
@@ -26,7 +26,14 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  name:'topUser',
+  methods:{
+    setup(){
+      this.$router.push('./Setup')
+    }
+  }
+};
 </script>
 <style scoped lang="scss">
 .box {

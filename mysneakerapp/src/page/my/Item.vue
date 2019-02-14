@@ -22,11 +22,5 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-ul {
-  li {
-    height: 40px;
-    background-color: #fff;
-  }
-}
 </style>
 
