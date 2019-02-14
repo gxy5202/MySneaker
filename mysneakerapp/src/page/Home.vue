@@ -50,7 +50,6 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js App',
-      active:0,
       list: [],
       loading: false,
       finished: false,
@@ -115,6 +114,9 @@ export default {
       ]
     }
   },
+  computed: {
+    
+  },
   methods: {
     
     onLoad() {
@@ -138,7 +140,7 @@ export default {
     },
     toUpload(){
       this.$router.push('/Upload');
-      this.$store.commit('tabState');
+      this.$store.commit('tabState',1);
     }
   },
   components:{

@@ -1,5 +1,8 @@
 <template>
   <div class="wrapper">
+    <div class="back">
+        <Icon size="20px" name="cross" @click="back"></Icon>
+    </div> 
     <div class="selectButton">
         <Button square type="primary" text="注册" @click="signUp"></Button>
         <Button plain type="primary" text="已有账号登录" @click="signIn"></Button>
@@ -8,7 +11,7 @@
 </template>
 
 <script>
-import { Tabbar, TabbarItem, NavBar, Uploader, Icon , List, Button } from 'vant';
+import {  Icon , Button } from 'vant';
 export default {
   name: 'Login',
   data () {
@@ -26,10 +29,9 @@ export default {
       },
   },
   methods: {
-    
-    onLoad() {
-      // 异步更新数据
-     
+    back(){
+        this.$router.back(-1);
+        this.$store.commit('tabState',0);
     },
     login(){
         this.$store.commit('loginState');
@@ -43,12 +45,7 @@ export default {
     }
   },
   components:{
-    Tabbar,
-    TabbarItem,
-    NavBar,
-    Uploader,
     Icon,
-    List,
     Button
   }
 }
@@ -61,19 +58,36 @@ export default {
     justify-content: center;
     align-items: center;
 }
-html,body {
-    height: 100%;
-    @include flex-center();
+@mixin absolute {
+    position: absolute;
+    margin: auto;
+    left:0;
+    right:0;
+    bottom: 0;
+    top:0;
 }
 .wrapper {
     @include flex-center();
-    margin-top: 70%;
+    @include absolute();
+    .back {
+        position: absolute;
+        top:30px;
+        left:30px;
+
+    }
     .selectButton {
         width: 100%;
-        
         Button {
             width:60%;
             margin: 10px;
+            &:nth-child(1){
+                background: black;
+                border:black 1px solid;
+            }
+            &:nth-child(2){
+                border:black 1px solid;
+                color:black;
+            }
         }
     }
     

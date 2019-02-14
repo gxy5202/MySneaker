@@ -7,19 +7,28 @@ const store = new Vuex.Store({
     state:{
         isLogin:false,
         tabShow:true,
-        
+        tabActive:0
     },
     mutations:{
-        loginState(state){
-            if(state.isLogin == false){
+        loginState(state,status){
+            let uid = sessionStorage.getItem('uid');
+            if(uid){
                 state.isLogin = true;
-            }else {
+            }else{
                 state.isLogin = false;
+            }
+            state.isLogin = status;
+        },
+        tabState(state,num){
+            if(num == 0){
+                state.tabShow = true;
+            }else {
+                state.tabShow = false;
             }
             
         },
-        tabState(state){
-            state.tabShow = !state.tabShow 
+        tabActive(state,index){
+            state.tabActive = index
         }
        
     },

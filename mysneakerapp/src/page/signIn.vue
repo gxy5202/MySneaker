@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { Tabbar, TabbarItem, NavBar, Uploader, Icon , Button, Field, CellGroup ,Toast } from 'vant';
+import {  NavBar, Uploader, Icon , Button, Field, CellGroup ,Toast } from 'vant';
 export default {
   name: 'Login',
   data () {
@@ -51,33 +51,26 @@ export default {
     signIn(){
         axios.post('https://www.gooomi.cn/signIn',this.user)
         .then((res)=>{
-            Toast.loading({
-                duration: 0,
-                mask: false,
-                message: '登录中...'
-            });
             
-            console.log(res.data);
-            this.$store.commit('tabState');
-            this.$router.push('/My');
-            Toast.clear()
+            console.log(res);
+            if(res.data.status == 0){
+                this.$toast({
+                    message: "登陆失败，用户名或密码错误",
+                })
+            }else{
+                this.$store.commit('tabState',0);
+                this.$router.push('/My');
+                sessionStorage.setItem('uid',JSON.stringify(res.data.results[0].uid));
+                this.$store.commit('loginState',true)
+            }
+            
+            
         })
-        // axios({
-        //     method: 'post',
-        //     url: 'https://www.gooomi.cn/signIn',
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded',
-        //         'Accept': 'text/json'
-        //     },
-        //     data: this.user
-        //     }).then((res) => {
-        //     console.log(res)
-        // })
+      
     }
   },
   components:{
-    Tabbar,
-    TabbarItem,
+    
     NavBar,
     Uploader,
     Icon,

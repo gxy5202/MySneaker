@@ -31,8 +31,7 @@ export default {
     }
   },
   components:{
-    Tabbar,
-    TabbarItem,
+    
     NavBar,
     Uploader,
     Icon,

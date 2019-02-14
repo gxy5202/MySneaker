@@ -52,6 +52,7 @@ export default {
     },
     back(){
         this.$router.back(-1);
+        this.$store.commit('tabState',0);
     },
     onRead(file) {
         console.log(file);

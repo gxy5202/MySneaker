@@ -1,10 +1,10 @@
 <template>
   <div class="hello">
-    <Tabbar v-model="active">
+    <Tabbar v-model="active" active-color="#000">
       <TabbarItem icon="home-o" @click="toHome" >鞋圈</TabbarItem>
-      <TabbarItem icon="search" dot @click="toShop">购物</TabbarItem>
-      <TabbarItem icon="friends-o" info="5" @click="toMap">附近</TabbarItem>
-      <TabbarItem icon="setting-o" info="20" @click="toMy">我的</TabbarItem>
+      <TabbarItem icon="search"  @click="toShop">购物</TabbarItem>
+      <TabbarItem icon="friends-o"  @click="toMap">附近</TabbarItem>
+      <TabbarItem icon="setting-o"  @click="toMy">我的</TabbarItem>
     </Tabbar>
   </div>
 </template>
@@ -15,8 +15,7 @@ export default {
   name: 'ComTab',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      active:0
+      index:0
     }
   },
   computed:{
@@ -25,24 +24,38 @@ export default {
       },
       tabState(){
           return this.$store.state.tabState
+      },
+      active:{
+        get () {
+          return this.$store.state.tabActive
+        },
+        set (index) {
+          this.$store.commit('tabActive', index)
+        }
+          
       }
   },
   methods: {
     toHome(){
+      this.$store.commit('tabActive',0);
       this.$router.push('/Home')
     },
     toShop(){
+      this.$store.commit('tabActive',1);
       this.$router.push('/Shop')
     },
     toMap(){
+      this.$store.commit('tabActive',2);
       this.$router.push('/Map')
     },
     toMy(){
+      this.$store.commit('tabActive',3);
       if(this.loginState == false){
         this.$router.push('/Login');
-        this.$store.commit('tabState')
+        this.$store.commit('tabState',1)
       }else {
-        this.$router.push('/My')
+        this.$router.push('/My');
+        this.$store.commit('tabState',0)
       };
       
 
@@ -60,18 +73,5 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-h1, h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+
 </style>
