@@ -59,11 +59,23 @@
     <!-- 生日 -->
     <div class="text">
       <span class="text1">生日</span>
-      <div>
+      <div @click="userbirthday()">
         <span class="text2">{{message.birthday}}</span>
         <icon class="icon" name="arrow"></icon>
       </div>
     </div>
+    <!-- 修改生日 -->
+    <actionsheet v-model="state.birthday.show">
+      <datetime-picker
+        v-model="state.birthday.currentDate"
+        type="date"
+        :show-toolbar="true"
+        @confirm="birthday()"
+        @cancel='userbirthday1()'
+        :min-date="state.birthday.minDate"
+        :max-date="state.birthday.maxDate"
+      />
+    </actionsheet>
     <!-- 修改密码 -->
     <div class="text">
       <span class="text1">修改密码</span>
@@ -88,9 +100,9 @@ import {
   CellGroup,
   Cell,
   RadioGroup,
-  Radio
+  Radio,
+  DatetimePicker
 } from "vant";
-import Userimg from "./setup/Userimg";
 export default {
   name: "Setup",
   data() {
@@ -106,7 +118,10 @@ export default {
           show: false
         },
         birthday: {
-          show: false
+          show: false,
+          currentDate: new Date("2000/00/00"),
+          minDate: new Date("1970/01/01"),
+          maxDate: new Date()
         },
         password: {
           show: false
@@ -116,7 +131,7 @@ export default {
         img:
           "https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike116%2C5%2C5%2C116%2C38/sign=ee9bedd9b8de9c82b268f1dd0de8eb6f/3ac79f3df8dcd100c662f1c1798b4710b8122f57.jpg",
         nickName: "天价腰花",
-        gender: "male",
+        gender: "男",
         birthday: "1970-00-00",
         password: ""
       }
@@ -128,19 +143,22 @@ export default {
     Button,
     Actionsheet,
     Popup,
-    Userimg,
     Uploader,
     Field,
     CellGroup,
     Cell,
     RadioGroup,
-    Radio
+    Radio,
+    DatetimePicker
   },
   computed: {
     bg() {
       let img = this.message.img;
       return `background-image: url(${img})`;
     }
+    // birthday(){
+    //   return this.state.birthday.currentDate.toLocaleDateString();
+    // }
   },
   methods: {
     // 修改头像
@@ -154,6 +172,18 @@ export default {
     // 修改性别
     usergender() {
       this.state.gender.show = !this.state.gender.show;
+    },
+    // 修改生日
+    userbirthday() {
+      this.state.birthday.show = !this.state.birthday.show;
+    },
+    userbirthday1() {
+      this.state.birthday.show = !this.state.birthday.show;
+    },
+    birthday() {
+      let x = this.state.birthday.currentDate.toLocaleDateString();
+      this.message.birthday = x;
+      this.state.birthday.show = !this.state.birthday.show;
     }
   }
 };
