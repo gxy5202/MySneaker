@@ -1,47 +1,80 @@
 <template>
   <div class="wrapper">
     <!-- 顶部导航栏 -->
-    <Nav-bar title="发布动态" fixed right-text="发布" @click-right="onClickRight">
+    <Nav-bar title="" fixed >
       <Icon slot="left" name="arrow-left" size="20px" color="black" @click="back"/>
+      
     </Nav-bar>
     <!-- 顶部导航栏 -->
-
-    <div class="text-area">
-        <textarea name="" id="" cols="30" rows="10" placeholder="在这里输入文字..." v-model="text"></textarea>
-    </div>
-
-    <!-- 图片上传 -->
-    <div class="upload">
-        <div class="up-review" v-for="(item,index) in upImgList" :key="index" >
-            <img  :src="item" alt="">
+    
+    <!-- 动态详情 -->
+    <div class="dynamic">
+        <div class="user-head" slot="left">
+          <img class="user-img" v-lazy="posting.u_img" :src="posting.u_img">
+          <div class="user-info">
+            <div class="user-name">{{posting.u_name}}</div>
+            <div class="time">{{ posting.p_date | dateForm }}</div>
+          </div>
         </div>
-        <Uploader  class="uploader" :after-read="onRead" :disabled="isUp" accept="image/gif, image/jpeg" multiple @oversize="oversize">
-            <img class="upIcon" src="../assets/imgloader.png" alt="upload" ref="upimg">
-        </Uploader>
-    </div>
-
-    <img :src="download" alt="">
+        <lazy-component>
+          <div class="content-img" type="flex" justify="space-between">
+            <img v-lazy="imgUrl" :class="posting.p_imgList.length == 1 ? 'one':posting.p_imgList.length == 2 ? 'two': posting.p_imgList.length == 3 ? 'three':'four'" v-for="(imgUrl,ind) of posting.p_imgList" :key="ind" :src="imgUrl" @click.stop="preview(posting.p_imgList,ind)">
+          </div>
+        </lazy-component>
+        <div class="content-text">
+          <div>{{posting.p_text}}</div>
+        </div>
+        <div class="bottom-action">
+          <div class="bottom-action-left">
+            <Icon size="25px" name="chat-o"></Icon>
+            <span>{{posting.p_comment}}</span>
+          </div>
+          <div class="bottom-action-right">
+            <Icon size="25px" :name="posting.likeState.style" @click.stop="like(posting)"></Icon>
+            <span>{{posting.p_like}}</span>
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 
 <script>
-import { NavBar, Uploader, Icon , Button, Field, CellGroup ,Toast } from 'vant';
+import moment from "moment";
+import Vue from 'vue';
+import { component as VueLazyComponent } from '@xunlei/vue-lazy-component';
+import Comment from './Comment';
+moment.locale("zh-cn");
+import {
+  NavBar,
+  Uploader,
+  Icon,
+  List,
+  Lazyload,
+  ImagePreview,
+  Row,
+  Col,
+  Popup
+} from "vant";
+Vue.use(Lazyload);
 export default {
   name: 'Comment',
   data () {
     return {
-
       text:'',
       isUp:false,
       upImgList:[],
       Postings:{},
-      download:""
+      download:"",
+      
     }
   },
   computed:{
       loginState(){
           return this.$store.state.isLogin
       },
+      posting(){
+          return JSON.parse(this.$route.params.id)
+      }
 
   },
   methods: {
@@ -54,90 +87,167 @@ export default {
         this.$router.back(-1);
         this.$store.commit('tabState',0);
     },
-    onRead(file) {
-        console.log(file);
-        if(file.length > 1 ){
-            file.map((value,index)=>{
-                this.upImgList.push(value.content)
-            })
-        }else{
-            this.upImgList.push(file.content)
-        }
-        //将原图片显示为选择的图片
-        //this.$refs.upimg.src = file.content;
-        
-    },
     oversize(){
         alert('oversize')
     },
-    onClickRight(){
-        this.Postings = {
-            img:this.upImgList,
-            text:this.text,
-            uid:this.$store.state.uid
+    preview(value,index){
+      ImagePreview({
+        images: value,
+        startPosition: index,
+        onClose() {
+          // do something
         }
-        axios.post('https://www.gooomi.cn/upload',this.Postings)
-        .then(res=>{
-            console.log(res)
-        })
+      });
     }
+    
+  },
+  filters: {
+    dateForm(el) {
+      //return moment(el).format('YYYY-MM-DD HH:mm:ss');
+      return moment(el)
+        .startOf("hour")
+        .fromNow();
+    }
+  },
+  created() {
+    console.log(this.posting)
     
   },
   components:{
     NavBar,
     Uploader,
     Icon,
-    Button,
-    Field,
-    CellGroup,
-    Toast
+    List,
+    [Lazyload.name]:Lazyload,
+    Row,
+    [Col.name]:Col,
+    'lazy-component': VueLazyComponent,
+    Popup,
+    Comment
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
-    @mixin flex-left {
+@mixin flex-al-center {
+  display: flex;
+  align-items: center;
+}
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wrapper {
+  padding-top: 35px;
+  background: rgba(0, 0, 0, 0.01);
+  .dynamic {
+    margin: 10px auto;
+    background: rgb(255, 255, 255);
+  }
+  .user-head {
+    @include flex-al-center;
+    padding: 5px;
+    height: 50px;
+    .user-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    .user-info {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: 5px;
+      .user-name {
+        width: 70%;
+        font-weight: bold;
         display: flex;
-        align-items: center;
-        flex-wrap: wrap;
+      }
+      .time {
+        font-size: 10px;
+      }
     }
-    .text-area {
-        margin: 50px auto 0 auto;
-        width: 95%;
-        textarea {
-            border:none;
-            width: 100%;
+  }
+  .content-img {
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 300px;
+    .two {
+      width: 49%;
+      height: 100%;
+      
+    }
+    .one {
+      width: 100%;
+      height: 100%;
+    }
+
+    .three {
+      &:nth-child(1){
+        width:100%;
+        height: 50%;
+        margin-bottom:3px;
+      }
+      &:nth-child(2){
+        width:49%;
+        height: 50%;
+      }
+      &:nth-child(3){
+        width:49%;
+        height: 50%;
+      }
+    }
+      .four {
+        &:nth-child(1){
+          width:49%;
+          height: 50%;
+          margin-bottom:3px;
+        }
+        &:nth-child(2){
+          width:49%;
+          height: 50%;
+          margin-bottom:3px;
+        }
+        &:nth-child(3){
+          width:49%;
+          height: 50%;
+        }
+        &:nth-child(4){
+          width:49%;
+          height: 50%;
         }
     }
-    .upload {
-        @include flex-left();
-        margin: 50px auto 0 auto;
-        width: 95%;
-        max-width:95%;
-        .up-review {
-            overflow: hidden;
-            text-align: center;
-            width: 60px;
-            height: 60px;
-            
-            img {
-                width:100%;
-                height:100%;
-                margin:3px;
-                object-fit:cover;
-            }
-        }
-        .uploader {
-            margin:3px;
-            .upIcon {
-                
-                width: 60px;
-                height: 60px;
-                
-            }
-        }
-        
+    img {
+      // width: 50%;
+      // height: 50%;
+      // margin: 3px;
+      object-fit: cover;
+      // display: inline-block;
     }
+  }
+  .content-text {
+    @include flex-al-center();
+    padding: 5px;
+  }
+  .bottom-action {
+    @include flex-between();
+    padding: 5px;
+
+    .bottom-action-left {
+    }
+    .bottom-action-left,
+    .bottom-action-right {
+      @include flex-between();
+    }
+  }
+  img {
+    width: 100%;
+  }
+}
     
 </style>

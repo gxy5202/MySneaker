@@ -76,10 +76,11 @@ export default new Router({
       component: Setup
     },
     {
-      path: "/Comment",
+      path: "/Comment/:id",
       name: "Comment",
       meta: { index: 1 },
-      component: Comment
+      component: Comment,
+      
     }
   ]
 });

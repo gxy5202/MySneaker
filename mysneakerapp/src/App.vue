@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <Com-Tab v-show="tabState"></Com-Tab>
-    <router-view/>
-    
+    <transition  :name="transitionName">   
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -12,7 +13,7 @@ export default {
   name: 'App',
   data() {
     return {
-        
+        transitionName:''
     }
   },
   computed: {
@@ -20,6 +21,20 @@ export default {
           return this.$store.state.tabShow
       },
   },
+  watch: {//使用watch 监听$router的变化
+    $route(to, from) {
+      //如果to索引大于from索引,判断为前进状态,反之则为后退状态
+      if(to.meta.index > from.meta.index){
+	    //设置动画名称
+        this.transitionName = 'slide-left';
+      }else if(to.meta.index < from.meta.index){
+        this.transitionName = 'slide-right';
+      }else{
+         this.transitionName = ''
+      }
+    }
+  },
+
   created() {
     //在页面加载时读取sessionStorage里的状态信息
     if (sessionStorage.getItem("store") ) {
@@ -48,6 +63,35 @@ export default {
   color: #2c3e50;
   height: 100%;
   /* margin-top: 60px; */
+}
+    .slide-right-enter-active,
+    .slide-right-leave-active,
+    .slide-left-enter-active,
+    .slide-left-leave-active {
+        will-change: transform;
+        transition: all .3s;
+        position: absolute;
+        width:100%;
+        left:0;
+    }
+    .slide-right-enter {
+        transform: translateX(-100%);
+    }
+    .slide-right-leave-active {
+        transform: translateX(100%);
+    }
+    .slide-left-enter {
+        transform: translateX(100%);
+    }
+    .slide-left-leave-active {
+        transform: translateX(-100%);
+    }
+
+router-view {
+  width:100%;
+  height:100%;
+ overflow-y: auto;
+ overflow-x: hidden;
 }
 
 </style>

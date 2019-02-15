@@ -8,7 +8,8 @@
 
     <!-- 显示列表 -->
     <List v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-      <div class="dynamic" v-for="(item,index) of dataList" :key="index">
+      
+      <div class="dynamic" v-for="(item,index) of dataList" :key="index" @click.stop="toComment(item)">
         <div class="user-head">
           <img class="user-img" v-lazy="item.u_img" :src="item.u_img">
           <div class="user-info">
@@ -18,7 +19,7 @@
         </div>
         <lazy-component>
           <div class="content-img" type="flex" justify="space-between">
-            <img v-lazy="imgUrl" :class="item.p_imgList.length == 1 ? 'one':item.p_imgList.length == 2 ? 'two': item.p_imgList.length == 3 ? 'three':'four'" v-for="(imgUrl,ind) of item.p_imgList" :key="ind" :src="imgUrl" @click="preview(item.p_imgList,ind)">
+            <img v-lazy="imgUrl" :class="item.p_imgList.length == 1 ? 'one':item.p_imgList.length == 2 ? 'two': item.p_imgList.length == 3 ? 'three':'four'" v-for="(imgUrl,ind) of item.p_imgList" :key="ind" :src="imgUrl" @click.stop="preview(item.p_imgList,ind)">
           </div>
         </lazy-component>
         <div class="content-text">
@@ -30,7 +31,7 @@
             <span>{{item.p_comment}}</span>
           </div>
           <div class="bottom-action-right">
-            <Icon size="25px" :name="item.likeState.style" @click="like(item)"></Icon>
+            <Icon size="25px" :name="item.likeState.style" @click.stop="like(item)"></Icon>
             <span>{{item.p_like}}</span>
           </div>
         </div>
@@ -43,7 +44,8 @@
 <script>
 import moment from "moment";
 import Vue from 'vue';
-import { component as VueLazyComponent } from '@xunlei/vue-lazy-component'
+import { component as VueLazyComponent } from '@xunlei/vue-lazy-component';
+import Comment from './Comment';
 moment.locale("zh-cn");
 import {
   Tabbar,
@@ -55,7 +57,8 @@ import {
   Lazyload,
   ImagePreview,
   Row,
-  Col
+  Col,
+  Popup
 } from "vant";
 Vue.use(Lazyload);
 export default {
@@ -69,7 +72,7 @@ export default {
       dataList: [],
       imgList: [],
       already_like:'',
-      
+      show:false
     };
   },
   computed: {
@@ -81,6 +84,16 @@ export default {
   methods: {
     onLoad() {
       // 异步更新数据
+    },
+    toComment(item){
+      //this.$router.push('/Comment');
+      this.$router.push({
+          name: 'Comment',
+          params: {
+            id: JSON.stringify(item)
+          }
+        })
+      this.show = true;
     },
     like(item) {
       let posting_like = {
@@ -176,7 +189,6 @@ export default {
       console.log(postings)
       this.dataList = postings;
 
-      
     });
   },
   updated() {
@@ -192,7 +204,9 @@ export default {
     [Lazyload.name]:Lazyload,
     Row,
     [Col.name]:Col,
-    'lazy-component': VueLazyComponent
+    'lazy-component': VueLazyComponent,
+    Popup,
+    Comment
   }
 };
 </script>
@@ -210,7 +224,7 @@ export default {
 }
 
 .wrapper {
-  margin-top: 45px;
+  padding-top: 35px;
   background: rgba(0, 0, 0, 0.01);
   .dynamic {
     margin: 10px auto;
