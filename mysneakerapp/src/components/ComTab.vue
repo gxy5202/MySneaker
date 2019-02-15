@@ -49,7 +49,7 @@ export default {
       this.$router.push('/Map')
     },
     toMy(){
-      this.$store.commit('tabActive',3);
+      // this.$store.commit('tabActive',3);
       if(this.loginState == false){
         this.$router.push('/Login');
         this.$store.commit('tabState',1)

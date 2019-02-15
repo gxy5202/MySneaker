@@ -61,7 +61,7 @@ export default {
                 this.$store.commit('tabState',0);
                 this.$router.push('/My');
                 sessionStorage.setItem('uid',JSON.stringify(res.data.results[0].uid));
-                this.$store.commit('loginState',true)
+                this.$store.commit('loginState',true);
             }
             
             

@@ -73,7 +73,8 @@ export default {
     onClickRight(){
         this.Postings = {
             img:this.upImgList,
-            text:this.text
+            text:this.text,
+            uid:this.$store.state.uid
         }
         axios.post('https://www.gooomi.cn/upload',this.Postings)
         .then(res=>{

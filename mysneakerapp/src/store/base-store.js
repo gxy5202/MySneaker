@@ -6,13 +6,14 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state:{
         isLogin:false,
+        uid:"",
         tabShow:true,
         tabActive:0
     },
     mutations:{
-        loginState(state,status){
-            let uid = sessionStorage.getItem('uid');
-            if(uid){
+        loginState(state,status,uid){
+            state.uid = sessionStorage.getItem('uid');
+            if(state.uid != ''){
                 state.isLogin = true;
             }else{
                 state.isLogin = false;
