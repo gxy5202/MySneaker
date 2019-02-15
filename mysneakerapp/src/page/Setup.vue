@@ -1,5 +1,7 @@
 <template>
   <div class="setup">
+    <!-- 返回上一页 -->
+    <Icon @click="fanhui()" class="icon1 fanhui" size="30px" name="arrow-left"></Icon>
     <!-- 顶部 -->
     <Nav-bar title="个人信息" fixed></Nav-bar>
     <!-- 顶部 -->
@@ -71,21 +73,31 @@
         type="date"
         :show-toolbar="true"
         @confirm="birthday()"
-        @cancel='userbirthday1()'
+        @cancel="userbirthday1()"
         :min-date="state.birthday.minDate"
         :max-date="state.birthday.maxDate"
       />
     </actionsheet>
-    <!-- 修改密码 -->
+    <!-- 密码 -->
     <div class="text">
       <span class="text1">修改密码</span>
-      <div>
+      <div @click="userpassword()">
         <icon class="icon" name="arrow"></icon>
       </div>
     </div>
+    <!-- 修改密码 -->
+    <popup class="upimg upbox" position="right" v-model="state.password.show">
+      <Icon @click="userpassword()" class="icon1" size="30px" name="arrow-left"></Icon>
+      <cell-group>
+        <field type="password" label="原密码" placeholder="请输入原密码"/>
+        <field type="password" label="新密码" placeholder="请输入新密码"/>
+        <field type="password" label="新密码" placeholder="请确认新密码"/>
+        <Button class="btn1" type="primary">确认修改</Button>
+      </cell-group>
+    </popup>
     <!-- 信息修改 -->
     <!-- 退出登录 -->
-    <Button class="btn" type="default">退出登录</Button>
+    <Button class="btn" type="default">确认修改</Button>
   </div>
 </template>
 <script>
@@ -184,6 +196,14 @@ export default {
       let x = this.state.birthday.currentDate.toLocaleDateString();
       this.message.birthday = x;
       this.state.birthday.show = !this.state.birthday.show;
+    },
+    // 修改密码
+    userpassword() {
+      this.state.password.show = !this.state.password.show;
+    },
+    // 测试
+    fanhui(){
+      this.$router.go(-1)
     }
   }
 };
@@ -204,6 +224,13 @@ export default {
   }
   .icon {
     margin-right: 20px;
+  }
+  // 返回上一页
+  .fanhui{
+    position: fixed;
+    z-index: 99;
+    top:10px;
+    left:20px;
   }
   //   头像
   .img {

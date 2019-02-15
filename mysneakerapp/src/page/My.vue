@@ -1,17 +1,13 @@
 <template>
   <div class="hello">
-    <!-- 顶部导航栏 -->
-    <!-- <Nav-bar title="个人中心" fixed></Nav-bar> -->
-    <!-- 顶部导航栏 -->
     <!-- 用户信息栏 -->
-    <top-user></top-user>
-    <!-- 用户信息栏 -->
+    <top-user @fol='fol()'></top-user>
     <!-- 用户相关商品 -->
     <good></good>
-    <!-- 用户相关商品 -->
     <!-- 其他功能列表 -->
     <Item class="item"></Item>
-    <!-- 其他功能列表 -->
+    <!-- 关注页 -->
+    <follow :prop='follow' @fol='fol()'></follow>
   </div>
 </template>
 <script>
@@ -19,6 +15,7 @@ import { Tabbar, TabbarItem, NavBar, Uploader, Icon, List } from "vant";
 import Item from "./my/Item";
 import topUser from "./my/topUser";
 import good from "./my/good";
+import follow from './my/follow';
 export default {
   name: "Home",
   data() {
@@ -27,12 +24,17 @@ export default {
       active: 0,
       list: [],
       loading: false,
-      finished: false
+      finished: false,
+      follow:false
     };
   },
   methods: {
     onLoad() {
       // 异步更新数据
+    },
+    // 跳转关注页面
+    fol(){
+      this.follow=!this.follow;
     }
   },
   components: {
@@ -44,7 +46,8 @@ export default {
     List,
     Item,
     topUser,
-    good
+    good,
+    follow,
   }
 };
 </script>

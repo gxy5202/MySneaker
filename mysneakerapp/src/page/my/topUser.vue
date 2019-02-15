@@ -9,7 +9,7 @@
         <p class="jianjie">这个人很懒，什么也没留下</p>
       </div>
       <ul class="guanzhu">
-        <li>
+        <li @click="follow()" @fanhui='follow()'>
           <span>0</span>
           <span>关注</span>
         </li>
@@ -31,6 +31,9 @@ export default {
   methods:{
     setup(){
       this.$router.push('./Setup')
+    },
+    follow(){
+      this.$emit('fol')
     }
   }
 };
