@@ -2,9 +2,9 @@
   <div>
     <popup position="right" class="popup" v-model="prop">
       <!-- 标题 -->
-      <nav-bar title="关注" left-arrow @click-left="onClickLeft"/>
+      <nav-bar title="粉丝" left-arrow @click-left="onClickLeft"/>
       <!-- 关注列表 -->
-      <people @click="followUser()" v-for='i in item' :key='i.index' :prop='i'></people>
+      <people v-for='i in item' :key='i.index' :prop='i'></people>
     </popup>
   </div>
 </template>
@@ -12,7 +12,7 @@
 import { Popup, Icon, NavBar } from "vant";
 import people from "./follow/people";
 export default {
-  name: "follow",
+  name: "fans",
   props: ["prop"],
   data () {
     return {
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$emit("fol");
+      this.$emit("lick");
     }
   }
 };

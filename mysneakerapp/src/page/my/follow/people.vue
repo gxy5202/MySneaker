@@ -25,14 +25,20 @@ export default {
 <style lang="scss" scoped>
 .item {
     height: 60px;
-    width: 95%;
-    margin: 0 auto;
+    width: 90%;
+    margin: 10px auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  > div {
+    border-bottom: 0.2px solid rgb(196, 193, 193);
+  > .img{
     height: 40px;
     width: 40px;
+    background-size: cover;
+    border-radius: 40px;
+  }
+  .name{
+    margin-left: -100px;
   }
   .btn{
       height: 30px;

@@ -9,15 +9,15 @@
         <p class="jianjie">这个人很懒，什么也没留下</p>
       </div>
       <ul class="guanzhu">
-        <li @click="follow()" @fanhui='follow()'>
+        <li @click="follow()">
           <span>0</span>
           <span>关注</span>
         </li>
-        <li>
+        <li @click="fans()">
           <span>0</span>
           <span>粉丝</span>
         </li>
-        <li>
+        <li @click="like()">
           <span>0</span>
           <span>喜欢</span>
         </li>
@@ -34,7 +34,13 @@ export default {
     },
     follow(){
       this.$emit('fol')
-    }
+    },
+    fans(){
+      this.$emit('fol')
+    },
+    like(){
+      this.$emit('like1')
+    },
   }
 };
 </script>

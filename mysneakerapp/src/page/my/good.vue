@@ -1,11 +1,11 @@
 <template>
   <div>
-    <p>
+    <p @click="buy()">
       <img src alt>
       <span>我的购买</span>
       <icon name="arrow"></icon>
     </p>
-    <p>
+    <p @click="shoucang()">
       <img src alt>
       <span>我的收藏</span>
       <icon name="arrow"></icon>
@@ -18,6 +18,14 @@ export default {
   name: "good",
   components: {
     Icon
+  },
+  methods:{
+    buy(){
+      this.$emit('buy')
+    },
+    shoucang(x){
+      this.$emit('shoucang')
+    }
   }
 };
 </script>
