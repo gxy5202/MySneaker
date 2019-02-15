@@ -5,19 +5,22 @@
       <Icon slot="right" name="photograph" size="20px" color="black" @click="toUpload"/>
     </Nav-bar>
     <!-- 顶部导航栏 -->
+
     <!-- 显示列表 -->
     <List v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <div class="dynamic" v-for="(item,index) of dataList" :key="index">
         <div class="user-head">
-          <img class="user-img" :src="item.u_img">
+          <img class="user-img" v-lazy="item.u_img" :src="item.u_img">
           <div class="user-info">
             <div class="user-name">{{item.u_name}}</div>
             <div class="time">{{ item.p_date | dateForm }}</div>
           </div>
         </div>
-        <div class="content-img">
-          <img v-for="(imgUrl,ind) of item.p_imgList" :key="ind" :src="imgUrl" @click="preview(item.p_imgList,ind)">
-        </div>
+        <lazy-component>
+          <div class="content-img" type="flex" justify="space-between">
+            <img v-lazy="imgUrl" :class="item.p_imgList.length == 1 ? 'one':item.p_imgList.length == 2 ? 'two': item.p_imgList.length == 3 ? 'three':'four'" v-for="(imgUrl,ind) of item.p_imgList" :key="ind" :src="imgUrl" @click="preview(item.p_imgList,ind)">
+          </div>
+        </lazy-component>
         <div class="content-text">
           <div>{{item.p_text}}</div>
         </div>
@@ -39,6 +42,8 @@
 
 <script>
 import moment from "moment";
+import Vue from 'vue';
+import { component as VueLazyComponent } from '@xunlei/vue-lazy-component'
 moment.locale("zh-cn");
 import {
   Tabbar,
@@ -48,8 +53,11 @@ import {
   Icon,
   List,
   Lazyload,
-  ImagePreview
+  ImagePreview,
+  Row,
+  Col
 } from "vant";
+Vue.use(Lazyload);
 export default {
   name: "Home",
   data() {
@@ -60,7 +68,8 @@ export default {
       likeStyle: ["like-o", "like"],
       dataList: [],
       imgList: [],
-      already_like:''
+      already_like:'',
+      
     };
   },
   computed: {
@@ -78,23 +87,29 @@ export default {
         uid:this.$store.state.uid,
         pid:item.pid
       };
-      axios.post("https://www.gooomi.cn/postings_like",posting_like)
-      .then(res=>{
-          if(res.data == 'already_like'){
-            item.likeState = {
-              state: false,
-              style: "like-o"
-            };
-            item.p_like -= 1;
-          }else if(res.data == 'like_success'){
-            item.likeState = {
-              state: true,
-              style: "like"
-            };
-            item.p_like += 1;
-        }
-        
-      })
+      if(posting_like.uid == ''){
+        this.$router.push('/Login');
+        this.$store.commit('tabState',1);
+      }else{
+        axios.post("https://www.gooomi.cn/postings_like",posting_like)
+        .then(res=>{
+            if(res.data == 'already_like'){
+              item.likeState = {
+                state: false,
+                style: "like-o"
+              };
+              item.p_like -= 1;
+            }else if(res.data == 'like_success'){
+              item.likeState = {
+                state: true,
+                style: "like"
+              };
+              item.p_like += 1;
+          }
+          
+        })
+      }
+      
       // if (item.likeState.state == true) {
       //   item.likeState = {
       //     state: false,
@@ -173,7 +188,11 @@ export default {
     NavBar,
     Uploader,
     Icon,
-    List
+    List,
+    [Lazyload.name]:Lazyload,
+    Row,
+    [Col.name]:Col,
+    'lazy-component': VueLazyComponent
   }
 };
 </script>
@@ -189,6 +208,7 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
+
 .wrapper {
   margin-top: 45px;
   background: rgba(0, 0, 0, 0.01);
@@ -220,16 +240,63 @@ export default {
     }
   }
   .content-img {
-    background: red;
     overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
     width: 100%;
     height: 300px;
+    .two {
+      width: 49%;
+      height: 100%;
+      
+    }
+    .one {
+      width: 100%;
+      height: 100%;
+    }
+
+    .three {
+      &:nth-child(1){
+        width:100%;
+        height: 50%;
+        margin-bottom:3px;
+      }
+      &:nth-child(2){
+        width:49%;
+        height: 50%;
+      }
+      &:nth-child(3){
+        width:49%;
+        height: 50%;
+      }
+    }
+      .four {
+        &:nth-child(1){
+          width:49%;
+          height: 50%;
+          margin-bottom:3px;
+        }
+        &:nth-child(2){
+          width:49%;
+          height: 50%;
+          margin-bottom:3px;
+        }
+        &:nth-child(3){
+          width:49%;
+          height: 50%;
+        }
+        &:nth-child(4){
+          width:49%;
+          height: 50%;
+        }
+    }
     img {
-      width: 50%;
-      height: 50%;
-      margin: 3px;
+      // width: 50%;
+      // height: 50%;
+      // margin: 3px;
       object-fit: cover;
-      display: inline-block;
+      // display: inline-block;
     }
   }
   .content-text {

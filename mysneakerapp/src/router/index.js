@@ -10,6 +10,7 @@ import SignUp from "@/page/SignUp";
 import SignIn from "@/page/SignIn";
 import Upload from "@/page/Upload";
 import Setup from "@/page/Setup";
+import Comment from "@/page/Comment";
 Vue.use(Router);
 
 export default new Router({
@@ -73,6 +74,12 @@ export default new Router({
       name: "Setup",
       meta: { index: 1 },
       component: Setup
+    },
+    {
+      path: "/Comment",
+      name: "Comment",
+      meta: { index: 1 },
+      component: Comment
     }
   ]
 });
