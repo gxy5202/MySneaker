@@ -12,7 +12,6 @@
     <like :prop="like" @like1="like1()"></like>
     <buy :prop="buy" @buy="buy1()"></buy>
     <shoucang :prop="shoucang" @shoucang="shoucang1()"></shoucang>
-    <FollowUser :prop="FollowUser" @followUser="followUser" :overlay="false"></FollowUser>
   </div>
 </template>
 <script>

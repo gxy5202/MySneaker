@@ -13,7 +13,8 @@ export default {
   name: 'App',
   data() {
     return {
-        transitionName:''
+        transitionName:'',
+        prop:''
     }
   },
   computed: {

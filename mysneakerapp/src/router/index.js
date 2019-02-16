@@ -11,21 +11,11 @@ import SignIn from "@/page/SignIn";
 import Upload from "@/page/Upload";
 import Setup from "@/page/Setup";
 import Comment from "@/page/Comment";
+import FollowUser from '@/page/FollowUser'
 Vue.use(Router);
 
 export default new Router({
   mode: "history",
-  scrollBehavior(to, from, savedPosition) {
-    console.log(savedPosition)
-    if(savedPosition) {
-        return savedPosition
-    } else {
-        return {
-            x: 0,
-            y: 0
-        }
-    }
-},
   routes: [
     {
       path: "/",
@@ -91,7 +81,12 @@ export default new Router({
       name: "Comment",
       meta: { index: 1 },
       component: Comment,
-      
+    },
+    {
+      path: "/FollowUser",
+      name: "FollowUser",
+      meta: { index: 1 },
+      component: FollowUser,
     }
   ]
 });

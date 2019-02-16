@@ -1,6 +1,6 @@
 <template>
   <div class="item">
-    <div :style="bg" class="img"></div>
+    <div :style="bg" @click="followUser()" class="img"></div>
     <span class="name">{{prop.name}}</span>
     <Button class="btn" v-if="prop.fol==0" type="primary">关注</Button>
     <Button class="btn" v-if="prop.fol==1" type="default">已关注</Button>
@@ -11,6 +11,9 @@ import { Button } from "vant";
 export default {
   name: "people",
   props: ["prop"],
+  data() {
+    return {};
+  },
   computed: {
     bg() {
       return `background-image: url(${this.prop.img})`;
@@ -19,7 +22,11 @@ export default {
   components: {
     Button
   },
-  methods: {}
+  methods: {
+    followUser() {
+      this.$router.push("./FollowUser");
+    }
+  }
 };
 </script>
 

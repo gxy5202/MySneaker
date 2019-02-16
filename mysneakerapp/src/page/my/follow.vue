@@ -4,7 +4,7 @@
       <!-- 标题 -->
       <nav-bar title="关注" left-arrow @click-left="onClickLeft"/>
       <!-- 关注列表 -->
-      <people @click="followUser()" v-for='i in item' :key='i.index' :prop='i'></people>
+      <people v-for='i in item' :key='i.index' :prop='i'></people>
     </popup>
   </div>
 </template>
