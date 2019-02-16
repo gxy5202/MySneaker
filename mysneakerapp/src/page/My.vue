@@ -12,6 +12,7 @@
     <like :prop="like" @like1="like1()"></like>
     <buy :prop="buy" @buy="buy1()"></buy>
     <shoucang :prop="shoucang" @shoucang="shoucang1()"></shoucang>
+    <FollowUser :prop="FollowUser" @followUser="followUser" :overlay="false"></FollowUser>
   </div>
 </template>
 <script>
@@ -24,6 +25,7 @@ import fans from "./my/fans";
 import like from "./my/like";
 import buy from "./my/buy";
 import shoucang from "./my/shoucang";
+import FollowUser from "./FollowUser";
 export default {
   name: "Home",
   data() {
@@ -38,6 +40,7 @@ export default {
       like: false,
       buy: false,
       shoucang: false,
+      FollowUser: false
     };
   },
   methods: {
@@ -60,6 +63,9 @@ export default {
     },
     shoucang1(x) {
       this.shoucang = !this.shoucang;
+    },
+    followUser() {
+      this.FollowUser = !this.FollowUser;
     }
   },
   components: {
@@ -76,7 +82,8 @@ export default {
     fans,
     like,
     buy,
-    shoucang
+    shoucang,
+    FollowUser
   }
 };
 </script>
