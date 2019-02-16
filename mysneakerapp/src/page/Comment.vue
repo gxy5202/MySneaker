@@ -10,32 +10,44 @@
     <!-- 动态详情 -->
     <div class="dynamic">
         <div class="user-head" slot="left">
-          <img class="user-img" v-lazy="posting.u_img" :src="posting.u_img">
-          <div class="user-info">
-            <div class="user-name">{{posting.u_name}}</div>
-            <div class="time">{{ posting.p_date | dateForm }}</div>
-          </div>
+            <img class="user-img" v-lazy="posting.u_img" :src="posting.u_img">
+            <div class="user-info">
+                <div class="user-name">{{posting.u_name}}</div>
+                <div class="time">{{ posting.p_date | dateForm }}</div>
+            </div>
+            </div>
+            
+            <div class="content-img" type="flex" justify="space-between">
+                <img v-lazy="imgUrl" :class="posting.p_imgList.length == 1 ? 'one':posting.p_imgList.length == 2 ? 'two': posting.p_imgList.length == 3 ? 'three':'four'" v-for="(imgUrl,ind) of posting.p_imgList" :key="ind" :src="imgUrl" @click.stop="preview(posting.p_imgList,ind)">
+            </div>
+            
+            <div class="content-text">
+                <div>{{posting.p_text}}</div>
+            </div>
+            <div class="bottom-action">
+            <div class="bottom-action-left">
+                <Icon size="25px" name="chat-o"></Icon>
+                <span>{{posting.p_comment}}</span>
+            </div>
+            <div class="bottom-action-right">
+                <Icon size="25px" :name="posting.likeState.style" @click.stop="like(posting)"></Icon>
+                <span>{{posting.p_like}}</span>
+            </div>
+            </div>
         </div>
-        <lazy-component>
-          <div class="content-img" type="flex" justify="space-between">
-            <img v-lazy="imgUrl" :class="posting.p_imgList.length == 1 ? 'one':posting.p_imgList.length == 2 ? 'two': posting.p_imgList.length == 3 ? 'three':'four'" v-for="(imgUrl,ind) of posting.p_imgList" :key="ind" :src="imgUrl" @click.stop="preview(posting.p_imgList,ind)">
-          </div>
-        </lazy-component>
-        <div class="content-text">
-          <div>{{posting.p_text}}</div>
+        <div class="comment-list">
+            <p class="title">全部评论</p>
+            <div>
+
+            </div>
+        </div> 
+
+        <!-- 评论框 -->
+        <div class="comment-input">
+            <input type="text" placeholder="添加评论..." :class="{'commentHeight':isShow}" @focus="moreHeight" @blur="lowHeight"/>
+            <Button>发送</Button>
         </div>
-        <div class="bottom-action">
-          <div class="bottom-action-left">
-            <Icon size="25px" name="chat-o"></Icon>
-            <span>{{posting.p_comment}}</span>
-          </div>
-          <div class="bottom-action-right">
-            <Icon size="25px" :name="posting.likeState.style" @click.stop="like(posting)"></Icon>
-            <span>{{posting.p_like}}</span>
-          </div>
-        </div>
-      </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -48,12 +60,15 @@ import {
   NavBar,
   Uploader,
   Icon,
+  Button,
   List,
   Lazyload,
   ImagePreview,
   Row,
   Col,
-  Popup
+  Popup,
+  Cell, 
+  CellGroup
 } from "vant";
 Vue.use(Lazyload);
 export default {
@@ -65,7 +80,7 @@ export default {
       upImgList:[],
       Postings:{},
       download:"",
-      
+      isShow:false
     }
   },
   computed:{
@@ -98,8 +113,19 @@ export default {
           // do something
         }
       });
+    },
+    moreHeight(){
+      let uid = this.$store.state.uid;
+      if(uid){
+        this.isShow = true;
+      }else{
+        this.$router.push('/Login')
+      }
+      
+    },
+    lowHeight(){
+      this.isShow = false;
     }
-    
   },
   filters: {
     dateForm(el) {
@@ -123,7 +149,9 @@ export default {
     [Col.name]:Col,
     'lazy-component': VueLazyComponent,
     Popup,
-    Comment
+    Comment,
+    Cell, 
+    CellGroup
   }
 }
 </script>
@@ -237,8 +265,8 @@ export default {
   .bottom-action {
     @include flex-between();
     padding: 5px;
-
     .bottom-action-left {
+
     }
     .bottom-action-left,
     .bottom-action-right {
@@ -247,6 +275,39 @@ export default {
   }
   img {
     width: 100%;
+  }
+  .comment-input {
+      position: fixed;
+      display: flex;
+      justify-content: space-around;
+      bottom: 0;
+      width: 100%;
+      border-top: 1px solid rgba(0, 0, 0, 0.2);
+      .commentHeight {
+          height: 60px;
+      }
+      .commentHeight {
+            height: 100px;
+            border: none;
+      }
+
+      input {
+          width: 80%;
+          height: 40px;
+          border: none;
+      }
+      Button {
+          background: none;
+          border: none;
+          @include flex-al-center();
+          font-weight: bold;
+          color:black;
+      }
+  }
+  .comment-list {
+      .title {
+          text-align: left;
+      }
   }
 }
     

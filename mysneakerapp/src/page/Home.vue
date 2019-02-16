@@ -17,11 +17,11 @@
             <div class="time">{{ item.p_date | dateForm }}</div>
           </div>
         </div>
-        <lazy-component>
+        
           <div class="content-img" type="flex" justify="space-between">
             <img v-lazy="imgUrl" :class="item.p_imgList.length == 1 ? 'one':item.p_imgList.length == 2 ? 'two': item.p_imgList.length == 3 ? 'three':'four'" v-for="(imgUrl,ind) of item.p_imgList" :key="ind" :src="imgUrl" @click.stop="preview(item.p_imgList,ind)">
           </div>
-        </lazy-component>
+        
         <div class="content-text">
           <div>{{item.p_text}}</div>
         </div>
@@ -30,10 +30,8 @@
             <Icon size="25px" name="chat-o"></Icon>
             <span>{{item.p_comment}}</span>
           </div>
-          <div class="bottom-action-right">
-            <Icon size="25px" :name="item.likeState.style" @click.stop="like(item)"></Icon>
-            <span>{{item.p_like}}</span>
-          </div>
+          <Like class="bottom-action-right" ></Like>
+          
         </div>
       </div>
     </List>
@@ -42,6 +40,7 @@
 </template>
 
 <script>
+import Like from '../components/Like'
 import moment from "moment";
 import Vue from 'vue';
 import { component as VueLazyComponent } from '@xunlei/vue-lazy-component';
@@ -93,50 +92,10 @@ export default {
             id: JSON.stringify(item)
           }
         })
+      this.$store.commit("tabState", 1);
       this.show = true;
     },
-    like(item) {
-      let posting_like = {
-        uid:this.$store.state.uid,
-        pid:item.pid
-      };
-      if(posting_like.uid == ''){
-        this.$router.push('/Login');
-        this.$store.commit('tabState',1);
-      }else{
-        axios.post("https://www.gooomi.cn/postings_like",posting_like)
-        .then(res=>{
-            if(res.data == 'already_like'){
-              item.likeState = {
-                state: false,
-                style: "like-o"
-              };
-              item.p_like -= 1;
-            }else if(res.data == 'like_success'){
-              item.likeState = {
-                state: true,
-                style: "like"
-              };
-              item.p_like += 1;
-          }
-          
-        })
-      }
-      
-      // if (item.likeState.state == true) {
-      //   item.likeState = {
-      //     state: false,
-      //     style: "like-o"
-      //   };
-      //   item.p_like -= 1;
-      // } else {
-      //   item.likeState = {
-      //     state: true,
-      //     style: "like"
-      //   };
-      //   item.p_like += 1;
-      // }
-    },
+   
     toUpload() {
       this.$router.push("/Upload");
       this.$store.commit("tabState", 1);
@@ -206,7 +165,8 @@ export default {
     [Col.name]:Col,
     'lazy-component': VueLazyComponent,
     Popup,
-    Comment
+    Comment,
+    Like
   }
 };
 </script>
