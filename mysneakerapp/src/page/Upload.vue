@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { NavBar, Uploader, Icon , Button, Field, CellGroup ,Toast } from 'vant';
+import { NavBar, Uploader, Icon , Button, Field, CellGroup ,Toast,Dialog } from 'vant';
 export default {
   name: 'Upload',
   data () {
@@ -76,10 +76,28 @@ export default {
             text:this.text,
             uid:this.$store.state.uid
         }
-        axios.post('https://www.gooomi.cn/upload',this.Postings)
-        .then(res=>{
-            console.log(res)
-        })
+        if(this.upImgList.length == 0){
+            Dialog.alert({
+                message: '请至少添加一张图片哦'
+                }).then(() => {
+                // on close
+                });
+        }else{
+            axios.post('https://www.gooomi.cn/upload',this.Postings)
+            .then((res)=>{
+                console.log(res);
+                Toast.loading({
+                    mask: false,
+                    message: '正在发布...'
+                });
+                if(res.data){
+                    Toast.clear();
+                    this.$router.back(-1);
+                    this.$store.commit('tabState',0);
+                }
+            })
+        }
+        
     }
     
   },
@@ -90,7 +108,8 @@ export default {
     Button,
     Field,
     CellGroup,
-    Toast
+    Toast,
+    Dialog
   }
 }
 </script>

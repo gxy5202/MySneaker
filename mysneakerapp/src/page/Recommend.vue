@@ -1,15 +1,6 @@
 <template>
   <div class="hello">
-    <!-- 顶部导航栏 -->
-    <Nav-bar title="鞋城" fixed>
-     
-    </Nav-bar>
-    <!-- 顶部导航栏 -->
-    <Tabs @click="toShopList(index)">
-      <Tab v-for="(item,index) in 8" :key="index" :title="'标签 ' + index" >
-         <router-view></router-view>
-      </Tab>
-    </Tabs>
+    123
   </div>
 </template>
 
@@ -19,6 +10,7 @@ export default {
   name: 'Shop',
   data () {
     return {
+      msg: 'Welcome to Your Vue.js App',
       active:0,
       list: [],
       loading: false,
@@ -27,9 +19,9 @@ export default {
   },
   methods: {
     
-    toShopList(index){
-      console.log(1)
-      
+    onLoad() {
+      // 异步更新数据
+     
     }
   },
   components:{

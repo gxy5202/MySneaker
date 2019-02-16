@@ -11,7 +11,8 @@ import SignIn from "@/page/SignIn";
 import Upload from "@/page/Upload";
 import Setup from "@/page/Setup";
 import Comment from "@/page/Comment";
-import FollowUser from '@/page/FollowUser'
+import FollowUser from '@/page/FollowUser';
+import Recommend from '@/page/Recommend';
 Vue.use(Router);
 
 export default new Router({
@@ -87,6 +88,12 @@ export default new Router({
       name: "FollowUser",
       meta: { index: 1 },
       component: FollowUser,
+    },
+    {
+      path: "/Recommend",
+      name: "Recommend",
+      meta: { index: 1 },
+      component: Recommend,
     }
   ]
 });

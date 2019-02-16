@@ -46,7 +46,7 @@ export default {
     dateForm(el) {
       //return moment(el).format('YYYY-MM-DD HH:mm:ss');
       return moment(el)
-        .startOf("hour")
+        .startOf("second")
         .fromNow();
     }
   },
