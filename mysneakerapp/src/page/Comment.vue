@@ -9,13 +9,7 @@
     
     <!-- 动态详情 -->
     <div class="dynamic">
-        <div class="user-head" slot="left">
-            <img class="user-img" v-lazy="posting.u_img" :src="posting.u_img">
-            <div class="user-info">
-                <div class="user-name">{{posting.u_name}}</div>
-                <div class="time">{{ posting.p_date | dateForm }}</div>
-            </div>
-            </div>
+            <User-Head class="user-head" :headData="posting"></User-Head>
             
             <div class="content-img" type="flex" justify="space-between">
                 <img v-lazy="imgUrl" :class="posting.p_imgList.length == 1 ? 'one':posting.p_imgList.length == 2 ? 'two': posting.p_imgList.length == 3 ? 'three':'four'" v-for="(imgUrl,ind) of posting.p_imgList" :key="ind" :src="imgUrl" @click.stop="preview(posting.p_imgList,ind)">
@@ -32,10 +26,23 @@
             <Like class="bottom-action-right" :likeData="posting"></Like>
             </div>
         </div>
+        <p class="title">全部评论</p>
         <div class="comment-list">
-            <p class="title">全部评论</p>
-            <div>
-
+            
+            
+              <div class="comment-view" v-for='(item,index) of commentList' :key="index" >
+                <div class="head-img">
+                  <img class="user-img" v-lazy="item.u_img" :src="item.u_img">
+                      <div class="user-info">
+                        <div class="user-name">{{item.u_nick_name}}</div>
+                        <div class="content">
+                          {{item.c_text}}
+                        </div>
+                      </div>
+                </div>
+                <div class="time">{{ item.c_date | dateForm }}</div>
+                
+              
             </div>
         </div> 
 
@@ -49,6 +56,7 @@
 
 <script>
 import Like from '../components/Like';
+import UserHead from '../components/UserHead';
 import moment from "moment";
 import Vue from 'vue';
 import { component as VueLazyComponent } from '@xunlei/vue-lazy-component';
@@ -81,7 +89,8 @@ export default {
       download:"",
       isShow:false,
       posting:JSON.parse(this.$route.params.id),
-      comment_text:""
+      comment_text:"",
+      commentList:[]
     }
   },
   computed:{
@@ -91,7 +100,7 @@ export default {
       // posting(){
       //     return JSON.parse(this.$route.params.id)
       // }
-
+      
   },
   methods: {
     
@@ -134,17 +143,26 @@ export default {
         pid:this.posting.pid,
         text:this.comment_text,
       }
+      //判断用户是否登陆
       if(uid){
         if(this.comment_text == ''){
           alert('请输入内容')
         }else{
+          //获取评论数据
           axios.post('https://www.gooomi.cn/comment',content)
           .then(res=>{
-            console.log(res.data)
-            Toast('评论成功');
+            if(res.data.state == 'success'){
+              console.log(res.data)
+              Toast('评论成功');
+              this.commentList = res.data.list;
+            }else{
+              Toast('评论失败');
+            }
+            
           });
           this.comment_text = '';
-          this.isShow = false
+          this.isShow = false;
+          
         }
       }else{
         this.$router.push('/Login')
@@ -156,13 +174,19 @@ export default {
     dateForm(el) {
       //return moment(el).format('YYYY-MM-DD HH:mm:ss');
       return moment(el)
-        .startOf("hour")
+        .startOf("second")
         .fromNow();
     }
   },
   created() {
-    console.log(this.posting)
-    
+    let pid = {
+      pid:this.posting.pid
+    }
+    axios.post('https://www.gooomi.cn/comment_query',pid)
+    .then(res=>{
+      console.log(res.data);
+      this.commentList = res.data
+    })
   },
   components:{
     NavBar,
@@ -177,7 +201,8 @@ export default {
     Cell, 
     CellGroup,
     Like,
-    Toast
+    Toast,
+    UserHead
   }
 }
 </script>
@@ -201,13 +226,13 @@ export default {
     margin: 10px auto;
     background: rgb(255, 255, 255);
   }
-  .user-head {
+  .head-img {
     @include flex-al-center;
     padding: 5px;
     height: 50px;
     .user-img {
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
     }
     .user-info {
@@ -216,14 +241,19 @@ export default {
       margin-left: 5px;
       .user-name {
         width: 70%;
-        font-weight: bold;
+        font-size: 14px;
+        color:rgba(0, 0, 0, 0.5);
         display: flex;
+      }
+      .content {
+        
       }
       .time {
         font-size: 10px;
       }
     }
   }
+  
   .content-img {
     overflow: hidden;
     display: flex;
@@ -306,6 +336,7 @@ export default {
       position: fixed;
       display: flex;
       justify-content: space-around;
+      background: white;
       bottom: 0;
       width: 100%;
       border-top: 1px solid rgba(0, 0, 0, 0.2);
@@ -330,9 +361,25 @@ export default {
           color:black;
       }
   }
-  .comment-list {
-      .title {
+  .title {
           text-align: left;
+      }
+  .comment-list {
+      margin-bottom:60px;
+      background: white;
+      
+      .comment-view {
+        
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        width: 95%;
+        margin:auto;
+        .time {
+          font-size: 10px;
+          color:rgba(0, 0, 0, 0.5);
+        }
       }
   }
 }

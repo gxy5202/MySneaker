@@ -11,7 +11,7 @@ const store = new Vuex.Store({
         tabActive:0
     },
     mutations:{
-        loginState(state,status,uid){
+        loginState(state,status,aid){
             state.uid = sessionStorage.getItem('uid');
             if(state.uid != ''){
                 state.isLogin = true;

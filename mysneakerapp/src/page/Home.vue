@@ -10,17 +10,11 @@
     <List v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       
       <div class="dynamic" v-for="(item,index) of dataList" :key="index" @click.stop="toComment(item)">
-        <div class="user-head">
-          <img class="user-img" v-lazy="item.u_img" :src="item.u_img">
-          <div class="user-info">
-            <div class="user-name">{{item.u_name}}</div>
-            <div class="time">{{ item.p_date | dateForm }}</div>
-          </div>
+        <User-Head class="user-head" :headData="item"></User-Head>
+
+        <div class="content-img" type="flex" justify="space-between">
+          <img v-lazy="imgUrl" :class="item.p_imgList.length == 1 ? 'one':item.p_imgList.length == 2 ? 'two': item.p_imgList.length == 3 ? 'three':'four'" v-for="(imgUrl,ind) of item.p_imgList" :key="ind" :src="imgUrl" @click.stop="preview(item.p_imgList,ind)">
         </div>
-        
-          <div class="content-img" type="flex" justify="space-between">
-            <img v-lazy="imgUrl" :class="item.p_imgList.length == 1 ? 'one':item.p_imgList.length == 2 ? 'two': item.p_imgList.length == 3 ? 'three':'four'" v-for="(imgUrl,ind) of item.p_imgList" :key="ind" :src="imgUrl" @click.stop="preview(item.p_imgList,ind)">
-          </div>
         
         <div class="content-text">
           <div>{{item.p_text}}</div>
@@ -40,14 +34,10 @@
 
 <script>
 import Like from '../components/Like';
-import moment from "moment";
-import Vue from 'vue';
-import { component as VueLazyComponent } from '@xunlei/vue-lazy-component';
-import Comment from './Comment';
-moment.locale("zh-cn");
+import UserHead from '../components/UserHead';
+
 import {
-  Tabbar,
-  TabbarItem,
+  
   NavBar,
   Uploader,
   Icon,
@@ -58,7 +48,7 @@ import {
   Col,
   Popup
 } from "vant";
-Vue.use(Lazyload);
+
 export default {
   name: "Home",
   data() {
@@ -107,14 +97,7 @@ export default {
       });
     }
   },
-  filters: {
-    dateForm(el) {
-      //return moment(el).format('YYYY-MM-DD HH:mm:ss');
-      return moment(el)
-        .startOf("hour")
-        .fromNow();
-    }
-  },
+  
   created() {
     let uid_query = {
       uid:this.$store.state.uid
@@ -151,19 +134,19 @@ export default {
     
   },
   components: {
-    Tabbar,
-    TabbarItem,
+    
     NavBar,
     Uploader,
     Icon,
     List,
-    [Lazyload.name]:Lazyload,
+    
     Row,
     [Col.name]:Col,
-    'lazy-component': VueLazyComponent,
+   
     Popup,
     Comment,
-    Like
+    Like,
+    UserHead
   }
 };
 </script>
@@ -187,29 +170,7 @@ export default {
     margin: 10px auto;
     background: rgb(255, 255, 255);
   }
-  .user-head {
-    @include flex-al-center;
-    padding: 5px;
-    height: 50px;
-    .user-img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-    }
-    .user-info {
-      display: flex;
-      flex-wrap: wrap;
-      margin-left: 5px;
-      .user-name {
-        width: 70%;
-        font-weight: bold;
-        display: flex;
-      }
-      .time {
-        font-size: 10px;
-      }
-    }
-  }
+  
   .content-img {
     overflow: hidden;
     display: flex;
