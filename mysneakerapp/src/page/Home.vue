@@ -30,8 +30,7 @@
             <Icon size="25px" name="chat-o"></Icon>
             <span>{{item.p_comment}}</span>
           </div>
-          <Like class="bottom-action-right" ></Like>
-          
+          <Like class="bottom-action-right" :likeData="item"></Like>
         </div>
       </div>
     </List>
@@ -40,7 +39,7 @@
 </template>
 
 <script>
-import Like from '../components/Like'
+import Like from '../components/Like';
 import moment from "moment";
 import Vue from 'vue';
 import { component as VueLazyComponent } from '@xunlei/vue-lazy-component';
@@ -67,10 +66,8 @@ export default {
       list: [],
       loading: false,
       finished: false,
-      likeStyle: ["like-o", "like"],
       dataList: [],
       imgList: [],
-      already_like:'',
       show:false
     };
   },

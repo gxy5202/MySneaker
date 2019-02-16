@@ -29,10 +29,7 @@
                 <Icon size="25px" name="chat-o"></Icon>
                 <span>{{posting.p_comment}}</span>
             </div>
-            <div class="bottom-action-right">
-                <Icon size="25px" :name="posting.likeState.style" @click.stop="like(posting)"></Icon>
-                <span>{{posting.p_like}}</span>
-            </div>
+            <Like class="bottom-action-right" :likeData="posting"></Like>
             </div>
         </div>
         <div class="comment-list">
@@ -44,17 +41,18 @@
 
         <!-- 评论框 -->
         <div class="comment-input">
-            <input type="text" placeholder="添加评论..." :class="{'commentHeight':isShow}" @focus="moreHeight" @blur="lowHeight"/>
-            <Button>发送</Button>
+            <input type="text" placeholder="添加评论..." :class="{'commentHeight':isShow}" v-model="comment_text" @focus="moreHeight" @blur="lowHeight"/>
+            <Button @click="commentConfirm">发送</Button>
         </div>
     </div>
 </template>
 
 <script>
+import Like from '../components/Like';
 import moment from "moment";
 import Vue from 'vue';
 import { component as VueLazyComponent } from '@xunlei/vue-lazy-component';
-import Comment from './Comment';
+
 moment.locale("zh-cn");
 import {
   NavBar,
@@ -68,7 +66,8 @@ import {
   Col,
   Popup,
   Cell, 
-  CellGroup
+  CellGroup,
+  Toast
 } from "vant";
 Vue.use(Lazyload);
 export default {
@@ -80,16 +79,18 @@ export default {
       upImgList:[],
       Postings:{},
       download:"",
-      isShow:false
+      isShow:false,
+      posting:JSON.parse(this.$route.params.id),
+      comment_text:""
     }
   },
   computed:{
       loginState(){
           return this.$store.state.isLogin
       },
-      posting(){
-          return JSON.parse(this.$route.params.id)
-      }
+      // posting(){
+      //     return JSON.parse(this.$route.params.id)
+      // }
 
   },
   methods: {
@@ -125,6 +126,30 @@ export default {
     },
     lowHeight(){
       this.isShow = false;
+    },
+    commentConfirm(){
+      let uid = this.$store.state.uid;
+      let content = {
+        uid:uid,
+        pid:this.posting.pid,
+        text:this.comment_text,
+      }
+      if(uid){
+        if(this.comment_text == ''){
+          alert('请输入内容')
+        }else{
+          axios.post('https://www.gooomi.cn/comment',content)
+          .then(res=>{
+            console.log(res.data)
+            Toast('评论成功');
+          });
+          this.comment_text = '';
+          this.isShow = false
+        }
+      }else{
+        this.$router.push('/Login')
+      }
+      
     }
   },
   filters: {
@@ -149,9 +174,10 @@ export default {
     [Col.name]:Col,
     'lazy-component': VueLazyComponent,
     Popup,
-    Comment,
     Cell, 
-    CellGroup
+    CellGroup,
+    Like,
+    Toast
   }
 }
 </script>

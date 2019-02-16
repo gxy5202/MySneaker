@@ -1,7 +1,7 @@
 <template>
-  <div class="wrapper">
-    <Icon size="25px" name="like" ></Icon>
-    <span>123</span>
+  <div class="like">
+    <Icon size="25px" :name="likeData.likeState.style" @click.stop="like(likeData)"></Icon>
+    <span>{{likeData.p_like}}</span>
             <!-- <span>{{item.p_like}}</span> -->
   </div>
 </template>
@@ -16,6 +16,7 @@ import {
 
 export default {
   name: "Like",
+  props:['likeData'],
   data() {
     return {
       likeStyle: ["like-o", "like"],
@@ -36,10 +37,11 @@ export default {
       // 异步更新数据
     },
     
-    like(item) {
+    like(likeData) {
+    
       let posting_like = {
         uid:this.$store.state.uid,
-        pid:item.pid
+        pid:likeData.pid
       };
       if(posting_like.uid == ''){
         this.$router.push('/Login');
@@ -48,19 +50,18 @@ export default {
         axios.post("https://www.gooomi.cn/postings_like",posting_like)
         .then(res=>{
             if(res.data == 'already_like'){
-              item.likeState = {
+              likeData.likeState = {
                 state: false,
                 style: "like-o"
               };
-              item.p_like -= 1;
+              likeData.p_like -= 1;
             }else if(res.data == 'like_success'){
-              item.likeState = {
+              likeData.likeState = {
                 state: true,
                 style: "like"
               };
-              item.p_like += 1;
-          }
-          
+              likeData.p_like += 1;
+          } 
         })
       }
       
@@ -69,8 +70,6 @@ export default {
   },
   created() {
     
-
-   
   },
   updated() {
     
