@@ -97,8 +97,6 @@ export default {
     @include flex-al-center;
     padding: 5px;
     height: 50px;
-    
-    background: red;
     .user-img {
       width: 40px;
       height: 40px;

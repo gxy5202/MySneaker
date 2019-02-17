@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <div :style="bg" @click="followUser()" class="img"></div>
-    <span class="name">{{prop.name}}</span>
+    <span class="name">{{prop.u_nick_name}}</span>
     <Button class="btn" v-if="prop.fol==0" type="primary">关注</Button>
     <Button class="btn" v-if="prop.fol==1" type="default">已关注</Button>
   </div>
@@ -16,7 +16,7 @@ export default {
   },
   computed: {
     bg() {
-      return `background-image: url(${this.prop.img})`;
+      return `background-image: url(${this.prop.u_img})`;
     }
   },
   components: {
@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     followUser() {
-      this.$router.push({ path: '/FollowUser', query: {uid:1}});
+      this.$router.push({ path: '/FollowUser', query: {uid:this.prop.uid}});
     }
   }
 };
