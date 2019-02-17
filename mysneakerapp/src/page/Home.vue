@@ -7,9 +7,9 @@
     <!-- 顶部导航栏 -->
 
     <!-- 显示列表 -->
-    <List v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+    <List class="list" v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       
-      <div class="dynamic" v-for="(item,index) of dataList" :key="index" @click.stop="toComment(item)">
+      <div class="dynamic" v-for="(item,index) of loadList" :key="index" @click.stop="toComment(item)">
         <User-Head class="user-head" :headData="item"></User-Head>
 
         <div class="content-img" type="flex" justify="space-between">
@@ -58,7 +58,8 @@ export default {
       finished: false,
       dataList: [],
       imgList: [],
-      show:false
+      show:false,
+      loadList:[]
     };
   },
   computed: {
@@ -70,6 +71,51 @@ export default {
   methods: {
     onLoad() {
       // 异步更新数据
+      this.loading = true;
+      console.log(123);
+      let uid_query = {
+        uid:this.$store.state.uid
+      };
+      
+      axios.post("https://www.gooomi.cn/postings",uid_query)
+      .then(res => {
+        console.log(res.data);
+        let postings = res.data.list;
+        let icon = res.data.icon;
+        postings.map((value,index,arr) => {
+          value.p_imgList = value.p_imgList.split(",");
+          if(icon.find(v=>v==value.pid)){
+            value.likeState = {
+                  state: true,
+                  style: "like"
+              }
+          }else{
+                value.likeState = {
+                  state: false,
+                  style: "like-o"
+              } 
+            }
+        });
+        
+        if(this.loadList.length + 5 > postings.length){
+          this.loadList = postings.slice(0,postings.length);
+          
+          if(this.loadList.length == postings.length){
+            this.loading = false;
+            this.finished = true;
+          }else {
+
+          }
+        }else{
+          this.loadList = postings.slice(0,this.loadList.length + 5)
+          this.loading = false;
+          
+        }
+        
+        console.log(postings)
+        //this.dataList = postings;
+        
+      });
     },
     toComment(item){
       //this.$router.push('/Comment');
@@ -99,36 +145,34 @@ export default {
   },
   
   created() {
-    let uid_query = {
-      uid:this.$store.state.uid
-    };
+    // let uid_query = {
+    //   uid:this.$store.state.uid
+    // };
     
-    axios.post("https://www.gooomi.cn/postings",uid_query)
-    .then(res => {
-      console.log(res.data);
-      let postings = res.data.list;
-      let icon = res.data.icon;
-      // var iconArr = postings.filter(val=>{
-      //   return icon.includes(val.pid) 
-      // })
-      postings.map((value,index,arr) => {
-        value.p_imgList = value.p_imgList.split(",");
-        if(icon.find(v=>v==value.pid)){
-          value.likeState = {
-                state: true,
-                style: "like"
-            }
-        }else{
-              value.likeState = {
-                state: false,
-                style: "like-o"
-            } 
-          }
-      });
-      console.log(postings)
-      this.dataList = postings;
+    // axios.post("https://www.gooomi.cn/postings",uid_query)
+    // .then(res => {
+    //   console.log(res.data);
+      
+    //   let postings = res.data.list.slice(0,5);
+    //   let icon = res.data.icon;
+    //   postings.map((value,index,arr) => {
+    //     value.p_imgList = value.p_imgList.split(",");
+    //     if(icon.find(v=>v==value.pid)){
+    //       value.likeState = {
+    //             state: true,
+    //             style: "like"
+    //         }
+    //     }else{
+    //           value.likeState = {
+    //             state: false,
+    //             style: "like-o"
+    //         } 
+    //       }
+    //   });
+    //   console.log(postings)
+    //   this.dataList = postings;
 
-    });
+    // });
   },
   updated() {
     
@@ -165,10 +209,17 @@ export default {
 
 .wrapper {
   padding-top: 35px;
-  background: rgba(0, 0, 0, 0.01);
+  
+  background: rgba(0, 0, 0, 0.03);
+  .list {
+    margin-bottom: 40px;
+  }
   .dynamic {
     margin: 10px auto;
     background: rgb(255, 255, 255);
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
   
   .content-img {
