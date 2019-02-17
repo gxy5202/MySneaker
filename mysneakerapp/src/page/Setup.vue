@@ -18,7 +18,7 @@
     <popup class="upimg upbox" position="right" v-model="state.img.show">
       <Icon @click="userImg()" class="icon1" size="30px" name="arrow-left"></Icon>
       <div>
-        <uploader>
+        <uploader :after-read="onRead">
           <icon size="60px" name="photograph"/>
         </uploader>
         <Button class="btn1" type="primary">确认修改</Button>
@@ -28,7 +28,7 @@
     <div class="text">
       <span class="text1">修改昵称</span>
       <div @click="usernickname()">
-        <span class="text2">{{user.u_nick_name}}</span>
+        <span class="text2">{{user.u_nick_name==null?'未设置':user.u_nick_name}}</span>
         <icon class="icon" name="arrow"></icon>
       </div>
     </div>
@@ -37,43 +37,42 @@
       <Icon @click="usernickname()" class="icon1" size="30px" name="arrow-left"></Icon>
       <div>
         <Cell-group>
-          <field placeholder="请输入新昵称"/>
+          <field id="nickname" :value="user.u_nick_name" placeholder="请输入新昵称"/>
         </Cell-group>
-        <Button class="btn1" type="primary">确认修改</Button>
+        <Button @click="nicknameset()" class="btn1" type="primary">确认修改</Button>
       </div>
     </popup>
     <!-- 性别 -->
     <div class="text">
       <span class="text1">性别</span>
       <div @click="usergender()">
-        <span class="text2">{{user.u_gender}}</span>
+        <span class="text2">{{user.u_gender==null?'未设置':user.u_gender}}</span>
         <icon class="icon" name="arrow"></icon>
       </div>
     </div>
     <!-- 修改性别 -->
-    <actionsheet v-model="state.gender.show" title="请选择性别">
-      <radio-group v-model="message.gender">
-        <radio name="男">男</radio>
-        <radio name="女">女</radio>
+    <actionsheet v-model="state.gender.show" :overlay="false" title="请选择性别">
+      <radio-group v-model="user.u_gender">
+        <radio @click="usergender()" class="gender" name="boy">boy</radio>
+        <radio @click="usergender()" class="gender" name="girl">girl</radio>
       </radio-group>
-      <Button type="default">确认修改</Button>
     </actionsheet>
     <!-- 生日 -->
     <div class="text">
       <span class="text1">生日</span>
       <div @click="userbirthday()">
-        <span class="text2">{{user.u_birth}}</span>
+        <span class="text2">{{birth==null?'未设置':birth}}</span>
         <icon class="icon" name="arrow"></icon>
       </div>
     </div>
     <!-- 修改生日 -->
     <actionsheet v-model="state.birthday.show">
       <datetime-picker
-        v-model="state.birthday.currentDate"
+        v-model="user.u_birth"
         type="date"
         :show-toolbar="true"
-        @confirm="birthday()"
-        @cancel="userbirthday1()"
+        @confirm="userbirthday()"
+        @cancel="userbirthday()"
         :min-date="state.birthday.minDate"
         :max-date="state.birthday.maxDate"
       />
@@ -89,15 +88,15 @@
     <popup class="upimg upbox" position="right" v-model="state.password.show">
       <Icon @click="userpassword()" class="icon1" size="30px" name="arrow-left"></Icon>
       <cell-group>
-        <field type="password" label="原密码" placeholder="请输入原密码"/>
-        <field type="password" label="新密码" placeholder="请输入新密码"/>
-        <field type="password" label="新密码" placeholder="请确认新密码"/>
-        <Button class="btn1" type="primary">确认修改</Button>
+        <field id="password" type="password" label="新密码" placeholder="请输入新密码"/>
+        <field id="password1" type="password" label="新密码" placeholder="请确认新密码"/>
+        <span v-if="state.password.show1" class="pass">两次密码不一致</span>
+        <Button @click="password()" class="btn1" type="primary">确认修改</Button>
       </cell-group>
     </popup>
     <!-- 信息修改 -->
     <!-- 退出登录 -->
-    <Button class="btn" type="default">确认修改</Button>
+    <Button @click="upload()" class="btn" type="default">确认修改</Button>
   </div>
 </template>
 <script>
@@ -117,20 +116,12 @@ import {
 } from "vant";
 export default {
   name: "Setup",
-  created(){
-    this.user=this.$route.query
-    console.log(this.user)
+  created() {
+    this.user = this.$route.query;
   },
   data() {
     return {
-      user:{},
-      user_state:{
-        img:false,
-        nickName:false,
-        gender:false,
-        birthday:false,
-        password:false,
-      },
+      user: {},
       state: {
         img: {
           show: false
@@ -148,7 +139,8 @@ export default {
           maxDate: new Date()
         },
         password: {
-          show: false
+          show: false,
+          show1: false
         }
       },
       message: {
@@ -177,17 +169,37 @@ export default {
   },
   computed: {
     bg() {
-      let img = this.user.u_img
+      let img = this.user.u_img;
       return `background-image: url(${img})`;
     },
+    birth() {
+      if (this.user.u_birth == null) {
+        return "";
+      } else {
+        // let birth = new Date(this.user.u_birth);
+        // return this.user.u_birth.toLocaleDateString();
+        console.log();
+        return new Date(this.user.u_birth).toLocaleDateString();
+      }
+    }
   },
   methods: {
     // 修改头像
     userImg() {
       this.state.img.show = !this.state.img.show;
     },
+    // 查看图像
+    onRead(file){
+      console.log(file)
+    },
     // 修改昵称
     usernickname() {
+      this.state.nickname.show = !this.state.nickname.show;
+    },
+    // 确认修改昵称
+    nicknameset() {
+      let name = document.getElementById("nickname").value;
+      this.user.u_nick_name = name;
       this.state.nickname.show = !this.state.nickname.show;
     },
     // 修改性别
@@ -198,21 +210,32 @@ export default {
     userbirthday() {
       this.state.birthday.show = !this.state.birthday.show;
     },
-    userbirthday1() {
-      this.state.birthday.show = !this.state.birthday.show;
-    },
-    birthday() {
-      let x = this.state.birthday.currentDate.toLocaleDateString();
-      this.message.birthday = x;
-      this.state.birthday.show = !this.state.birthday.show;
-    },
     // 修改密码
     userpassword() {
       this.state.password.show = !this.state.password.show;
     },
-    // 测试
-    fanhui(){
-      this.$router.go(-1)
+    password() {
+      let p = document.getElementById("password").value,
+        p1 = document.getElementById("password1").value;
+      if (p == p1 && p != "") {
+        this.user.u_password = p;
+        console.log(this.user);
+        this.state.password.show = !this.state.password.show;
+        this.state.password.show1 = false;
+      } else {
+        this.state.password.show1 = true;
+      }
+    },
+    // 返回
+    fanhui() {
+      this.$router.go(-1);
+    },
+    // 确认修改
+    upload() {
+      console.log(this.user);
+      axios
+        .post("https://www.gooomi.cn/updata_user", this.user)
+        .then(res => {});
     }
   }
 };
@@ -235,11 +258,11 @@ export default {
     margin-right: 20px;
   }
   // 返回上一页
-  .fanhui{
+  .fanhui {
     position: fixed;
     z-index: 99;
-    top:10px;
-    left:20px;
+    top: 10px;
+    left: 20px;
   }
   //   头像
   .img {
@@ -306,9 +329,13 @@ export default {
     justify-content: center;
   }
 }
-// 昵称修改
-// .usernickname {
-//   > div {
-//     }
-//   }
+// 性别修改
+.gender {
+  margin: 10px auto;
+}
+.pass {
+  color: red;
+  font-size: 14px;
+  margin: 10px auto;
+}
 </style>
