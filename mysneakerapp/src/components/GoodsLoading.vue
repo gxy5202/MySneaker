@@ -3,7 +3,7 @@
 
             <!-- 显示列表 -->
             <List class="list" :offset='30' v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-                <div class="goods-list" v-for="(item,index) of loadList" :key="index" @click.stop="toItem">
+                <div class="goods-list" v-for="(item,index) of loadList" :key="index" @click.stop="toItem(item)">
                       <div class="goods-item" >
                         <img v-lazy='item.g_cover' :src="item.g_cover" alt="" >
                         <p>{{item.g_name}}</p>
@@ -192,8 +192,13 @@ export default {
       this.tabIndex =index;
       
     },
-    toItem(){
-        this.$router.push('/goodItem')
+    toItem(item){
+        this.$router.push({
+          path: 'goodItem',
+          query: {
+            item: item
+          }
+        })
     }
   },
   created() {

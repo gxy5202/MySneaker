@@ -4,10 +4,10 @@
       <div class="top">
         <div class="fans">
           <span class="fans-num">{{prop.u_fans}}</span>
-          <span class="fans-text" @click="la()">粉丝</span>
+          <span class="fans-text" >粉丝</span>
         </div>
         <div :style="bg" class="img"></div>
-        <div class="follow">
+        <div class="follow" @click="isFollow(prop.uid)">
           <img v-if="follow" src='../../../static/img/guanzhu1.png'>
           <img v-if="!follow" src='../../../static/img/guanzhu.png'>
           <span v-if="follow">已关注</span>
@@ -37,8 +37,19 @@ export default {
   methods: {
     la() {
       console.log(this.bg);
+    },
+    
+  },
+  created() {
+    let follow = {
+      fid:this.$store.state.uid,
+      tid:this.prop.uid
     }
-  }
+    axios.post("https://www.gooomi.cn/follow_query", follow).then(res => {
+      
+      console.log(res.data);
+    });
+  },
 };
 </script>
 <style scoped lang="scss">
