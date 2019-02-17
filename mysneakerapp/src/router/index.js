@@ -33,7 +33,10 @@ export default new Router({
       path: "/Shop",
       name: "Shop",
       meta: { index: 0 },
-      component: Shop
+      component: Shop,
+      children:[
+        
+      ]
     },
     {
       path: "/Map",
@@ -89,11 +92,6 @@ export default new Router({
       meta: { index: 1 },
       component: FollowUser,
     },
-    {
-      path: "/Recommend",
-      name: "Recommend",
-      meta: { index: 1 },
-      component: Recommend,
-    }
+    
   ]
 });

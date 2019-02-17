@@ -5,8 +5,8 @@
      
     </Nav-bar>
     <!-- 顶部导航栏 -->
-    <Tabs @click="toShopList(index)">
-      <Tab v-for="(item,index) in 8" :key="index" :title="'标签 ' + index" >
+    <Tabs @click="toShopList">
+      <Tab v-for="(item,index) in tabs" :key="index" :title="item.title" >
          <router-view></router-view>
       </Tab>
     </Tabs>
@@ -25,11 +25,39 @@ export default {
       finished: false
     }
   },
+  computed: {
+    tabs(){
+      return [
+        {
+          title:'推荐',
+          index:0
+        },
+        {
+          title:'推荐',
+          index:1
+        },
+        {
+          title:'推荐',
+          index:2
+        },
+        {
+          title:'推荐',
+          index:3
+        },
+        {
+          title:'推荐',
+          index:4
+        },
+      ]
+    }
+  },
   methods: {
     
-    toShopList(index){
-      console.log(1)
-      
+    toShopList(index,title){
+      console.log(index)
+      if(index == 1){
+        this.$router.push('/Recommend')
+      }
     }
   },
   components:{
