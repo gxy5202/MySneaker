@@ -3,7 +3,7 @@
 
             <!-- 显示列表 -->
             <List class="list" :offset='30' v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-                <div class="goods-list" v-for="(item,index) of loadList" :key="index">
+                <div class="goods-list" v-for="(item,index) of loadList" :key="index" @click.stop="toItem">
                       <div class="goods-item" >
                         <img v-lazy='item.g_cover' :src="item.g_cover" alt="" >
                         <p>{{item.g_name}}</p>
@@ -60,7 +60,9 @@ export default {
       console.log(this.loading);
       axios.get("https://www.gooomi.cn/sneaker_goods")
       .then(res=>{
+        
         let goods = res.data;
+        console.log(goods)
         if(this.tabIndex == 0){
           console.log(this.tabIndex)
           goods.map((value,index,arr) => {
@@ -189,6 +191,9 @@ export default {
     toShopList(index,title){
       this.tabIndex =index;
       
+    },
+    toItem(){
+        this.$router.push('/goodItem')
     }
   },
   created() {

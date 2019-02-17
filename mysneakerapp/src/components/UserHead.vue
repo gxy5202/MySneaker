@@ -1,5 +1,5 @@
 <template>
-  <div class="head" >
+  <div class="head" @click.stop="toUser(headData.uid)">
     <img class="user-img" v-lazy="headData.u_img" :src="headData.u_img">
           <div class="user-info">
             <div class="user-name">{{headData.u_nick_name}}</div>
@@ -38,7 +38,14 @@ export default {
     onLoad() {
       // 异步更新数据
     },
-    
+    toUser(item){
+      this.$router.push({
+          path: 'FollowUser',
+          query: {
+            uid: item
+          }
+        })
+    }
     
     
   },
