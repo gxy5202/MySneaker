@@ -1,8 +1,8 @@
 <template>
-  <div class="box">
+  <div class="follow-box">
     <nav-bar left-text="返回" left-arrow @click-left="onClickLeft"/>
     <top :prop="user.message"></top>
-    <postings :prop='user.postings'></postings>
+    <postings v-for="i in user.postings" :key="i.id" :prop="i"></postings>
   </div>
 </template>
 <script>
@@ -17,7 +17,7 @@ export default {
       user: {
         message: {},
         postings: {}
-      }
+      },
     };
   },
   components: {
@@ -32,7 +32,8 @@ export default {
     }
   },
   created: function() {
-    let uid = { uid: 1 };
+    let uId=this.prop
+    let uid = { uid:uId}
     axios.post("https://www.gooomi.cn/user_info", uid).then(res => {
       this.user.message = res.data.user[0];
       this.user.postings = res.data.postings;
@@ -42,9 +43,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.box{
-  height: 100%;
-  background-color: rgb(129, 121, 121);
+.follow-box {
+  padding-bottom: 40px;
+  background-color: rgb(248, 248, 248);
 }
 </style>
 
