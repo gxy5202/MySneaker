@@ -6,7 +6,7 @@
     <good @buy="buy1()" @shoucang="shoucang1()"></good>
     <!-- 其他功能列表 -->
     <Item></Item>
-    <Button @click="logout()" class="AllBtn" type="primary">确认修改</Button>
+    <Button @click="logout()" class="AllBtn" type="primary">退出登录</Button>
     <!-- 二级内容页 -->
     <follow :prop="follow" @fol="fol()"></follow>
     <fans :prop="fans" @fan="fan()"></fans>

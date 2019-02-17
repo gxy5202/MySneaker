@@ -5,7 +5,7 @@
       <p class="time">加入MySneaker {{createDate}} 天</p>
       <div class="message">
         <div @click="setup" class="user-img" :style="bg"></div>
-        <p class="name">天价腰花</p>
+        <p class="name">{{prop.u_nick_name}}</p>
         <!-- <p class="jianjie">这个人很懒，什么也没留下</p> -->
       </div>
       <ul class="guanzhu">

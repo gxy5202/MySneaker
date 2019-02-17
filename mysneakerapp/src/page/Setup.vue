@@ -234,8 +234,9 @@ export default {
     // 确认修改
     upload() {
       console.log(this.user);
-      // axios.post("https://www.gooomi.cn/updata_user", this.user).then(() => {});
-      this.success = !this.success;
+      axios.post("https://www.gooomi.cn/updata_user", this.user).then(() => {
+        // this.success = !this.success;
+      });
     }
   }
 };
