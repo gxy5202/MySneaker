@@ -50,18 +50,18 @@ export default {
             this.follow = true;
             Toast.success('关注成功')
           }else{
-            this.follow = false;
+            //this.follow = false;
             Toast.fail('关注失败，请稍后再试')
           }
         });
       }else{
         axios.post("https://www.gooomi.cn/follow_delete", followId).then(res => {
           if(res.data.status == 'success'){
-            this.follow = true;
-            Toast.success('关注成功')
-          }else{
             this.follow = false;
-            Toast.fail('关注失败，请稍后再试')
+            Toast.success('已取消关注该用户')
+          }else{
+            //this.follow = false;
+            Toast.fail('取消关注失败，请稍后再试')
           }
         });
       }
