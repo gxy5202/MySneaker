@@ -7,11 +7,11 @@
           <span class="fans-text" >粉丝</span>
         </div>
         <div :style="bg" class="img"></div>
-        <div class="follow" @click="isFollow(prop.uid)">
-          <img v-if="follow" src='../../../static/img/guanzhu1.png'>
-          <img v-if="!follow" src='../../../static/img/guanzhu.png'>
-          <span v-if="follow">已关注</span>
-          <span v-if="!follow">未关注</span>
+        <div class="follow" @click.stop="isFollow(prop.uid)">
+          <img v-if="follow == true" src='../../../static/img/guanzhu1.png'>
+          <img v-if="follow == false" src='../../../static/img/guanzhu.png'>
+          <span v-if="follow == true">已关注</span>
+          <span v-if="follow == false">未关注</span>
         </div>
     </div>
     <div class="bottom">
@@ -21,12 +21,13 @@
   </div>
 </template> 
 <script>
+import {Toast} from 'vant';
 export default {
   name: "top",
   props: ["prop"],
   data() {
     return {
-      follow: true
+      follow: false
     };
   },
   computed: {
@@ -38,18 +39,57 @@ export default {
     la() {
       console.log(this.bg);
     },
-    
+    isFollow(item){
+      let followId = {
+          fid:this.$store.state.uid,
+          tid:this.$store.state.tid
+        }
+      if(this.follow == false) {
+        axios.post("https://www.gooomi.cn/follow_insert", followId).then(res => {
+          if(res.data.status == 'success'){
+            this.follow = true;
+            Toast.success('关注成功')
+          }else{
+            this.follow = false;
+            Toast.fail('关注失败，请稍后再试')
+          }
+        });
+      }else{
+        axios.post("https://www.gooomi.cn/follow_delete", followId).then(res => {
+          if(res.data.status == 'success'){
+            this.follow = true;
+            Toast.success('关注成功')
+          }else{
+            this.follow = false;
+            Toast.fail('关注失败，请稍后再试')
+          }
+        });
+      }
+    }
   },
   created() {
-    let follow = {
-      fid:this.$store.state.uid,
-      tid:this.prop.uid
-    }
-    axios.post("https://www.gooomi.cn/follow_query", follow).then(res => {
-      
-      console.log(res.data);
-    });
+    
+    
+      console.log(this.prop.uid)
+      let followId = {
+        fid:this.$store.state.uid,
+        tid:this.$store.state.tid
+      }
+      console.log(followId)
+      axios.post("https://www.gooomi.cn/follow_query", followId).then(res => {
+        console.log(res.data)
+        if(res.data.status == '未关注'){
+          this.follow = false
+        }else{
+          this.follow = true
+        }
+      });
+    
+    
   },
+  components:{
+    Toast
+  }
 };
 </script>
 <style scoped lang="scss">

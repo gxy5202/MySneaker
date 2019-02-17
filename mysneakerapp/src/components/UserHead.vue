@@ -40,12 +40,22 @@ export default {
     },
     toUser(item){
       console.log(item)
-      this.$router.push({
-          path: 'FollowUser',
+      if(item == this.$store.state.uid){
+        this.$router.push('/My');
+        this.$store.commit('tabState',0);
+        this.$store.commit('tabActive',3);
+      }else{
+
+        this.$router.push({
+          name: 'FollowUser',
           query: {
             uid: item
           }
         })
+        this.$store.commit('tabState',1);
+        this.$store.commit('followUser',item);
+      }
+      
     }
     
     

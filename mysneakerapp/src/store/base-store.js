@@ -8,7 +8,8 @@ const store = new Vuex.Store({
         isLogin:false,
         uid:"",
         tabShow:true,
-        tabActive:0
+        tabActive:0,
+        tid:''
     },
     mutations:{
         loginState(state,status,aid){
@@ -30,8 +31,10 @@ const store = new Vuex.Store({
         },
         tabActive(state,index){
             state.tabActive = index
+        },
+        followUser(state,item){
+            state.tid = item
         }
-       
     },
     
 });

@@ -29,14 +29,18 @@ export default {
   methods: {
     onClickLeft() {
       this.$router.go(-1);
+      this.$store.commit('tabState',0);
     }
   },
   created: function() {
     let uid=this.$route.query
     axios.post("https://www.gooomi.cn/user_info", uid).then(res => {
-      this.user.message = res.data.user[0];
-      this.user.postings = res.data.postings;
-      console.log(this.user.postings);
+      this.user = {
+        message:res.data.user[0],
+        postings:res.data.postings
+      }
+      
+      console.log(this.user);
     });
   }
 };

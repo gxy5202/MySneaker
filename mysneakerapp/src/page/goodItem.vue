@@ -81,8 +81,8 @@ export default {
   },
   created() {
     this.$store.state.tabShow = false;
-    this.good = this.$router.query;
-    console.log(this.$router.query);
+    this.good = this.$route.query;
+    console.log(this.$route.query);
   }
 };
 </script>
