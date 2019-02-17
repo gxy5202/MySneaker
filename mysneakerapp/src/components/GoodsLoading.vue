@@ -2,7 +2,7 @@
   <div class="goodsList">
 
             <!-- 显示列表 -->
-            <List class="list" v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+            <List class="list" :offset='30' v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
                 <div class="goods-list" v-for="(item,index) of loadList" :key="index">
                       <div class="goods-item" >
                         <img v-lazy='item.g_cover' :src="item.g_cover" alt="" >
@@ -19,7 +19,7 @@
 import {   Icon ,List  ,Lazyload} from 'vant';
 export default {
   name: 'GoodsLoading',
-  props:['tabIndex','goods'],
+  props:['tabIndex'],
   data () {
     return {
       active:0,
@@ -55,18 +55,21 @@ export default {
 
     },
     onLoad(){
-      console.log(this.tabIndex)
+      
       this.loading = true;
+      console.log(this.loading);
       axios.get("https://www.gooomi.cn/sneaker_goods")
       .then(res=>{
         let goods = res.data;
         if(this.tabIndex == 0){
+          console.log(this.tabIndex)
           goods.map((value,index,arr) => {
             value.g_size = value.g_size.split(" ");
-            if(value.g_type == '推荐'){
+            if(value.g_type == '球鞋'){
                this.dataList.push(value);
             }
           });
+          console.log(this.dataList)
           //this.$options.methods.loadingGet();
           //this.loadingGet(this.loadList,goods,6);
           if(this.loadList.length + 6 > this.dataList.length){
@@ -79,7 +82,7 @@ export default {
 
               }
             }else{
-                this.loadList = this.dataList.slice(0,this.loadList .length + 6)
+                this.loadList = this.dataList.slice(0,this.loadList.length + 6)
                 this.loading = false;
                 
             }
@@ -103,7 +106,7 @@ export default {
 
               }
             }else{
-                this.loadList = this.dataList.slice(0,this.loadList .length + 6)
+                this.loadList = this.dataList.slice(0,this.loadList.length + 6)
                 this.loading = false;
                 
             }
@@ -126,17 +129,17 @@ export default {
 
               }
             }else{
-                this.loadList = this.dataList.slice(0,this.loadList .length + 6)
+                this.loadList = this.dataList.slice(0,this.loadList.length + 6)
                 this.loading = false;
                 
             }
         }else if(this.tabIndex == 3){
             goods.map((value,index,arr) => {
-            value.g_size = value.g_size.split(" ");
-            if(value.g_type == '女子'){
-               this.dataList.push(value);
-            }
-          });
+                value.g_size = value.g_size.split(" ");
+                if(value.g_type == '女子'){
+                    this.dataList.push(value);
+                }
+            });
           //this.$options.methods.loadingGet();
           //this.loadingGet(this.loadList,goods,6);
           if(this.loadList.length + 6 > this.dataList.length){
@@ -149,7 +152,7 @@ export default {
 
               }
             }else{
-                this.loadList = this.dataList.slice(0,this.loadList .length + 6)
+                this.loadList = this.dataList.slice(0,this.loadList.length + 6)
                 this.loading = false;
                 
             }
@@ -172,7 +175,7 @@ export default {
 
               }
             }else{
-                this.loadList = this.dataList.slice(0,this.loadList .length + 6)
+                this.loadList = this.dataList.slice(0,this.loadList.length + 6)
                 this.loading = false;
                 
             }
@@ -187,6 +190,9 @@ export default {
       this.tabIndex =index;
       
     }
+  },
+  created() {
+      
   },
   components:{
 

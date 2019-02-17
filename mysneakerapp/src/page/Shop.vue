@@ -14,12 +14,15 @@
             </Swipe>
 
             <!-- 显示列表 -->
-            <Goods-Loading :tabIndex="tabIndex"></Goods-Loading>
+            <!-- <Goods-Loading v-if="index==0" :tabIndex="0"></Goods-Loading> -->
             <!-- 显示列表 -->
 
          </div>
          <div v-if="index==1">
-            <Goods-Loading :tabIndex="tabIndex"></Goods-Loading>
+            <Goods-Loading v-if="index==1" :tabIndex="1"></Goods-Loading>
+         </div>
+         <div v-if="index==2">
+            <Goods-Loading v-if="index==2" :tabIndex="2"></Goods-Loading>
          </div>
       </Tab>
     </Tabs>
