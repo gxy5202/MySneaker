@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     followUser() {
-      this.$router.push("./FollowUser");
+      this.$router.push({ path: '/FollowUser', query: {uid:1}});
     }
   }
 };

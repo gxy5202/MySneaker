@@ -28,7 +28,7 @@
     <div class="text">
       <span class="text1">修改昵称</span>
       <div @click="usernickname()">
-        <span class="text2">{{message.nickName}}</span>
+        <span class="text2">{{user.u_nick_name}}</span>
         <icon class="icon" name="arrow"></icon>
       </div>
     </div>
@@ -46,7 +46,7 @@
     <div class="text">
       <span class="text1">性别</span>
       <div @click="usergender()">
-        <span class="text2">{{message.gender}}</span>
+        <span class="text2">{{user.u_gender}}</span>
         <icon class="icon" name="arrow"></icon>
       </div>
     </div>
@@ -62,7 +62,7 @@
     <div class="text">
       <span class="text1">生日</span>
       <div @click="userbirthday()">
-        <span class="text2">{{message.birthday}}</span>
+        <span class="text2">{{user.u_birth}}</span>
         <icon class="icon" name="arrow"></icon>
       </div>
     </div>
@@ -117,8 +117,20 @@ import {
 } from "vant";
 export default {
   name: "Setup",
+  created(){
+    this.user=this.$route.query
+    console.log(this.user)
+  },
   data() {
     return {
+      user:{},
+      user_state:{
+        img:false,
+        nickName:false,
+        gender:false,
+        birthday:false,
+        password:false,
+      },
       state: {
         img: {
           show: false
@@ -165,12 +177,9 @@ export default {
   },
   computed: {
     bg() {
-      let img = this.message.img;
+      let img = this.user.u_img
       return `background-image: url(${img})`;
-    }
-    // birthday(){
-    //   return this.state.birthday.currentDate.toLocaleDateString();
-    // }
+    },
   },
   methods: {
     // 修改头像

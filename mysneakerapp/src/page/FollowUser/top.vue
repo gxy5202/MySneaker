@@ -64,6 +64,7 @@ export default {
     justify-content: space-around;
     align-items: center;
     .fans{
+      width: 30%;
       display: flex;
       flex-direction: column;
       .fans-text{
@@ -71,6 +72,7 @@ export default {
       }
     }
     .img {
+      width: 40%;
       background-size: cover;
       height: 70px;
       width: 70px;
@@ -78,6 +80,7 @@ export default {
       border-radius: 100px;
     }
     .follow{
+      width: 30%;
       display: flex;
       flex-direction: column;
       align-items: center;

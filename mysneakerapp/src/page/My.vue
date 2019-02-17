@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <!-- 用户信息栏 -->
-    <top-user @fol="fol()" @fan="fan()" @like1="like1()"></top-user>
+    <top-user :prop='user.message' @fol="fol()" @fan="fan()" @like1="like1()"></top-user>
     <!-- 用户相关商品 -->
     <good @buy="buy1()" @shoucang="shoucang1()"></good>
     <!-- 其他功能列表 -->
@@ -29,8 +29,10 @@ export default {
   name: "Home",
   data() {
     return {
-      msg: "Welcome to Your Vue.js App",
-      active: 0,
+      user: {
+        message: {},
+        postings: {}
+      },
       list: [],
       loading: false,
       finished: false,
@@ -83,6 +85,14 @@ export default {
     buy,
     shoucang,
     FollowUser
+  },
+  created() {
+    let uid = this.$store.state;
+    axios.post("https://www.gooomi.cn/user_info", uid).then(res => {
+      this.user.message = res.data.user[0];
+      this.user.postings = res.data.postings;
+      // console.log(this.user);
+    });
   }
 };
 </script>

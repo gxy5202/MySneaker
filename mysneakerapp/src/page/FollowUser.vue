@@ -32,8 +32,7 @@ export default {
     }
   },
   created: function() {
-    let uId=this.prop
-    let uid = { uid:uId}
+    let uid=this.$route.query
     axios.post("https://www.gooomi.cn/user_info", uid).then(res => {
       this.user.message = res.data.user[0];
       this.user.postings = res.data.postings;

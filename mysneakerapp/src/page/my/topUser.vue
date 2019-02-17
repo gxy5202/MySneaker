@@ -1,24 +1,24 @@
 <template>
   <div class="box">
-    <div class="box1"></div>
+    <div class="box1" :style="bg"></div>
     <div class="box2">
-      <p class="time">加入毒5天</p>
+      <p class="time">加入MySneaker {{createDate}} 天</p>
       <div class="message">
-        <div @click="setup" class="user-img"></div>
+        <div @click="setup" class="user-img" :style="bg"></div>
         <p class="name">天价腰花</p>
-        <p class="jianjie">这个人很懒，什么也没留下</p>
+        <!-- <p class="jianjie">这个人很懒，什么也没留下</p> -->
       </div>
       <ul class="guanzhu">
         <li @click="follow()">
-          <span>0</span>
+          <span>{{prop.u_follow}}</span>
           <span>关注</span>
         </li>
         <li @click="fans()">
-          <span>0</span>
+          <span>{{prop.u_fans}}</span>
           <span>粉丝</span>
         </li>
         <li @click="like()">
-          <span>0</span>
+          <span>{{prop.u_like}}</span>
           <span>喜欢</span>
         </li>
       </ul>
@@ -27,20 +27,34 @@
 </template>
 <script>
 export default {
-  name:'topUser',
-  methods:{
-    setup(){
-      this.$router.push('./Setup')
+  name: "topUser",
+  props: ["prop"],
+  methods: {
+    setup() {
+      this.$router.push({ path: '/Setup', query: this.prop});
     },
-    follow(){
-      this.$emit('fol')
+    follow() {
+      this.$emit("fol");
     },
-    fans(){
-      this.$emit('fol')
+    fans() {
+      this.$emit("fol");
     },
-    like(){
-      this.$emit('like1')
+    like() {
+      this.$emit("like1");
+    }
+  },
+  computed: {
+    createDate() {
+      let oldTime = new Date(this.prop.u_create_time),
+        newTime = new Date();
+      let time = newTime - oldTime;
+      time = time / 1000 / 60 / 60 / 24;
+      let day = parseInt(7 / 2);
+      return day;
     },
+    bg() {
+      return `background-image: url(${this.prop.u_img})`;
+    }
   }
 };
 </script>
@@ -55,7 +69,6 @@ export default {
   .box1 {
     height: 100%;
     width: 100%;
-    background-image: url(https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike116%2C5%2C5%2C116%2C38/sign=ee9bedd9b8de9c82b268f1dd0de8eb6f/3ac79f3df8dcd100c662f1c1798b4710b8122f57.jpg);
     background-size: cover;
     filter: blur(10px);
   }
@@ -80,7 +93,6 @@ export default {
       height: 112px;
     }
     .user-img {
-      background-image: url(https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike116%2C5%2C5%2C116%2C38/sign=ee9bedd9b8de9c82b268f1dd0de8eb6f/3ac79f3df8dcd100c662f1c1798b4710b8122f57.jpg);
       background-size: cover;
       height: 60px;
       width: 60px;
@@ -93,15 +105,15 @@ export default {
     .jianjie {
       font-size: 12px;
     }
-    .guanzhu{
-        height: 50px;
+    .guanzhu {
+      height: 50px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      li {
         display: flex;
-        justify-content: space-around;
-        align-items: center;
-        li{
-            display: flex;
-            flex-direction: column;
-        }
+        flex-direction: column;
+      }
     }
   }
 }
