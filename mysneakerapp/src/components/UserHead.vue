@@ -39,6 +39,7 @@ export default {
       // 异步更新数据
     },
     toUser(item){
+      console.log(item)
       this.$router.push({
           path: 'FollowUser',
           query: {
@@ -82,10 +83,12 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
-.user-head {
+.head {
     @include flex-al-center;
     padding: 5px;
     height: 50px;
+    
+    background: red;
     .user-img {
       width: 40px;
       height: 40px;

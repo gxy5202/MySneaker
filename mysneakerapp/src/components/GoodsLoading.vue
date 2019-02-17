@@ -193,11 +193,10 @@ export default {
       
     },
     toItem(item){
+        console.log(item)
         this.$router.push({
           path: 'goodItem',
-          query: {
-            item: item
-          }
+          query: item
         })
     }
   },
