@@ -1,11 +1,12 @@
 <template>
   <div class="hello">
     <!-- 用户信息栏 -->
-    <top-user :prop='user.message' @fol="fol()" @fan="fan()" @like1="like1()"></top-user>
+    <top-user :prop="user.message" @fol="fol()" @fan="fan()" @like1="like1()"></top-user>
     <!-- 用户相关商品 -->
     <good @buy="buy1()" @shoucang="shoucang1()"></good>
     <!-- 其他功能列表 -->
-    <Item class="item"></Item>
+    <Item></Item>
+    <Button @click="logout()" class="AllBtn" type="primary">确认修改</Button>
     <!-- 二级内容页 -->
     <follow :prop="follow" @fol="fol()"></follow>
     <fans :prop="fans" @fan="fan()"></fans>
@@ -15,7 +16,7 @@
   </div>
 </template>
 <script>
-import { Tabbar, TabbarItem, NavBar, Uploader, Icon, List } from "vant";
+import { Tabbar, TabbarItem, NavBar, Uploader, Icon, List, Button } from "vant";
 import Item from "./my/Item";
 import topUser from "./my/topUser";
 import good from "./my/good";
@@ -67,6 +68,13 @@ export default {
     },
     followUser() {
       this.FollowUser = !this.FollowUser;
+    },
+    // 退出登录
+    logout() {
+      console.log(1);
+      this.$store.state.isLogin = !this.$store.state.isLogin;
+      this.$store.state.uid = "";
+      this.$router.push({ path: "/Home"});
     }
   },
   components: {
@@ -84,7 +92,8 @@ export default {
     like,
     buy,
     shoucang,
-    FollowUser
+    FollowUser,
+    Button
   },
   created() {
     let uid = this.$store.state;
@@ -103,9 +112,10 @@ export default {
 .hello {
   background-color: rgb(241, 241, 241);
 }
-// 功能板块
-.item {
-  margin-bottom: 50px;
+.AllBtn {
+  width: 70%;
+  margin-top: 20px;
+  margin-bottom: 70px;
 }
 h1,
 h2 {

@@ -55,7 +55,7 @@ export default {
         this.$store.commit('tabState',0);
     },
     onRead(file) {
-        console.log(file);
+        
         if(file.length > 1 ){
             file.map((value,index)=>{
                 this.upImgList.push(value.content)
@@ -63,6 +63,7 @@ export default {
         }else{
             this.upImgList.push(file.content)
         }
+        console.log(this.upImgList);
         //将原图片显示为选择的图片
         //this.$refs.upimg.src = file.content;
         

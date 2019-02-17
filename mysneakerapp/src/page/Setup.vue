@@ -18,10 +18,11 @@
     <popup class="upimg upbox" position="right" v-model="state.img.show">
       <Icon @click="userImg()" class="icon1" size="30px" name="arrow-left"></Icon>
       <div>
+        <img class="upimg1" :src="upimg" alt>
         <uploader :after-read="onRead">
           <icon size="60px" name="photograph"/>
         </uploader>
-        <Button class="btn1" type="primary">确认修改</Button>
+        <Button @click="upimgFun()" class="btn1" type="primary">确认修改</Button>
       </div>
     </popup>
     <!-- 昵称 -->
@@ -97,6 +98,7 @@
     <!-- 信息修改 -->
     <!-- 退出登录 -->
     <Button @click="upload()" class="btn" type="default">确认修改</Button>
+    <popup v-model="success">内容</popup>
   </div>
 </template>
 <script>
@@ -122,6 +124,8 @@ export default {
   data() {
     return {
       user: {},
+      upimg: "",
+      success: false,
       state: {
         img: {
           show: false
@@ -142,14 +146,6 @@ export default {
           show: false,
           show1: false
         }
-      },
-      message: {
-        img:
-          "https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike116%2C5%2C5%2C116%2C38/sign=ee9bedd9b8de9c82b268f1dd0de8eb6f/3ac79f3df8dcd100c662f1c1798b4710b8122f57.jpg",
-        nickName: "天价腰花",
-        gender: "男",
-        birthday: "1970-00-00",
-        password: ""
       }
     };
   },
@@ -189,8 +185,13 @@ export default {
       this.state.img.show = !this.state.img.show;
     },
     // 查看图像
-    onRead(file){
-      console.log(file)
+    onRead(file) {
+      this.upimg = file.content;
+    },
+    // 确认修改头像
+    upimgFun() {
+      this.user.u_img = this.upimg;
+      this.state.img.show = !this.state.img.show;
     },
     // 修改昵称
     usernickname() {
@@ -233,9 +234,8 @@ export default {
     // 确认修改
     upload() {
       console.log(this.user);
-      axios
-        .post("https://www.gooomi.cn/updata_user", this.user)
-        .then(res => {});
+      // axios.post("https://www.gooomi.cn/updata_user", this.user).then(() => {});
+      this.success = !this.success;
     }
   }
 };
@@ -327,6 +327,12 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  }
+  .upimg1 {
+    height: 100px;
+    width: 100px;
+    margin-bottom: 20px;
+    border: 1px solid black;
   }
 }
 // 性别修改
