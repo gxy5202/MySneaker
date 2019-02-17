@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$emit("lick");
+      this.$emit("fan");
     }
   }
 };

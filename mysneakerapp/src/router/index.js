@@ -14,6 +14,7 @@ import Comment from "@/page/Comment";
 import FollowUser from "@/page/FollowUser";
 import Recommend from "@/page/Recommend";
 import goodItem from "@/page/goodItem";
+import buy from "@/page/my/buy";
 Vue.use(Router);
 
 export default new Router({
@@ -96,6 +97,12 @@ export default new Router({
       name: "goodItem",
       meta: { index: 2 },
       component: goodItem
-    }
+    },
+    {
+      path: "/buy",
+      name: "buy",
+      meta: { index: 3 },
+      component: buy
+    },
   ]
 });

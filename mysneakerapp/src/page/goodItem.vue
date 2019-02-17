@@ -5,61 +5,85 @@
     <!-- 轮播 -->
     <swipe :autoplay="3000" indicator-color="white">
       <swipe-item>
-        <div class="swdiv">1</div>
+        <div class="swdiv">
+          <img :src="good.g_img1" alt>
+        </div>
       </swipe-item>
       <swipe-item>
-        <div class="swdiv">2</div>
+        <div class="swdiv">
+          <img :src="good.g_img2" alt>
+        </div>
       </swipe-item>
       <swipe-item>
-        <div class="swdiv">3</div>
+        <div class="swdiv">
+          <img :src="good.g_img3" alt>
+        </div>
       </swipe-item>
       <swipe-item>
-        <div class="swdiv">4</div>
+        <div class="swdiv">
+          <img :src="good.g_img4" alt>
+        </div>
       </swipe-item>
     </swipe>
     <!-- 商品名称 -->
-    <p
-      class="good-name"
-    >sajhsjakhfjasajhsjakhfjasajhsjakhfjasajhsjakhfjasajhsjakhfjasajhsjakhfjasajhsjakhfjasajhsjakhfjasajhsjakhfjasajhsjakhfja</p>
-    <p class="good-price">￥ 998</p>
+    <p class="good-name">{{good.g_name}}</p>
+    <p class="good-price">￥ {{good.g_newPrice}}</p>
     <!-- 商品尺码 -->
-    <div class="good-size">
+    <div class="good-size" @click="goodsize()">
       <span>选择尺码</span>
       <Icon name="arrow"></Icon>
     </div>
+    <popup class="good-size1" v-model="goodSize">内容</popup>
     <!-- 商品信息 -->
     <div class="good-message">
       <div class="message-item">
         <span>配色</span>
-        <span>红/白</span>
+        <span>{{good.g_color}}</span>
       </div>
       <div class="message-item">
         <span>发行时间</span>
-        <span>2019年春季</span>
+        <span>{{good.g_date}}</span>
       </div>
       <div class="message-item">
         <span>发售价格</span>
-        <span>￥ 1099</span>
+        <span>￥ {{good.g_newPrice}}</span>
       </div>
       <div class="message-item">
         <span>分类</span>
-        <span>球鞋</span>
+        <span>{{good.g_type}}</span>
       </div>
     </div>
-    <!-- 底部购买 -->
-    <div class="bottom-buy">
-      <Icon name="star-o" size="44px"></Icon>
-      <Button class="btn" type="primary">立即购买</Button>
+    <!-- 商品信息图片 -->
+    <div class="good-message-bottom">
+      <img v-for="i in good.g_message" :key="i.index" :src="i" alt>
     </div>
+    <!-- 下单 -->
+    <goods-action>
+      <goods-action-mini-btn icon="cart-o" text="我的购买" @click="order"/>
+      <goods-action-mini-btn icon="star-o" text="收藏" @click="shoucang"/>
+      <goods-action-big-btn primary text="立即购买" @click="buy"/>
+    </goods-action>
   </div>
 </template>
 <script>
-import { NavBar, Icon, Swipe, SwipeItem, Button } from "vant";
+import {
+  NavBar,
+  Icon,
+  Swipe,
+  SwipeItem,
+  Button,
+  Popup,
+  GoodsAction,
+  GoodsActionBigBtn,
+  GoodsActionMiniBtn
+} from "vant";
 export default {
   name: "goodItem",
   data() {
     return {
-      good: {}
+      good: {},
+      message: [],
+      goodSize: false
     };
   },
   components: {
@@ -67,7 +91,11 @@ export default {
     Icon,
     Swipe,
     SwipeItem,
-    Button
+    Button,
+    Popup,
+    GoodsAction,
+    GoodsActionBigBtn,
+    GoodsActionMiniBtn
   },
   methods: {
     onClickLeft() {
@@ -77,12 +105,24 @@ export default {
   methods: {
     onClickLeft() {
       this.$router.go(-1);
-    }
+      this.$store.state.tabShow = true;
+    },
+    goodsize() {
+      this.goodSize = !this.goodSize;
+    },
+    order() {
+      this.$router.push({
+        path: "/buy",
+        query: { gid: this.$store.state.uid }
+      });
+    },
+    buy() {},
+    shoucang() {}
   },
   created() {
     this.$store.state.tabShow = false;
     this.good = this.$route.query;
-    console.log(this.$route.query);
+    console.log(this.good);
   }
 };
 </script>
@@ -91,7 +131,9 @@ export default {
 .swdiv {
   height: 180px;
   width: 99%;
-  border: 1px solid black;
+  img {
+    height: 100%;
+  }
 }
 // 商品名
 .good-name {
@@ -116,7 +158,6 @@ export default {
 // 商品信息
 .good-message {
   border-top: 10px solid rgb(235, 232, 232);
-  margin-bottom: 60px;
   .message-item {
     padding: 0 10px;
     margin: 5px 0;
@@ -128,19 +169,12 @@ export default {
     font-size: 14px;
   }
 }
-// 底部购买
-.bottom-buy {
-  border-top: 1px solid rgb(194, 192, 192);
-  background-color: rgb(235, 231, 231);
-  position: fixed;
-  bottom: 0;
-  height: 60px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  .btn {
-    width: 60%;
+// 商品信息图片
+.good-message-bottom {
+  border-top: 10px solid rgb(235, 232, 232);
+  margin-bottom: 60px;
+  img {
+    width: 100%;
   }
 }
 </style>

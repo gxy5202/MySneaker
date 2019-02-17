@@ -37,7 +37,7 @@ export default {
       this.$emit("fol");
     },
     fans() {
-      this.$emit("fol");
+      this.$emit("fan");
     },
     like() {
       this.$emit("like1");
