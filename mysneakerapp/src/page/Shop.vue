@@ -1,11 +1,7 @@
 <template>
   <div class="hello">
-    <!-- 顶部导航栏 -->
-    <Nav-bar title="鞋城" fixed>
-     
-    </Nav-bar>
-    <!-- 顶部导航栏 -->
-    <Tabs @click="toShopList" animated swipeable color="black">
+    
+    <Tabs @click="toShopList" animated swipeable sticky color="black">
       <Tab class='tab' v-for="(item,index) in tabs" :key="index" :title="item.title" >
          <div v-if="index==0">
              <div class="search-input">
@@ -18,16 +14,12 @@
             </Swipe>
 
             <!-- 显示列表 -->
-            <List class="list" v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
-                <div v-for="(item,index) of loadList" :key="index">
-                  
-                </div>
-            </List>
+            <Goods-Loading :tabIndex="tabIndex"></Goods-Loading>
             <!-- 显示列表 -->
 
          </div>
          <div v-if="index==1">
-            1sfdf
+            <Goods-Loading :tabIndex="tabIndex"></Goods-Loading>
          </div>
       </Tab>
     </Tabs>
@@ -35,7 +27,8 @@
 </template>
 
 <script>
-import {  Tab, Tabs,NavBar, Uploader, Icon ,List ,Field ,Swipe, SwipeItem ,Lazyload,Search} from 'vant';
+import GoodsLoading from '../components/GoodsLoading';
+import {  Tab, Tabs,NavBar, Uploader, Icon ,List ,Field ,Swipe, SwipeItem ,Lazyload,Search,Row, Col} from 'vant';
 export default {
   name: 'Shop',
   data () {
@@ -44,6 +37,7 @@ export default {
       list: [],
       loading: false,
       finished: false,
+      tabIndex:'',
       banner:[
         'http://img4.imgtn.bdimg.com/it/u=3766374770,2731064724&fm=26&gp=0.jpg',
         'http://img2.yonex.cn/image/2016/01/12/569479077d747.jpg',
@@ -52,7 +46,9 @@ export default {
 
       ],
       value:'',
-      loadList:[]
+      loadList:[],
+      dataList:[],
+      goods:[]
     }
   },
   computed: {
@@ -63,59 +59,35 @@ export default {
           index:0
         },
         {
-          title:'推荐',
+          title:'新品',
           index:1
         },
         {
-          title:'推荐',
+          title:'球鞋',
           index:2
         },
         {
-          title:'推荐',
+          title:'女子',
           index:3
         },
         {
-          title:'推荐',
+          title:'童鞋',
           index:4
         },
       ]
     }
   },
   methods: {
-    onLoad(){
-      axios.get("https://www.gooomi.cn/goods")
-      .then(res => {
-        console.log(res.data);
-        let goods = res.data.list;
-        goods.map((value,index,arr) => {
-          value.g_size = value.g_size.split(" ");
-          
-        });
-        
-        if(this.loadList.length + 5 > postings.length){
-          this.loadList = postings.slice(0,postings.length);
-          
-          if(this.loadList.length == postings.length){
-            this.loading = false;
-            this.finished = true;
-          }else {
-
-          }
-        }else{
-          this.loadList = postings.slice(0,this.loadList.length + 5)
-          this.loading = false;
-          
-        }
-        
-        console.log(postings)
-        //this.dataList = postings;
-        
-      });
-    },
+    
+      
+    
     toShopList(index,title){
-      console.log(index)
+      this.tabIndex =index;
       
     }
+  },
+  created() {
+    
   },
   components:{
    
@@ -129,7 +101,10 @@ export default {
     Swipe, 
     SwipeItem,
     Lazyload,
-    Search
+    Search,
+    Row,
+    [Col.name]:Col,
+    GoodsLoading
   }
 }
 </script>
@@ -146,9 +121,5 @@ export default {
   width: 100%;
   background: red;
 }
-
-  
-    
-
-
+      
 </style>
