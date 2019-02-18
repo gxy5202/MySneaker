@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="size-item">
-        <span @click="goodsize1(i.index)" v-for="i in good.g_size" :key="i.index">{{i}} 码</span>
+        <span @click="goodsize1(i)" v-for="i in good.g_size" :key="i.index">{{i}} 码</span>
       </div>
     </popup>
     <!-- 商品信息 -->
@@ -124,6 +124,9 @@ export default {
         path: "/buy",
         query: { gid: this.$store.state.uid }
       });
+    },
+    goodsize1(i){
+      this.size=i+' 码'
     },
     buy() {},
     shoucang() {}

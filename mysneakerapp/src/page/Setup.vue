@@ -22,7 +22,7 @@
         <uploader :after-read="onRead">
           <icon size="60px" name="photograph"/>
         </uploader>
-        <Button @click="upimgFun()" class="btn1" type="primary">确认修改</Button>
+        <Button @click="upimgFun()" class="AllBtn" type="primary">确认修改</Button>
       </div>
     </popup>
     <!-- 昵称 -->
@@ -40,7 +40,7 @@
         <Cell-group>
           <field id="nickname" :value="user.u_nick_name" placeholder="请输入新昵称"/>
         </Cell-group>
-        <Button @click="nicknameset()" class="btn1" type="primary">确认修改</Button>
+        <Button @click="nicknameset()" class="AllBtn" type="primary">确认修改</Button>
       </div>
     </popup>
     <!-- 性别 -->
@@ -92,12 +92,12 @@
         <field id="password" type="password" label="新密码" placeholder="请输入新密码"/>
         <field id="password1" type="password" label="新密码" placeholder="请确认新密码"/>
         <span v-if="state.password.show1" class="pass">两次密码不一致</span>
-        <Button @click="password()" class="btn1" type="primary">确认修改</Button>
+        <Button @click="password()" class="AllBtn" type="primary">确认修改</Button>
       </cell-group>
     </popup>
     <!-- 信息修改 -->
     <!-- 退出登录 -->
-    <Button @click="upload()" class="btn" type="default">确认修改</Button>
+    <Button @click="upload()" class="AllBtn" type="default">确认修改</Button>
     <popup v-model="success">内容</popup>
   </div>
 </template>
@@ -344,5 +344,14 @@ export default {
   color: red;
   font-size: 14px;
   margin: 10px auto;
+}
+// 按钮
+.AllBtn {
+  width: 99%;
+  margin-top: 20px;
+  margin-bottom: 70px;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  border: none;
 }
 </style>

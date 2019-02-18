@@ -113,9 +113,12 @@ export default {
   background-color: rgb(241, 241, 241);
 }
 .AllBtn {
-  width: 70%;
+  width: 99%;
   margin-top: 20px;
   margin-bottom: 70px;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  border: none;
 }
 h1,
 h2 {
