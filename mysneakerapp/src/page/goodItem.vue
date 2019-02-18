@@ -31,9 +31,22 @@
     <!-- 商品尺码 -->
     <div class="good-size" @click="goodsize()">
       <span>选择尺码</span>
+      <span>{{size}}</span>
       <Icon name="arrow"></Icon>
     </div>
-    <popup class="good-size1" v-model="goodSize">内容</popup>
+    <popup class="good-size1" :overlay="false" position="bottom" v-model="goodSize">
+      <Icon @click="goodsize()" class="size-icon" name="cross" size="30px"></Icon>
+      <div class="good-size1-good">
+        <img :src="good.g_cover" alt>
+        <div>
+          <span>￥ {{good.g_newPrice}}</span>
+          <span>选择尺码</span>
+        </div>
+      </div>
+      <div class="size-item">
+        <span @click="goodsize1(i.index)" v-for="i in good.g_size" :key="i.index">{{i}} 码</span>
+      </div>
+    </popup>
     <!-- 商品信息 -->
     <div class="good-message">
       <div class="message-item">
@@ -83,6 +96,7 @@ export default {
     return {
       good: {},
       message: [],
+      size:'',
       goodSize: false
     };
   },
@@ -96,11 +110,6 @@ export default {
     GoodsAction,
     GoodsActionBigBtn,
     GoodsActionMiniBtn
-  },
-  methods: {
-    onClickLeft() {
-      this.$router.back(-1);
-    }
   },
   methods: {
     onClickLeft() {
@@ -154,6 +163,54 @@ export default {
   padding: 0 10px;
   color: rgb(168, 167, 167);
   font-size: 14px;
+}
+// 选择商品尺码
+.good-size1 {
+  height: 70%;
+  background-color: rgb(247, 247, 247);
+  .size-icon {
+    align-items: flex-end;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  .good-size1-good {
+    height: 100px;
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    img {
+      height: 80px;
+      margin-left: 20px;
+    }
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 40%;
+      span {
+        margin: 5px 0;
+      }
+    }
+  }
+  .size-item {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    span {
+      background-color: #fff;
+      margin: 5px 2.5%;
+      height: 50px;
+      width: 20%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
 // 商品信息
 .good-message {
