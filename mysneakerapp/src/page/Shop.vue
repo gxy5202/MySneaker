@@ -14,7 +14,7 @@
             </Swipe>
 
             <!-- 显示列表 -->
-            <!-- <Goods-Loading v-if="index==0" :tabIndex="0"></Goods-Loading> -->
+            <Goods-Loading v-if="index==0" :tabIndex="0"></Goods-Loading>
             <!-- 显示列表 -->
 
          </div>
@@ -23,6 +23,12 @@
          </div>
          <div v-if="index==2">
             <Goods-Loading v-if="index==2" :tabIndex="2"></Goods-Loading>
+         </div>
+         <div v-if="index==3">
+            <Goods-Loading v-if="index==3" :tabIndex="3"></Goods-Loading>
+         </div>
+         <div v-if="index==4">
+            <Goods-Loading v-if="index==4" :tabIndex="4"></Goods-Loading>
          </div>
       </Tab>
     </Tabs>

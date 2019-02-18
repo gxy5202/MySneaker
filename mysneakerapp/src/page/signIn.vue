@@ -1,6 +1,10 @@
 <template>
   <div class="wrapper">
+      <div class="logo">
+            <img src="../assets/shoeAJ.png" alt="">
+        </div>
     <div class="signIn">
+        
         <div class="user-name">
             <input type="text" placeholder="请输入用户名" v-model="user.username">
         </div>
@@ -8,7 +12,7 @@
             <input type="password" placeholder="请输入密码" v-model="user.password">
         </div>
         <div class="sign-btn">
-            <Button type="primary" @click="signIn()">登录</Button>
+            <Button type="primary"  @click="signIn()">登录</Button>
         </div>
     </div>
     
@@ -92,7 +96,7 @@ export default {
 }
 
 .wrapper {
-    margin-top: 70%;
+    margin-top: 30%;
     @include flex-center;
     .signIn {
         width: 90%;
@@ -110,7 +114,9 @@ export default {
             width: 100%;
             margin-top: 10px;
             Button {
+                background: black;
                 width: 100%;
+                border: none;
             }
         }
     }
