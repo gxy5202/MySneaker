@@ -96,7 +96,7 @@ export default {
     return {
       good: {},
       message: [],
-      size:'',
+      size: "",
       goodSize: false
     };
   },
@@ -125,8 +125,9 @@ export default {
         query: { gid: this.$store.state.uid }
       });
     },
-    goodsize1(i){
-      this.size=i+' 码'
+    goodsize1(i) {
+      this.size = i + " 码";
+      this.goodSize = !this.goodSize;
     },
     buy() {},
     shoucang() {}
