@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <!-- 顶部导航栏 -->
-    <Nav-bar title="标题" fixed>
+    <Nav-bar title="鞋圈" fixed>
       <Icon slot="right" name="photograph" size="20px" color="black" @click="toUpload"/>
     </Nav-bar>
     <!-- 顶部导航栏 -->
@@ -130,8 +130,14 @@ export default {
     },
    
     toUpload() {
-      this.$router.push("/Upload");
-      this.$store.commit("tabState", 1);
+      if(this.$store.state.uid == ''){
+        this.$router.push('/Login');
+        this.$store.commit('tabState',1);
+      }else{
+        this.$router.push("/Upload");
+        this.$store.commit("tabState", 1);
+      }
+      
     },
     preview(value,index){
       ImagePreview({

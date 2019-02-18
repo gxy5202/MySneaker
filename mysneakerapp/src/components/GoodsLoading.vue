@@ -7,6 +7,7 @@
                       <div class="goods-item" >
                         <img v-lazy='item.g_cover' :src="item.g_cover" alt="" >
                         <p>{{item.g_name}}</p>
+                        <span>￥{{item.g_newPrice}}</span>
                       </div>
                 </div>
             </List>
@@ -222,6 +223,7 @@ export default {
 <style lang='scss' scoped>
 
 .list{
+  margin-top: 5px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -229,7 +231,14 @@ export default {
     border: 1px solid rgba(0,0,0,0.03);
     width:49%;
     .goods-item {
-      
+      p{
+        font-size: 10px;
+        text-align: left;
+      }
+      span {
+        font-weight: bold;
+        text-align: left;
+      }
       img {
         width: 100%;
       }

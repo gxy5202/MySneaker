@@ -1,7 +1,12 @@
 <template>
   <div class="wrapper">
+      <div class="back">
+        <Icon size="20px" name="cross" @click="back"></Icon>
+      </div> 
       <div class="logo">
+            
             <img src="../assets/shoeAJ.png" alt="">
+            <p>MySneaker</p>
         </div>
     <div class="signIn">
         
@@ -43,7 +48,10 @@ export default {
       },
   },
   methods: {
-    
+    back(){
+        this.$router.back(-1);
+        //this.$store.commit('tabState',0);
+    },
     onLoad() {
       // 异步更新数据
      
@@ -97,6 +105,24 @@ export default {
 
 .wrapper {
     margin-top: 30%;
+    .back {
+        position: absolute;
+        top:30px;
+        left:30px;
+
+    }
+    .logo{
+        width: 50%;
+        text-align: center;
+        p{
+            font-size: 30px;
+            font-weight: bold;
+        }
+        img {
+            width:100%;
+            
+        }
+    }
     @include flex-center;
     .signIn {
         width: 90%;

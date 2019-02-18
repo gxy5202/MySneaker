@@ -1,9 +1,12 @@
 <template>
   <div class="wrapper">
+    <div class="back">
+        <Icon size="20px" name="cross" @click="back"></Icon>
+    </div> 
     <div>
       <Cell-group>
-        <Field type="tel" v-model="username" placeholder="请输入手机号码" label="+86"/>
-        <Field center type="text" v-model="password" label="密码" placeholder="请输入密码"/>
+        <Field type="tel" v-model="user.username" placeholder="请输入手机号码" label="+86"/>
+        <Field center type="text" v-model="user.password" label="密码" placeholder="请输入密码"/>
       </Cell-group>
       <div class="sign-btn">
         <Button type="primary" @click="signUp()">注册</Button>
@@ -37,6 +40,10 @@ export default {
     onLoad() {
       // 异步更新数据
     },
+    back(){
+        this.$router.back(-1);
+        //this.$store.commit('tabState',0);
+    },
     login() {
       this.$store.commit("loginState");
       console.log(1);
@@ -45,15 +52,17 @@ export default {
         axios.post('https://www.gooomi.cn/signUp',this.user)
         .then((res)=>{
             
-            console.log(res);
-            if(res.data.status == 0){
-                this.$toast({
-                    message: "登陆失败，用户名或密码错误",
-                })
+            console.log(res.data);
+             if(res.data.status == 'already'){
+                 this.$toast({
+                     message: "用户名已存在",
+                 })
+              
             }else{
                 this.$store.commit('tabState',0);
                 this.$router.push('/My');
-                sessionStorage.setItem('aid',JSON.stringify(res.data.results[0].aid));
+                sessionStorage.setItem('uid',JSON.stringify(res.data.results.insertId));
+                this.$store.state.uid = res.data.results.insertId;
                 this.$store.commit('loginState',true);
             }
             
@@ -86,6 +95,12 @@ body {
 }
 .wrapper {
   margin-top: 70%;
+  .back {
+        position: absolute;
+        top:30px;
+        left:30px;
+
+    }
   Cell-group {
   }
   .sign-btn {
@@ -93,6 +108,8 @@ body {
     margin-top: 10px;
     button {
       width: 90%;
+      background: black;
+      border: none;
     }
   }
 }
