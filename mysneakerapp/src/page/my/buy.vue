@@ -1,6 +1,6 @@
 <template>
   <div>
-    <popup position="right" class="popup" v-model="prop">
+    <Popup position="right" class="popup" v-model="prop">
       <!-- 标题 -->
       <nav-bar title="我的购买" left-arrow @click-left="onClickLeft"/>
       <!-- 关注列表 -->
@@ -10,7 +10,7 @@
           <span>删除订单</span>
         </p>
       </div>
-    </popup>
+    </Popup>
   </div>
 </template>
 <script>
@@ -44,6 +44,9 @@ export default {
     Icon,
     NavBar,
     item
+  },
+  created(){
+    console.log(1)
   },
   methods: {
     onClickLeft() {

@@ -101,7 +101,7 @@ export default new Router({
     {
       path: "/buy",
       name: "buy",
-      meta: { index: 2 },
+      meta: { index: 3 },
       component: buy
     },
   ]

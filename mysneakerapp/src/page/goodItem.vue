@@ -44,7 +44,12 @@
         </div>
       </div>
       <div class="size-item">
-        <span @click="goodsize1(i)" v-for="i in good.g_size" :key="i.index">{{i}} 码</span>
+        <span
+          :class="{active:sizeItem==i}"
+          @click="goodsize1(i)"
+          v-for="i in good.g_size"
+          :key="i.index"
+        >{{i}} 码</span>
       </div>
     </popup>
     <!-- 商品信息 -->
@@ -76,6 +81,7 @@
       <goods-action-mini-btn icon="star-o" text="收藏" @click="shoucang"/>
       <goods-action-big-btn primary text="立即购买" @click="buy"/>
     </goods-action>
+    <buy :prop="buyState" @buy="order()"></buy>
   </div>
 </template>
 <script>
@@ -90,6 +96,7 @@ import {
   GoodsActionBigBtn,
   GoodsActionMiniBtn
 } from "vant";
+import buy from "./my/buy";
 export default {
   name: "goodItem",
   data() {
@@ -97,7 +104,9 @@ export default {
       good: {},
       message: [],
       size: "",
-      goodSize: false
+      sizeItem: "",
+      goodSize: false,
+      buyState: false
     };
   },
   components: {
@@ -109,7 +118,8 @@ export default {
     Popup,
     GoodsAction,
     GoodsActionBigBtn,
-    GoodsActionMiniBtn
+    GoodsActionMiniBtn,
+    buy
   },
   methods: {
     onClickLeft() {
@@ -120,14 +130,11 @@ export default {
       this.goodSize = !this.goodSize;
     },
     order() {
-      this.$router.push({
-        path: "/buy",
-        query: { gid: this.$store.state.uid }
-      });
+      this.buyState = !this.buyState;
     },
     goodsize1(i) {
       this.size = i + " 码";
-      this.goodSize = !this.goodSize;
+      this.sizeItem = i;
     },
     buy() {},
     shoucang() {}
@@ -213,6 +220,12 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    .active {
+      border: 1px solid black;
+      font-weight: bold;
     }
   }
 }
