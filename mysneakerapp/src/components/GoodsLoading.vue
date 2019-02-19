@@ -37,21 +37,30 @@ export default {
     
   },
   methods: {
-    loadingGet:function(loaddata,resdata,loadnum){
-        
-        if(loaddata.length + loadnum > resdata.length){
-              loaddata = resdata.slice(0,resdata.length);
-                
-              if(loaddata.length == resdata.length){
+    loadingGet:function(loaddata,resdata,type,loadnum){
+        resdata.map((value,index,arr) => {
+                value.g_size = value.g_size.split(" ");
+                value.g_message = value.g_message.split(",");
+              });
+        let selectData = resdata;
+        selectData = selectData.filter(value=>value.g_type == type);
+        if(loaddata.length + loadnum > selectData.length){
+              
+              loaddata = selectData.slice(0,selectData.length);
+              this.loadList = loaddata;
+              if(loaddata.length == selectData.length){
                 this.loading = false;
                 this.finished = true;
               }else {
 
               }
             }else{
-                loaddata = resdata.slice(0,loaddata.length + loadnum)
+                loaddata = selectData.slice(0,loaddata.length + loadnum)
                 this.loading = false;
+                this.loadList = loaddata;
                 console.log(this.loadList)
+                //return loaddata
+                
             }
 
     },
@@ -63,171 +72,27 @@ export default {
       .then(res=>{
         
         let goods = res.data;
-        console.log(goods)
+  
         if(this.tabIndex == 0){
-          console.log(this.tabIndex)
-          
-          
-          //this.$options.methods.loadingGet();
-          //this.loadingGet(this.loadList,goods,6);
-          if(this.loadList.length + 6 > this.dataList.length){
-                goods.map((value,index,arr) => {
-                  value.g_size = value.g_size.split(" ");
-                  value.g_message = value.g_message.split(",");
-                  if(value.g_type == '球鞋'){
-                    this.dataList.push(value);
-                  }
-                
-              });
-              this.loadList = this.dataList.slice(0,this.dataList.length);
-                
-              if(this.loadList.length == this.dataList.length){
-                this.loading = false;
-                this.finished = true;
-              }else {
-
-              }
-            }else{
-              goods.map((value,index,arr) => {
-              value.g_size = value.g_size.split(" ");
-              value.g_message = value.g_message.split(",");
-              if(value.g_type == '球鞋'){
-                this.dataList.push(value);
-              }
-            });
-                this.loadList = this.dataList.slice(0,this.loadList.length + 6)
-                this.loading = false;
-                
-            }
+        console.log(this.tabIndex)
+         
+        this.loadingGet(this.loadList,goods,'球鞋',6);
           
         }else if(this.tabIndex == 1){
             
           //this.$options.methods.loadingGet();
           //this.loadingGet(this.loadList,goods,6);
-          if(this.loadList.length + 6 > this.dataList.length){
-            goods.map((value,index,arr) => {
-              value.g_size = value.g_size.split(" ");
-              value.g_message = value.g_message.split(",");
-              if(value.g_type == '新品'){
-                this.dataList.push(value);
-              }
-            });
-              this.loadList = this.dataList.slice(0,this.dataList.length);
-                
-              if(this.loadList.length == this.dataList.length){
-                this.loading = false;
-                this.finished = true;
-              }else {
-
-              }
-            }else{
-              goods.map((value,index,arr) => {
-              value.g_size = value.g_size.split(" ");
-              value.g_message = value.g_message.split(",");
-              if(value.g_type == '新品'){
-                this.dataList.push(value);
-              }
-            });
-                this.loadList = this.dataList.slice(0,this.loadList.length + 6)
-                this.loading = false;
-                
-            }
+          this.loadingGet(this.loadList,goods,'新品',6);
+         
         }else if(this.tabIndex == 2){
             
-          //this.$options.methods.loadingGet();
-          //this.loadingGet(this.loadList,goods,6);
-          if(this.loadList.length + 6 > this.dataList.length){
-            goods.map((value,index,arr) => {
-              value.g_size = value.g_size.split(" ");
-              value.g_message = value.g_message.split(",");
-              if(value.g_type == '球鞋'){
-                this.dataList.push(value);
-              }
-            });
-              this.loadList = this.dataList.slice(0,this.dataList.length);
-                
-              if(this.loadList.length == this.dataList.length){
-                this.loading = false;
-                this.finished = true;
-              }else {
-
-              }
-            }else{
-              goods.map((value,index,arr) => {
-              value.g_size = value.g_size.split(" ");
-              value.g_message = value.g_message.split(",");
-              if(value.g_type == '球鞋'){
-                this.dataList.push(value);
-              }
-            });
-                this.loadList = this.dataList.slice(0,this.loadList.length + 6)
-                this.loading = false;
-                
-            }
+          this.loadingGet(this.loadList,goods,'球鞋',6);
         }else if(this.tabIndex == 3){
             
-          //this.$options.methods.loadingGet();
-          //this.loadingGet(this.loadList,goods,6);
-          if(this.loadList.length + 6 > this.dataList.length){
-            goods.map((value,index,arr) => {
-              value.g_size = value.g_size.split(" ");
-              value.g_message = value.g_message.split(",");
-              if(value.g_type == '女子'){
-                this.dataList.push(value);
-              }
-            });
-              this.loadList = this.dataList.slice(0,this.dataList.length);
-                
-              if(this.loadList.length == this.dataList.length){
-                this.loading = false;
-                this.finished = true;
-              }else {
-
-              }
-            }else{
-              goods.map((value,index,arr) => {
-              value.g_size = value.g_size.split(" ");
-              value.g_message = value.g_message.split(",");
-              if(value.g_type == '女子'){
-                this.dataList.push(value);
-              }
-            });
-                this.loadList = this.dataList.slice(0,this.loadList.length + 6)
-                this.loading = false;
-                
-            }
+          this.loadingGet(this.loadList,goods,'女子',6);
         }else{
-           
-          //this.$options.methods.loadingGet();
-          //this.loadingGet(this.loadList,goods,6);
-          if(this.loadList.length + 6 > this.dataList.length){
-            goods.map((value,index,arr) => {
-              value.g_size = value.g_size.split(" ");
-              value.g_message = value.g_message.split(",");
-              if(value.g_type == '童鞋'){
-                this.dataList.push(value);
-              }
-            });
-              this.loadList = this.dataList.slice(0,this.dataList.length);
-                
-              if(this.loadList.length == this.dataList.length){
-                this.loading = false;
-                this.finished = true;
-              }else {
-
-              }
-            }else{
-              goods.map((value,index,arr) => {
-              value.g_size = value.g_size.split(" ");
-              value.g_message = value.g_message.split(",");
-              if(value.g_type == '童鞋'){
-                this.dataList.push(value);
-              }
-            });
-                this.loadList = this.dataList.slice(0,this.loadList.length + 6)
-                this.loading = false;
-                
-            }
+           this.loadingGet(this.loadList,goods,'童鞋',6);
+         
         }
       })
         

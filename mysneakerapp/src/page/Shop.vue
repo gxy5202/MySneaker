@@ -1,11 +1,11 @@
 <template>
   <div class="hello">
-    
+    <div class="search-input">
+        <Search placeholder="请输入搜索关键词"  @focus="toSearch"/>
+    </div>
     <Tabs @click="toShopList" animated swipeable sticky color="black">
       <Tab class='tab' v-for="(item,index) in tabs" :key="index" :title="item.title" >
-         <div class="search-input">
-               <Search placeholder="请输入搜索关键词" v-model="value" />
-          </div>
+         
          <div class="content" v-if="index==0">
              
              <Swipe :autoplay="3000" :height='200'>
@@ -97,6 +97,10 @@ export default {
     toShopList(index,title){
       this.tabIndex =index;
       
+    },
+    toSearch(){
+      console.log(1)
+      this.$router.push('/Search')
     }
   },
   created() {
