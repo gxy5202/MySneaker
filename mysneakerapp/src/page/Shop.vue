@@ -3,10 +3,11 @@
     
     <Tabs @click="toShopList" animated swipeable sticky color="black">
       <Tab class='tab' v-for="(item,index) in tabs" :key="index" :title="item.title" >
-         <div v-if="index==0">
-             <div class="search-input">
+         <div class="search-input">
                <Search placeholder="请输入搜索关键词" v-model="value" />
-             </div>
+          </div>
+         <div class="content" v-if="index==0">
+             
              <Swipe :autoplay="3000" :height='200'>
               <Swipe-item v-for="(image, index) in banner" :key="index">
                 <img v-lazy="image" />
@@ -18,16 +19,19 @@
             <!-- 显示列表 -->
 
          </div>
-         <div v-if="index==1">
+         <div class="content" v-if="index==1">
             <Goods-Loading v-if="index==1" :tabIndex="1"></Goods-Loading>
          </div>
-         <div v-if="index==2">
+         <div class="content" v-if="index==2">
+          
             <Goods-Loading v-if="index==2" :tabIndex="2"></Goods-Loading>
          </div>
-         <div v-if="index==3">
+         <div class="content" v-if="index==3">
+           
             <Goods-Loading v-if="index==3" :tabIndex="3"></Goods-Loading>
          </div>
-         <div v-if="index==4">
+         <div class="content" v-if="index==4">
+           
             <Goods-Loading v-if="index==4" :tabIndex="4"></Goods-Loading>
          </div>
       </Tab>
@@ -120,6 +124,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
+.content {
+  margin-top:40px;
+}
 .tab {
   &:hover {
     font-size: 30px;
@@ -128,7 +135,10 @@ export default {
 }
 .search-input {
   width: 100%;
-  background: red;
+  position: fixed;
+  top:40px;
+  border: none;
+  z-index: 999;
 }
       
 </style>

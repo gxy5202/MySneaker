@@ -1,7 +1,7 @@
 <template>
   <div class="good-item">
     <!-- 返回 -->
-    <nav-bar left-text="返回" left-arrow @click-left="onClickLeft"/>
+    <nav-bar left-text="返回" left-arrow @click-left="onClickLeft" fixed/>
     <!-- 轮播 -->
     <swipe :autoplay="3000" indicator-color="white">
       <swipe-item>
@@ -35,7 +35,7 @@
       <Icon name="arrow"></Icon>
     </div>
     <popup class="good-size1" :overlay="false" position="bottom" v-model="goodSize">
-      <Icon @click="goodsize()" class="size-icon" name="cross" size="30px"></Icon>
+      <Icon @click="goodsize()" class="size-icon" name="cross" size="20px"></Icon>
       <div class="good-size1-good">
         <img :src="good.g_cover" alt>
         <div>
