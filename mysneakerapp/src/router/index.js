@@ -16,6 +16,7 @@ import Recommend from "@/page/Recommend";
 import goodItem from "@/page/goodItem";
 import SearchPage from "@/page/SearchPage";
 import order from "@/page/order";
+import userAddress from "@/page/userAddress";
 Vue.use(Router);
 
 export default new Router({
@@ -110,6 +111,12 @@ export default new Router({
       name: "order",
       meta: { index: 3 },
       component: order
+    },
+    {
+      path: "/userAddress",
+      name: "userAddress",
+      meta: { index: 4 },
+      component: userAddress
     }
   ]
 });

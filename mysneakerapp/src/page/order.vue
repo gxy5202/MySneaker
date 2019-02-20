@@ -2,9 +2,23 @@
   <div class="order">
     <nav-bar title="商品订单" left-arrow @click-left="onClickLeft"/>
     <!-- 收货人信息 -->
-    <div class="consignee">
-      <Icon name="add-o" size='50px'></Icon>
+    <div class="consignee" @click="address()">
+      <Icon name="add-o" size="50px"></Icon>
       <span>设置地址</span>
+    </div>
+    <!-- 商品信息 -->
+    <div class="good">
+      <div class="good-message">
+        <img :src="good.g_img" alt>
+        <div>
+          <span>{{good.g_name}}</span>
+          <div>
+            <span>{{good.g_size}}</span>
+            <span>数量*1</span>
+            <span>{{good.g_price}}</span>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- 提交订单 -->
     <div class="over-order">
@@ -45,6 +59,11 @@ export default {
   methods: {
     onClickLeft() {
       this.$router.go(-1);
+    },
+    address() {
+      this.$router.push({
+        name: "userAddress"
+      });
     }
   },
   created() {
@@ -56,10 +75,15 @@ export default {
 <style lang="scss" scoped>
 .consignee {
   height: 80px;
-  border: 1px solid black;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  color: gray;
+  padding-left: 50px;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 5px solid rgb(231, 231, 231);
+  span {
+    margin-left: 20px;
+  }
 }
 // 确认订单
 .over-order {
@@ -91,6 +115,31 @@ export default {
     height: 100%;
     background-color: black;
     border: none;
+  }
+}
+// 商品数据
+.good {
+  .good-message {
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    > img {
+      height: 60px;
+      width: 60px;
+      object-fit: cover;
+    }
+    > div {
+      display: flex;
+      flex-direction: column;
+      height: 60px;
+      width: calc(100% - 90px);
+      font-size: 12px;
+      >div{
+        
+      }
+    }
   }
 }
 </style>
