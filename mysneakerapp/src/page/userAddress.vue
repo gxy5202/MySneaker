@@ -29,11 +29,8 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
     },
-    onSave() {
-      console.log(1);
-      // console.log(this.$store.state.address);
-      // this.$store.state.address = { la: 1 };
-      // console.log(this.$store.state.address);
+    onSave(content) {
+      this.$store.commit("changeAddress", content);
     }
   }
 };
