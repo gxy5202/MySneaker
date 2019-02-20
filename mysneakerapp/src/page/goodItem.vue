@@ -79,7 +79,7 @@
     <goods-action>
       <goods-action-mini-btn icon="cart-o" text="我的购买" @click="order"/>
       <goods-action-mini-btn icon="star-o" text="收藏" @click="shoucang"/>
-      <goods-action-big-btn primary text="立即购买" @click="buy"/>
+      <goods-action-big-btn class="buy" primary text="立即购买" @click="buy"/>
     </goods-action>
     <buy :prop="buyState" @buy="order()"></buy>
   </div>
@@ -94,7 +94,8 @@ import {
   Popup,
   GoodsAction,
   GoodsActionBigBtn,
-  GoodsActionMiniBtn
+  GoodsActionMiniBtn,
+  Dialog
 } from "vant";
 import buy from "./my/buy";
 export default {
@@ -119,7 +120,8 @@ export default {
     GoodsAction,
     GoodsActionBigBtn,
     GoodsActionMiniBtn,
-    buy
+    buy,
+    Dialog
   },
   methods: {
     onClickLeft() {
@@ -136,17 +138,45 @@ export default {
       this.size = i + " 码";
       this.sizeItem = i;
     },
-    buy() {},
+    buy() {
+      if (!this.$store.state.isLogin) {
+        Dialog.confirm({
+          title: "未登录，是否跳转登录页面？"
+        })
+          .then(() => {
+            // on confirm
+            this.$router.push({ name: "SignUp" });
+          })
+          .catch(() => {
+            // on cancel
+          });
+      } else if (this.size == "") {
+        this.goodSize = !this.goodSize;
+      } else {
+        this.$router.push({
+          name: "order",
+          query: {
+            g_id: this.good.g_id,
+            g_name: this.good.g_name,
+            g_img: this.good.g_cover,
+            g_size: this.size,
+            g_price: this.good.g_newPrice
+          }
+        });
+      }
+    },
     shoucang() {}
   },
   created() {
     this.$store.state.tabShow = false;
     this.good = this.$route.query;
-    console.log(this.good);
   }
 };
 </script>
 <style lang="scss" scoped>
+.good-item {
+  padding-top: 50px;
+}
 // 轮播图
 .swdiv {
   height: 180px;
@@ -250,5 +280,9 @@ export default {
   img {
     width: 100%;
   }
+}
+.buy {
+  background-color: rgb(0, 0, 0);
+  border: none;
 }
 </style>

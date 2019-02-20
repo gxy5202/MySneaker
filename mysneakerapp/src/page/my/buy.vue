@@ -45,9 +45,6 @@ export default {
     NavBar,
     item
   },
-  created(){
-    console.log(1)
-  },
   methods: {
     onClickLeft() {
       this.$emit("buy");
@@ -62,16 +59,16 @@ export default {
   width: 100%;
   .item {
     background-color: rgb(255, 253, 253);
-    p{
+    p {
       margin: 0;
       display: flex;
       justify-content: flex-end;
       border-top: 0.5px solid rgb(207, 206, 206);
-      span{
+      span {
         border: 0.5px solid rgb(134, 134, 134);
         padding: 5px 10px;
         margin: 5px 20px;
-        &:active{
+        &:active {
           color: black;
           border: 0.5px solid black;
         }
