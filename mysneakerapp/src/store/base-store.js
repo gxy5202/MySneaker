@@ -9,7 +9,9 @@ const store = new Vuex.Store({
         uid:"",
         tabShow:true,
         tabActive:0,
-        tid:''
+        tid:'',
+        searchValue:'',
+        searchList:[]
     },
     mutations:{
         loginState(state,status,aid){
@@ -34,6 +36,12 @@ const store = new Vuex.Store({
         },
         followUser(state,item){
             state.tid = item
+        },
+        searchVal(state,item){
+            state.searchValue = item
+        },
+        searchList(state,item){
+            state.searchList = item
         }
     },
     

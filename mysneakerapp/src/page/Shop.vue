@@ -3,7 +3,7 @@
     <div class="search-input">
         <Search placeholder="请输入搜索关键词"  @focus="toSearch"/>
     </div>
-    <Tabs @click="toShopList" animated swipeable sticky color="black">
+    <Tabs @click="toShopList" animated swipeable sticky color="black" class="tabs">
       <Tab class='tab' v-for="(item,index) in tabs" :key="index" :title="item.title" >
          
          <div class="content" v-if="index==0">
@@ -15,24 +15,24 @@
             </Swipe>
 
             <!-- 显示列表 -->
-            <Goods-Loading v-if="index==0" :tabIndex="0"></Goods-Loading>
+            <Goods-Loading v-if="index==0" :tabIndex="0" :dataShow="true"></Goods-Loading>
             <!-- 显示列表 -->
 
          </div>
          <div class="content" v-if="index==1">
-            <Goods-Loading v-if="index==1" :tabIndex="1"></Goods-Loading>
+            <Goods-Loading v-if="index==1" :tabIndex="1" :dataShow="true"></Goods-Loading>
          </div>
          <div class="content" v-if="index==2">
           
-            <Goods-Loading v-if="index==2" :tabIndex="2"></Goods-Loading>
+            <Goods-Loading v-if="index==2" :tabIndex="2" :dataShow="true"></Goods-Loading>
          </div>
          <div class="content" v-if="index==3">
            
-            <Goods-Loading v-if="index==3" :tabIndex="3"></Goods-Loading>
+            <Goods-Loading v-if="index==3" :tabIndex="3" :dataShow="true"></Goods-Loading>
          </div>
          <div class="content" v-if="index==4">
            
-            <Goods-Loading v-if="index==4" :tabIndex="4"></Goods-Loading>
+            <Goods-Loading v-if="index==4" :tabIndex="4" :dataShow="true"></Goods-Loading>
          </div>
       </Tab>
     </Tabs>
@@ -51,6 +51,7 @@ export default {
       loading: false,
       finished: false,
       tabIndex:'',
+      
       banner:[
         'http://img4.imgtn.bdimg.com/it/u=3766374770,2731064724&fm=26&gp=0.jpg',
         'http://img2.yonex.cn/image/2016/01/12/569479077d747.jpg',
@@ -58,7 +59,7 @@ export default {
         'http://img.zcool.cn/community/01ddc3583fbc68a8012060c89be872.jpg@1280w_1l_2o_100sh.jpg'
 
       ],
-      value:'',
+      
       loadList:[],
       dataList:[],
       goods:[]
@@ -99,8 +100,8 @@ export default {
       
     },
     toSearch(){
-      console.log(1)
-      this.$router.push('/Search')
+      this.$router.push('/SearchPage');
+      this.$store.commit('tabState',1);
     }
   },
   created() {
@@ -131,6 +132,7 @@ export default {
 .content {
   margin-top:40px;
 }
+
 .tab {
   &:hover {
     font-size: 30px;
@@ -140,9 +142,9 @@ export default {
 .search-input {
   width: 100%;
   position: fixed;
-  top:40px;
+  top:43px;
   border: none;
-  z-index: 999;
+  z-index: 99;
 }
       
 </style>

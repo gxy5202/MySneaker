@@ -1,24 +1,33 @@
 <template>
   <div class="Search" >
-    <div class="search-input">
-        <Search placeholder="请输入搜索关键词" v-model="searchValue" >
-            <!-- <div slot="action" @click="onSearch">搜索</div> -->
-        </Search>
+    <!-- <form action="/">
+      <Search class="search-input"
+        v-model="searchValue"
+        placeholder="请输入搜索关键词"
+        show-action
+        @search="onSearch"
+        @cancel="onCancel"
+        
+      />
+    </form> -->
+    <div class="searchHistory">
+
+    </div>
+    <div class="search-content" >
+       <Goods-Loading :tabIndex="-1" :show="false"></Goods-Loading>
     </div>
   </div>
 </template>
 
 <script>
 
-
+import GoodsLoading from '../components/GoodsLoading';
 import Vue from 'vue';
-
-
 
 import {
   Icon,
-  
-  Search
+  Search,
+  NavBar,
 } from "vant";
 
 export default {
@@ -26,7 +35,10 @@ export default {
   //props:['headData'],
   data() {
     return {
-      searchValue:''
+      searchHistory:[],
+      loadList:[],
+      reload:false,
+      
     };
   },
   computed: {
@@ -36,13 +48,8 @@ export default {
     
   },
   methods: {
-    onLoad() {
-      // 异步更新数据
-    },
     
-    onSearch(){
     
-    }
     
   },
   
@@ -54,8 +61,9 @@ export default {
   },
   components: {
     Icon,
-    
-    Search
+    NavBar,
+    Search,
+    GoodsLoading
   }
 };
 </script>
@@ -71,6 +79,11 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
-
+.search-input {
+  input{
+    background: red;
+  }
+  
+}
   
 </style>
