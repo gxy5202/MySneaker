@@ -4,15 +4,15 @@
     <address-edit
       :area-list="areaList"
       show-postal
-      show-delete
-      show-set-default
       show-search-result
       :search-result="searchResult"
+      @save="onSave"
     />
   </div>
 </template>
 <script>
 import { AddressEdit, NavBar } from "vant";
+import { area } from "../components/area";
 export default {
   name: "userAddress",
   components: {
@@ -21,16 +21,27 @@ export default {
   },
   data() {
     return {
-      areaList: [],
+      areaList: area,
       searchResult: []
     };
   },
   methods: {
     onClickLeft() {
       this.$router.go(-1);
+    },
+    onSave() {
+      console.log(1);
+      // console.log(this.$store.state.address);
+      // this.$store.state.address = { la: 1 };
+      // console.log(this.$store.state.address);
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.van-address-edit {
+  span {
+    color: aqua !important;
+  }
+}
 </style>
