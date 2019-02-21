@@ -235,6 +235,8 @@ export default {
     flex-wrap: wrap;
     width: 100%;
     height: 300px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     .two {
       width: 49%;
       height: 100%;

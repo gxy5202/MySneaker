@@ -13,29 +13,81 @@
     <!-- 图片上传 -->
     <div class="upload">
         <div class="up-review" v-for="(item,index) in upImgList" :key="index" >
-            <img  :src="item" alt="">
+            <div class="overflow">
+                <img  :src="item" alt="">
+            </div>
+            <Icon class="clear" name="clear" @click="clear(index)"/>
         </div>
         <Uploader  class="uploader" :after-read="onRead" :disabled="isUp" accept="image/gif, image/jpeg" multiple @oversize="oversize">
-            <img class="upIcon" src="../assets/imgloader.png" alt="upload" ref="upimg">
+            <Icon class="upIcon" name="photo" size="40px"/>
         </Uploader>
+        
     </div>
-
-    <img :src="download" alt="">
+    <div class="position">
+        <Icon name="location-o" size="25px"/>
+        <span>{{position}}
+            <Loading v-if="position == ''" color="black" size="20px"/>
+        </span>
+        <van-switch v-model="checked" />
+    </div>
+    <el-amap class="amap-box" vid="'amap-vue'" :center="center" :plugin="plugin"></el-amap>
   </div>
 </template>
 
 <script>
-import { NavBar, Uploader, Icon , Button, Field, CellGroup ,Toast,Dialog } from 'vant';
+import Vue from 'vue' ;
+import VueAMap from 'vue-amap';
+import { NavBar, Uploader, Icon , Button, Field, CellGroup ,Toast,Dialog,Loading,Switch } from 'vant';
+Vue.use(VueAMap);
 export default {
   name: 'Upload',
   data () {
+    let self = this;
     return {
-
+        center: [112,34],
+            //lng: 0,
+            //lat: 0,
+            
+            loaded: false,
+            plugin: [{
+              enableHighAccuracy: true,//是否使用高精度定位，默认:true
+              timeout: 100,          //超过10秒后停止定位，默认：无穷大
+              maximumAge: 0,           //定位结果缓存0毫秒，默认：0
+              convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+              showButton: true,        //显示定位按钮，默认：true
+              buttonPosition: 'RB',    //定位按钮停靠位置，默认：'LB'，左下角
+              showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
+              showCircle: true,        //定位成功后用圆圈表示定位精度范围，默认：true
+              panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
+              zoomToAccuracy:true,//定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：f
+              extensions:'all',
+              pName: 'Geolocation',
+              events: {
+                init(o) {
+                  // o 是高德地图定位插件实例
+                  o.getCurrentPosition(function(status, result){
+                    console.log(result.addressComponent.city);
+                    if (result && result.position) {
+                      // this.lng = result.position.lng;
+                      // this.lat = result.position.lat;
+                      //self.center = result.addressComponent.city;
+                      self.position =result.addressComponent.city
+                      console.log(self.center)
+                      self.loaded = true;
+                      //self.$nextTick();
+                    }
+                  });
+                },
+                
+              }
+            }],
       text:'',
       isUp:false,
       upImgList:[],
       Postings:{},
-      download:""
+      download:"",
+      position:'',
+      checked:true
     }
   },
   computed:{
@@ -75,6 +127,7 @@ export default {
         this.Postings = {
             img:this.upImgList,
             text:this.text,
+            city:this.position,
             uid:this.$store.state.uid
         }
         if(this.upImgList.length == 0){
@@ -99,6 +152,9 @@ export default {
             })
         }
         
+    },
+    clear(index){
+        this.upImgList.splice(index,1)
     }
     
   },
@@ -110,7 +166,9 @@ export default {
     Field,
     CellGroup,
     Toast,
-    Dialog
+    Dialog,
+    Loading,
+    Switch
   }
 }
 </script>
@@ -135,29 +193,55 @@ export default {
         margin: 50px auto 0 auto;
         width: 95%;
         max-width:95%;
+        padding-bottom: 5px;
+        border-bottom: 1px solid rgba(0,0,0,0.06);
         .up-review {
-            overflow: hidden;
+            position: relative;
+            
             text-align: center;
+            margin: 5px;
             width: 60px;
             height: 60px;
+            border: 1px solid rgba(0,0,0,0.5);
             
-            img {
-                width:100%;
+            .overflow {
+                width: 100%;
                 height:100%;
-                margin:3px;
-                object-fit:cover;
+                overflow: hidden;
+                img {
+                    width:100%;
+                    height:100%;
+                    object-fit:cover;
+                }
+            }
+            .clear {
+                position: absolute;
+                top:-10px;
+                right:-10px;
+                z-index: 999;
             }
         }
         .uploader {
+            border: 1px solid rgba(0,0,0,0.2);
             margin:3px;
-            .upIcon {
-                
-                width: 60px;
-                height: 60px;
-                
-            }
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
         }
         
-    }
+        
+    };
+    .position {
+            width:100%;
+            height: 30px;
+            margin-top: 5px;
+            padding-left: 5px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+        }
     
 </style>

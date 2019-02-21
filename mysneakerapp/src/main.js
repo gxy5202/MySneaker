@@ -8,7 +8,8 @@ import store from './store/base-store';
 import moment from 'moment';
 import VueAMap from 'vue-amap';
 Vue.config.productionTip = false
-
+import { Switch } from 'vant'
+Vue.component('van-switch', Switch)
 Vue.use(VueAMap);
 VueAMap.initAMapApiLoader({
   key: 'fe0874d03093a00ef0e0cc570efa48f6',
