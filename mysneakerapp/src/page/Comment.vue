@@ -11,7 +11,7 @@
     <div class="dynamic">
             <User-Head class="user-head" :headData="posting"></User-Head>
             
-            <div class="content-img" type="flex" justify="space-between">
+            <div  justify="space-between" :class="posting.p_imgList.length == 2?'two-img':'content-img'">
                 <img v-lazy="imgUrl" :class="posting.p_imgList.length == 1 ? 'one':posting.p_imgList.length == 2 ? 'two': posting.p_imgList.length == 3 ? 'three':'four'" v-for="(imgUrl,ind) of posting.p_imgList" :key="ind" :src="imgUrl" @click.stop="preview(posting.p_imgList,ind)">
             </div>
             
@@ -19,11 +19,18 @@
                 <div>{{posting.p_text}}</div>
             </div>
             <div class="bottom-action">
-            <div class="bottom-action-left">
-                <Icon size="25px" name="chat-o"></Icon>
-                <span>{{posting.p_comment}}</span>
-            </div>
-            <Like class="bottom-action-right" :likeData="posting"></Like>
+              <div class="bottom-action-left">
+                <div class="left-icon" v-if="posting.p_city != null">
+                  <Icon size="25px" name="location-o"></Icon>
+                  <span>{{posting.p_city}}</span>
+                </div>
+                <div class="left-icon">
+                  <Icon size="25px" name="chat-o"></Icon>
+                  <span>{{posting.p_comment}}</span>
+                </div>
+                
+              </div>
+              <Like class="bottom-action-right" :likeData="posting"></Like>
             </div>
         </div>
         <p class="title">全部评论</p>
@@ -31,7 +38,7 @@
             
             
               <div class="comment-view" v-for='(item,index) of commentList' :key="index" >
-                <div class="head-img">
+                <div class="head-img" @click="toUser(item.uid)">
                   <img class="user-img" v-lazy="item.u_img" :src="item.u_img">
                       <div class="user-info">
                         <div class="user-name">{{item.u_nick_name}}</div>
@@ -135,6 +142,23 @@ export default {
     },
     lowHeight(){
       this.isShow = false;
+    },
+    toUser(uid){
+      if(uid == this.$store.state.uid){
+        this.$router.push('/My');
+        this.$store.commit('tabState',0);
+        this.$store.commit('tabActive',3);
+      }else{
+
+        this.$router.push({
+          name: 'FollowUser',
+          query: {
+            uid: uid
+          }
+        })
+        this.$store.commit('tabState',1);
+        this.$store.commit('followUser',uid);
+      }
     },
     commentConfirm(){
       let uid = this.$store.state.uid;
@@ -253,7 +277,18 @@ export default {
       }
     }
   }
-  
+  .two-img{
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 150px;
+    .two {
+      width: 49%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
   .content-img {
     overflow: hidden;
     display: flex;
@@ -322,7 +357,12 @@ export default {
     @include flex-between();
     padding: 5px;
     .bottom-action-left {
+      .left-icon {
+        display: flex;
+        align-items: center;
+        margin-right: 5px;
 
+      }
     }
     .bottom-action-left,
     .bottom-action-right {

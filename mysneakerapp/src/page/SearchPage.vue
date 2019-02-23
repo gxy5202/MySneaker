@@ -14,7 +14,7 @@
 
     </div>
     <div class="search-content" >
-       <Goods-Loading :tabIndex="-1" :show="false"></Goods-Loading>
+       <Goods-Loading :tabIndex="-1" :dataShow="false"></Goods-Loading>
     </div>
   </div>
 </template>

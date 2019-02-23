@@ -5,13 +5,36 @@
       
     </Nav-bar>
     <!-- 顶部导航栏 -->
-     <div class="amap-wrapper">
-      <el-amap class="amap-box" vid="'amap-vue'" :center="center" :plugin="plugin"></el-amap>
-      
+    
+    <div class="select">
+      <div class="attend">
+        <Icon class="shape" name="medel" size="20px" color="white" />
+        <div class="intro">签到</div>
+      </div>
+      <div class="attend">
+        <Icon class="shape" name="new" size="20px"  color="white"/>
+        <div class="intro">最新</div>
+      </div>
+      <div class="attend">
+        <Icon class="shape" name="hot" size="20px"  color="white"/>
+        <div class="intro">最热</div>
+      </div>
+      <div class="attend">
+        <Icon class="shape" name="chat" size="20px" color="white" />
+        <div class="intro">讨论最多</div>
+      </div>
     </div>
-    <div class="add">
+    <!-- 显示列表 -->
+    <div>
+      您的位置：{{city}}
+    </div>
 
+    <map-list :city="city"></map-list>
+    <!-- 显示列表 -->
+    <div class="amap-wrapper">
+      <el-amap class="amap-box" vid="'amap-vue'" :center="center" :plugin="plugin"></el-amap>
     </div>
+    
   </div>
 </template>
 
@@ -19,6 +42,7 @@
 ;
 import Vue from 'vue' ;
 import VueAMap from 'vue-amap';
+import MapList from '../components/MapList';
 import { Tabbar, TabbarItem, NavBar, Uploader, Icon ,List } from 'vant';
 Vue.use(VueAMap);
 
@@ -28,7 +52,7 @@ export default {
     let self = this;
     return {
       
-      mapStyle: 'amap://styles/a13ffb721a4fb7567b412d5b6e5e4ff6',
+      city:'',
       center: [112,34],
             //lng: 0,
             //lat: 0,
@@ -56,7 +80,7 @@ export default {
                       // this.lng = result.position.lng;
                       // this.lat = result.position.lat;
                       self.center = [result.position.lng, result.position.lat];
-                      
+                      self.city = result.addressComponent.city;
                       console.log(self.center)
                       self.loaded = true;
                       //self.$nextTick();
@@ -75,8 +99,7 @@ export default {
                 // }
               }
             }],
-      msg: 'Welcome to Your Vue.js App',
-      active:0,
+      
       list: [],
       loading: false,
       finished: false,
@@ -89,6 +112,9 @@ export default {
     onLoad() {
       // 异步更新数据
      
+
+        
+     
     }
   },
   components:{
@@ -96,32 +122,42 @@ export default {
     NavBar,
     Uploader,
     Icon,
-    List
+    List,
+    MapList
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
-
-.map{
-  height: 100%;
-  .amap-wrapper {
-    
-    height: 0;
-  }
-  .add{
-    position: absolute;
-    width: 50px;
-    height: 50px;
+.map {
+  padding-top: 45px;
+  .select {
     margin:auto;
-    left: 0;
-    right:0;
-    border-radius: 50%;
-    background: red;
-    bottom:50px;
     z-index: 999;
+    width:95%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .shape {
+      line-height: 50px;
+      flex-wrap: wrap;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.8);
+      height: 50px;
+      width: 50px;
+      color:white;
+      font-size: 8px;
+    }
+    .intro {
+      font-size: 6px;
+    }
   }
 }
+
+
+  
+
 
 </style>

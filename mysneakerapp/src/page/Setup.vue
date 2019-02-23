@@ -1,9 +1,11 @@
 <template>
   <div class="setup">
     <!-- 返回上一页 -->
-    <Icon @click="fanhui()" class="icon1 fanhui" size="30px" name="arrow-left"></Icon>
+    
     <!-- 顶部 -->
-    <Nav-bar title="个人信息" fixed></Nav-bar>
+    <Nav-bar title="个人信息" fixed>
+      <Icon @click="fanhui()" size="20px" name="arrow-left" color="black" slot="left"></Icon>
+    </Nav-bar>
     <!-- 顶部 -->
     <!-- 信息修改 -->
     <!-- 头像 -->
@@ -243,7 +245,8 @@ export default {
 </script>
 <style scoped lang="scss">
 .setup {
-  margin-top: 46px;
+  //margin-top: 46px;
+  padding-top: 46px;
   > div {
     border-bottom: 1px solid rgb(219, 219, 219);
   }
@@ -255,16 +258,9 @@ export default {
     color: #000;
     font-size: 14px;
   }
-  .icon {
-    margin-right: 20px;
-  }
+  
   // 返回上一页
-  .fanhui {
-    position: fixed;
-    z-index: 99;
-    top: 10px;
-    left: 20px;
-  }
+  
   //   头像
   .img {
     display: flex;

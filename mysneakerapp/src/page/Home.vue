@@ -12,7 +12,7 @@
       <div class="dynamic" v-for="(item,index) of loadList" :key="index" @click.stop="toComment(item)">
         <User-Head class="user-head" :headData="item"></User-Head>
 
-        <div class="content-img" type="flex" justify="space-between">
+        <div  type="flex" justify="space-between" :class="item.p_imgList.length == 2?'two-img':'content-img'">
           <img v-lazy="imgUrl" :class="item.p_imgList.length == 1 ? 'one':item.p_imgList.length == 2 ? 'two': item.p_imgList.length == 3 ? 'three':'four'" v-for="(imgUrl,ind) of item.p_imgList" :key="ind" :src="imgUrl" @click.stop="preview(item.p_imgList,ind)">
         </div>
         
@@ -21,8 +21,15 @@
         </div>
         <div class="bottom-action">
           <div class="bottom-action-left">
-            <Icon size="25px" name="chat-o"></Icon>
-            <span>{{item.p_comment}}</span>
+            <div class="left-icon" v-if="item.p_city != null">
+              <Icon size="25px" name="location-o"></Icon>
+              <span>{{item.p_city}}</span>
+            </div>
+            <div class="left-icon">
+              <Icon size="25px" name="chat-o"></Icon>
+              <span>{{item.p_comment}}</span>
+            </div>
+            
           </div>
           <Like class="bottom-action-right" :likeData="item"></Like>
         </div>
@@ -223,11 +230,23 @@ export default {
   .dynamic {
     margin: 10px auto;
     background: rgb(255, 255, 255);
+    padding-bottom: 3px;
     &:last-child {
       margin-bottom: 0;
     }
   }
-  
+  .two-img{
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 150px;
+    .two {
+      width: 49%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
   .content-img {
     overflow: hidden;
     display: flex;
@@ -297,8 +316,14 @@ export default {
   .bottom-action {
     @include flex-between();
     padding: 5px;
-
+    
     .bottom-action-left {
+      .left-icon {
+        display: flex;
+        align-items: center;
+        margin-right: 5px;
+
+      }
     }
     .bottom-action-left,
     .bottom-action-right {

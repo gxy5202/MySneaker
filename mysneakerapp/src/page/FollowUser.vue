@@ -2,7 +2,7 @@
   <div class="follow-box">
     <nav-bar left-text="返回" left-arrow @click-left="onClickLeft"/>
     <top :prop="user.message"></top>
-    <postings v-for="i in user.postings" :key="i.id" :prop="i"></postings>
+    <postings v-for="i in user.postings" :key="i.id" :prop="i" :user='user'></postings>
   </div>
 </template>
 <script>
@@ -35,6 +35,7 @@ export default {
   created: function() {
     let uid=this.$route.query
     axios.post("https://www.gooomi.cn/user_info", uid).then(res => {
+      console.log(res.data)
       this.user = {
         message:res.data.user[0],
         postings:res.data.postings

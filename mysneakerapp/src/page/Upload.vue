@@ -24,11 +24,15 @@
         
     </div>
     <div class="position">
-        <Icon name="location-o" size="25px"/>
-        <span>{{position}}
-            <Loading v-if="position == ''" color="black" size="20px"/>
-        </span>
-        <van-switch v-model="checked" />
+        <div class="po-left" >
+            <Icon name="location-o" size="25px" v-if="checked==true"/>
+            <span>
+                <span v-if="checked==true">{{position}}</span>
+                <span v-if="checked==false">不发布定位</span>
+                <Loading v-if="position == ''" color="black" size="20px"/>
+            </span>
+        </div>
+        <van-switch class="po-right" v-model="checked" active-color="rgba(0,0,0,0.8)"/>
     </div>
     <el-amap class="amap-box" vid="'amap-vue'" :center="center" :plugin="plugin"></el-amap>
   </div>
@@ -136,7 +140,14 @@ export default {
                 }).then(() => {
                 // on close
                 });
-        }else{
+        }else if(this.text.trim() == ''){
+             Dialog.alert({
+                message: '请输入文字内容'
+                }).then(() => {
+                // on close
+                });
+        }
+        else{
             axios.post('https://www.gooomi.cn/upload',this.Postings)
             .then((res)=>{
                 console.log(res);
@@ -149,6 +160,9 @@ export default {
                     this.$router.back(-1);
                     this.$store.commit('tabState',0);
                 }
+            })
+            .catch(error=>{
+                console.log(error.response)
             })
         }
         
@@ -180,6 +194,10 @@ export default {
         align-items: center;
         flex-wrap: wrap;
     }
+    .wrapper {
+        overflow: hidden;
+        box-sizing: border-box;
+    }
     .text-area {
         margin: 50px auto 0 auto;
         width: 95%;
@@ -195,6 +213,7 @@ export default {
         max-width:95%;
         padding-bottom: 5px;
         border-bottom: 1px solid rgba(0,0,0,0.06);
+        
         .up-review {
             position: relative;
             
@@ -235,13 +254,22 @@ export default {
         
     };
     .position {
+         
             width:100%;
-            height: 30px;
+            height: 50px;
             margin-top: 5px;
-            padding-left: 5px;
+            padding:5px;
             box-sizing: border-box;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            .po-left {
+                display: flex;
+                align-items: center;
+            }
+            .po-right{
+                margin-right: 5px;
+            }
         }
     
 </style>
