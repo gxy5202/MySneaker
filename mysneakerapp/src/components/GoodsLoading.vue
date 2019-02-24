@@ -15,7 +15,11 @@
                       <div class="goods-item" >
                         <img v-lazy='item.g_cover' :src="item.g_cover" alt="" >
                         <p>{{item.g_name}}</p>
-                        <span>￥{{item.g_newPrice}}</span>
+                        <div class='goods-price'>
+                          <span>￥{{item.g_newPrice}}</span>
+                          <span>{{item.g_collection}}人收藏</span>
+                        </div>
+                        
                       </div>
                 </div>
             </List>
@@ -222,6 +226,11 @@ export default {
       span {
         font-weight: bold;
         text-align: left;
+      }
+      .goods-price{
+         display: flex;
+         justify-content: space-between;
+         font-size: 10px;
       }
       img {
         width: 100%;
