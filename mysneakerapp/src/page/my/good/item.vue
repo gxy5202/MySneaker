@@ -1,11 +1,24 @@
 <template>
   <div class="item">
-    <div :style="bg" class="img"></div>
-    <div class="message">
-      <span class="name">{{prop.name}}</span>
-      <div class="price">
-        <span>￥{{prop.price}}</span>
-        <span>{{prop.size}}码</span>
+    <div>
+      <img :src="prop.o_cover" alt>
+      <div>
+        <span>{{prop.o_good_name}}</span>
+        <div>
+          <span>{{prop.o_size}}</span>
+          <span>数量*{{prop.o_num}}</span>
+          <span>{{prop.o_price}}</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div>
+        <span></span>
+        <span></span>
+      </div>
+      <div>
+        <span></span>
+        <span></span>
       </div>
     </div>
   </div>
@@ -15,11 +28,6 @@ import { Button } from "vant";
 export default {
   name: "item",
   props: ["prop"],
-  computed: {
-    bg() {
-      return `background-image: url(${this.prop.img})`;
-    }
-  },
   components: {
     Button
   }
@@ -27,32 +35,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.item {
-  height: 80px;
-  width: 100%;
-  margin: 5px 0;
-  display: flex;
-  align-items: center;
-  background-color: rgb(255, 253, 253);
-  .img {
-    height: 45px;
-    width: 45px;
-    margin: 15px;
-    background-size: cover;
-  }
-  .message {
-    height: 100%;
-    width: calc(100% - 95px);
-    margin: 0 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    .price{
-        display: flex;
-        justify-content: space-around;
-    }
-  }
-}
 </style>
 
 

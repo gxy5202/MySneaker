@@ -90,10 +90,12 @@ export default {
         address: this.$store.state.userAddress.address,
         areaCode: this.$store.state.userAddress.areaCode,
         gid: this.good.g_id,
+        gimg:this.good.g_img,
         gname: this.good.g_name,
         gsize: this.good.g_size,
         gnum: 1,
-        gprice: this.good.g_price
+        gprice: this.good.g_price,
+        pState: 1
       };
       // console.log(this.$store.state.uid)
       axios.post("https://www.gooomi.cn/order_insert", data).then(res => {

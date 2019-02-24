@@ -6,9 +6,6 @@
       <!-- 关注列表 -->
       <div class="item" v-for="i in item" :key="i.index">
         <item :prop="i"></item>
-        <p>
-          <span>删除订单</span>
-        </p>
       </div>
     </Popup>
   </div>
@@ -21,22 +18,7 @@ export default {
   props: ["prop"],
   data() {
     return {
-      item: [
-        {
-          img:
-            "http://img1.imgtn.bdimg.com/it/u=1694747816,2275605357&fm=214&gp=0.jpg",
-          name: "Nike Blazer Mid 911 没有勾",
-          price: 998,
-          size: 35.5
-        },
-        {
-          img:
-            "http://img1.imgtn.bdimg.com/it/u=1694747816,2275605357&fm=214&gp=0.jpg",
-          name: "Nike Blazer Mid 911 没有勾",
-          price: 998,
-          size: 35.5
-        }
-      ]
+      item: []
     };
   },
   components: {
@@ -55,7 +37,8 @@ export default {
     axios
       .post("https://www.gooomi.cn/order_query", { uid: this.$store.state.uid })
       .then(res => {
-        console.log(res.data);
+        this.item = res.data;
+        console.log(this.item);
       });
   }
 };
