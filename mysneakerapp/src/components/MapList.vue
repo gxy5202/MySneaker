@@ -1,7 +1,10 @@
 <template>
   <div class="map">
     <!-- 顶部导航栏 -->
-    
+    <Nav-bar v-if="index != ''" title="" fixed >
+      <Icon slot="left" name="arrow-left" size="20px" color="black" @click="back"/>
+      
+    </Nav-bar>
     <!-- 顶部导航栏 -->
     
     <!-- 显示列表 -->
@@ -30,6 +33,7 @@ import { Tabbar, TabbarItem, NavBar, Uploader, Icon ,List ,Lazyload} from 'vant'
 
 export default {
   name: 'MapList',
+  props:['index'],
   data () {
     return {
       
@@ -107,25 +111,25 @@ export default {
         
         
         
-        // postings.map((value,index,arr) => {
-        //   if(this.city == value.p_city){
-        //     value.p_imgList = value.p_imgList.split(",");
-        //     if(icon.find(v=>v==value.pid)){
-        //         value.likeState = {
-        //             state: true,
-        //             style: "like"
-        //         }
-        //     }else{
-        //             value.likeState = {
-        //             state: false,
-        //             style: "like-o"
-        //         } 
-        //     }
-        //     this.nearPostings.push(value)
-        //     console.log(2)
-        //   }
+        postings.map((value,index,arr) => {
+          if(this.city == value.p_city){
+            value.p_imgList = value.p_imgList.split(",");
+            if(icon.find(v=>v==value.pid)){
+                value.likeState = {
+                    state: true,
+                    style: "like"
+                }
+            }else{
+                    value.likeState = {
+                    state: false,
+                    style: "like-o"
+                } 
+            }
+            this.nearPostings.push(value)
+            console.log(2)
+          }
           
-        // });
+        });
         //this.loadList = postings;
         this.loadingGet(this.loadList,postings,icon,4);
          
@@ -134,10 +138,20 @@ export default {
       //   //console.log(this.nearPostings);
       //   this.loadingGetSearch(this.loadList,this.nearPostings,6)
       // })
-    }
+    },
+    back(){
+        this.$router.back(-1);
+        this.$store.commit('tabState',0);
+    },
   },
   created() {
-    
+    function compare(property){
+        return function(a,b){
+            var value1 = a[property];
+            var value2 = b[property];
+            return value2 - value1;
+        }
+    }
     let uid_query = {
         uid:this.$store.state.uid
       };
@@ -145,10 +159,36 @@ export default {
       axios.post("https://www.gooomi.cn/postings",uid_query)
       .then(res => {
         console.log(res.data.list);
-        res.data.list.map(value=>{
-          value.p_imgList = p_imgList.split(',')
-        })
-        this.loadList = res.data.list
+        let postings = res.data.list;
+        if(this.index == 1){
+          postings.sort(compare('p_date'))
+        }else if(this.index == 2){
+          postings.sort(compare('p_like'))
+        }else if(this.index == 3){
+          postings.sort(compare('p_comment'))
+        }
+        
+        postings.map((value,index,arr) => {
+          if(this.$store.state.city == value.p_city){
+            value.p_imgList = value.p_imgList.split(",");
+            if(res.data.icon.find(v=>v==value.pid)){
+                value.likeState = {
+                    state: true,
+                    style: "like"
+                }
+            }else{
+                    value.likeState = {
+                    state: false,
+                    style: "like-o"
+                } 
+            }
+            this.nearPostings.push(value)
+            
+          }
+          
+        });
+        
+        this.loadList = this.nearPostings
       })
   },
   mounted() {
@@ -174,14 +214,16 @@ export default {
 .list {
   width: 95%;
   margin:auto;
+  margin-top: 50px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  padding-bottom: 60px;
   .dynamic {
     width: 33%;
     height: 110px;
     overflow: hidden;
-
+    margin-bottom: 1.5px;
     img {
       width: 100%;
       height: 100%;

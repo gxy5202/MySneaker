@@ -13,6 +13,7 @@
     <div class="searchHistory">
 
     </div>
+    <div class="rock"></div>
     <div class="search-content" >
        <Goods-Loading :tabIndex="-1" :dataShow="false"></Goods-Loading>
     </div>
@@ -85,5 +86,7 @@ export default {
   }
   
 }
-  
+.rock {
+  height: 40px;
+}
 </style>

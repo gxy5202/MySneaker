@@ -371,6 +371,7 @@ export default {
   }
   img {
     width: 100%;
+    object-fit: cover;
   }
   .comment-input {
       position: fixed;

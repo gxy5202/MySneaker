@@ -5,7 +5,7 @@
     </div>
     <Tabs @click="toShopList" animated swipeable sticky color="black" class="tabs">
       <Tab class='tab' v-for="(item,index) in tabs" :key="index" :title="item.title" >
-         
+         <div class="rock"></div>
          <div class="content" v-if="index==0">
              
              <Swipe :autoplay="3000" :height='200'>
@@ -146,5 +146,9 @@ export default {
   border: none;
   z-index: 99;
 }
-      
+.rock {
+  height: 10px;
+  width: 100%;
+  
+}
 </style>

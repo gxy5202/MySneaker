@@ -7,29 +7,29 @@
     <!-- 顶部导航栏 -->
     
     <div class="select">
-      <div class="attend">
+      <div class="attend" >
         <Icon class="shape" name="medel" size="20px" color="white" />
         <div class="intro">签到</div>
       </div>
-      <div class="attend" @click="toList()">
+      <div class="attend" @click="toList(1)">
         <Icon class="shape" name="new" size="20px"  color="white"/>
         <div class="intro" >最新</div>
       </div>
-      <div class="attend">
+      <div class="attend" @click="toList(2)">
         <Icon class="shape" name="hot" size="20px"  color="white"/>
         <div class="intro">最热</div>
       </div>
-      <div class="attend">
+      <div class="attend" @click="toList(3)">
         <Icon class="shape" name="chat" size="20px" color="white" />
         <div class="intro">讨论最多</div>
       </div>
     </div>
     <!-- 显示列表 -->
-    <div>
+    <div class="my-position">
       您的位置：{{this.$store.state.city}}
     </div>
 
-    <map-list ></map-list>
+    <map-list :index="index"></map-list>
     <!-- 显示列表 -->
     <div class="amap-wrapper">
       
@@ -56,11 +56,20 @@ export default {
       loading: false,
       finished: false,
       zoom:16,
+      index:''
       
     }
   },
   methods: {
-    toList(){
+    toList(item){
+      if(item == 1){
+        this.index = 1;
+      }else if(item == 2){
+        this.index = 2;
+      }else if(item == 3){
+        this.index = 3;
+      }
+      
       this.$router.push('/MapList');
       this.$store.commit('tabState',1);
     }
@@ -107,7 +116,9 @@ export default {
     }
   }
 }
-
+.my-position {
+  background: red;
+}
 
   
 
