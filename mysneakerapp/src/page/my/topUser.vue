@@ -49,7 +49,7 @@ export default {
         newTime = new Date();
       let time = newTime - oldTime;
       time = time / 1000 / 60 / 60 / 24;
-      let day = parseInt(7 / 2);
+      let day = parseInt(time);
       return day;
     },
     bg() {

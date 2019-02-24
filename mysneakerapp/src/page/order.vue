@@ -27,7 +27,7 @@
       </div>
       <div class="good-2">
         <span>顺丰速运</span>
-        <span>￥ 23</span>
+        <span>包邮</span>
       </div>
     </div>
     <!-- 保证信息展示 -->
@@ -95,7 +95,7 @@ export default {
         gnum: 1,
         gprice: this.good.g_price
       };
-      console.log(this.$store.state.uid)
+      // console.log(this.$store.state.uid)
       axios.post("https://www.gooomi.cn/order_insert", data).then(res => {
         console.log(res.data);
       });

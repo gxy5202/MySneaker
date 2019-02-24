@@ -49,6 +49,14 @@ export default {
     onClickLeft() {
       this.$emit("buy");
     }
+  },
+  created() {
+    console.log(1);
+    axios
+      .post("https://www.gooomi.cn/order_query", { uid: this.$store.state.uid })
+      .then(res => {
+        console.log(res.data);
+      });
   }
 };
 </script>
