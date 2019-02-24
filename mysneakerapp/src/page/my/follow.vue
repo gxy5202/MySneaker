@@ -47,6 +47,7 @@ export default {
     }
   },
   created() {
+    console.log(123)
     let followId = {
       fid:this.$store.state.uid
     }
