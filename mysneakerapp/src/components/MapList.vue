@@ -5,10 +5,13 @@
     <!-- 顶部导航栏 -->
     
     <!-- 显示列表 -->
-    <div class="dynamic" v-for="(item,index) of loadList" :key="index" @click="toPosting(item)" >
+    <div class="list">
+      <div class="dynamic" v-for="(item,index) of loadList" :key="index" @click="toPosting(item)" >
            <img v-lazy="item.p_imgList[0]" :src="item.p_imgList[0]" alt="">
          
+      </div>
     </div>
+    
     <!-- <List class="list" v-model="loading" :finished="finished" finished-text="没有更多了"  immediate-check @load="onLoad">
       
       
@@ -27,7 +30,6 @@ import { Tabbar, TabbarItem, NavBar, Uploader, Icon ,List ,Lazyload} from 'vant'
 
 export default {
   name: 'MapList',
-  props:['city'],
   data () {
     return {
       
@@ -142,37 +144,12 @@ export default {
       //this.loading = true;
       axios.post("https://www.gooomi.cn/postings",uid_query)
       .then(res => {
-        console.log(res.data);
-        let icon = res.data.icon;
-        let postings = res.data.list;
-        
-        
-        
-        postings.map((value,index,arr) => {
-          if(this.city == value.p_city){
-            value.p_imgList = value.p_imgList.split(",");
-            if(icon.find(v=>v==value.pid)){
-                value.likeState = {
-                    state: true,
-                    style: "like"
-                }
-            }else{
-                    value.likeState = {
-                    state: false,
-                    style: "like-o"
-                } 
-            }
-            this.nearPostings.push(value);
-            
-          }
-          //this.loadList = this.nearPostings
-        });
-        
-        //this.loadList = postings;
-        //this.loadingGet(this.loadList,postings,icon,4);
-         
+        console.log(res.data.list);
+        res.data.list.map(value=>{
+          value.p_imgList = p_imgList.split(',')
+        })
+        this.loadList = res.data.list
       })
-      
   },
   mounted() {
     
@@ -200,10 +177,7 @@ export default {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  
-
-}
-.dynamic {
+  .dynamic {
     width: 33%;
     height: 110px;
     overflow: hidden;
@@ -214,5 +188,8 @@ export default {
       object-fit:cover;
     }
   }
+
+}
+
 
 </style>

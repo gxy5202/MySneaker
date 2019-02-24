@@ -11,9 +11,9 @@
         <Icon class="shape" name="medel" size="20px" color="white" />
         <div class="intro">签到</div>
       </div>
-      <div class="attend">
+      <div class="attend" @click="toList()">
         <Icon class="shape" name="new" size="20px"  color="white"/>
-        <div class="intro">最新</div>
+        <div class="intro" >最新</div>
       </div>
       <div class="attend">
         <Icon class="shape" name="hot" size="20px"  color="white"/>
@@ -26,10 +26,10 @@
     </div>
     <!-- 显示列表 -->
     <div>
-      您的位置：{{city}}
+      您的位置：{{this.$store.state.city}}
     </div>
 
-    <map-list :city="city"></map-list>
+    <map-list ></map-list>
     <!-- 显示列表 -->
     <div class="amap-wrapper">
       
@@ -60,15 +60,14 @@ export default {
     }
   },
   methods: {
-    
+    toList(){
+      this.$router.push('/MapList');
+      this.$store.commit('tabState',1);
+    }
     
   },
   created() {
-    axios.get("https://restapi.amap.com/v3/ip?key=e5cff84db8037d2b62a8f0f82a9b1ec7")
-      .then(res=>{
-          this.city = res.data.city;
-          console.log(res.data)
-      })
+    
   },
   components:{
     

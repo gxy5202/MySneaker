@@ -13,8 +13,7 @@ export default {
   name: 'App',
   data() {
     return {
-        transitionName:'',
-        prop:''
+        transitionName:''
     }
   },
   computed: {
@@ -41,12 +40,17 @@ export default {
     if (sessionStorage.getItem("store") ) {
         this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(sessionStorage.getItem("store"))))
     } 
-
+ 
     //在页面刷新时将vuex里的信息保存到sessionStorage里
     window.addEventListener("beforeunload",()=>{
         sessionStorage.setItem("store",JSON.stringify(this.$store.state))
     })
-
+    
+    axios.get("https://restapi.amap.com/v3/ip?key=e5cff84db8037d2b62a8f0f82a9b1ec7")
+      .then(res=>{
+          this.$store.commit('setCity',res.data.city)
+          console.log(res.data)
+      })
   },
   components:{
     ComTab

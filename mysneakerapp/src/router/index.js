@@ -17,6 +17,7 @@ import goodItem from "@/page/goodItem";
 import SearchPage from "@/page/SearchPage";
 import order from "@/page/order";
 import userAddress from "@/page/userAddress";
+import MapList from "@/components/MapList";
 Vue.use(Router);
 
 export default new Router({
@@ -117,6 +118,12 @@ export default new Router({
       name: "userAddress",
       meta: { index: 4 },
       component: userAddress
+    },
+    {
+      path: "/MapList",
+      name: "MapList",
+      meta: { index: 4 },
+      component: MapList
     }
   ]
 });

@@ -12,7 +12,8 @@ const store = new Vuex.Store({
     tid: "",
     searchValue: "",
     searchList: [],
-    userAddress: {}
+    userAddress: {},
+    city:''
   },
   mutations: {
     loginState(state, status, aid) {
@@ -45,6 +46,9 @@ const store = new Vuex.Store({
     },
     changeAddress(state, message) {
       state.userAddress = message;
+    },
+    setCity(state, item) {
+      state.city = item;
     }
   }
 });
