@@ -11,7 +11,7 @@ export default {
   name: "my-user",
   data() {
     return {
-      item: ["我的帖子", "我赞过的", "我的关注", "我的收藏", "意见反馈"]
+      item: ["我的帖子", "我赞过的", "我的关注"]
     };
   },
   components: {

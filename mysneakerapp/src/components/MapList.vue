@@ -128,7 +128,11 @@ export default {
   },
   created() {
     
-    
+    if(this.prop.to_user_id == this.$store.state.uid){
+        this.$store.commit('followUser',this.prop.from_user_id);
+      }else if(this.prop.from_user_id == this.$store.state.uid){
+        this.$store.commit('followUser',this.prop.to_user_id);
+      }
       
   },
   mounted() {
