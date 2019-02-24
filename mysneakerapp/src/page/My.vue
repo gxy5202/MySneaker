@@ -6,8 +6,8 @@
     <good @buy="buy1()" @shoucang="shoucang1()"></good>
     <!-- 其他功能列表 -->
     <cell-group>
-      <cell @click="mypostings()" title="我的帖子" is-link/>
-      <cell @click="mylove()" title="我赞过的" is-link/>
+      <cell @click="mypostings('my')" title="我的帖子" is-link/>
+      <cell @click="mypostings('like')" title="我赞过的" is-link/>
       <cell @click="fol()" title="我的关注" is-link/>
     </cell-group>
     <Button @click="logout()" class="AllBtn" type="primary">退出登录</Button>
@@ -82,6 +82,9 @@ export default {
     },
     followUser() {
       this.FollowUser = !this.FollowUser;
+    },
+    mypostings(res) {
+      this.$router.push({ name: "mypostings", query: res });
     },
     // 退出登录
     logout() {

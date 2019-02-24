@@ -18,6 +18,7 @@ import SearchPage from "@/page/SearchPage";
 import order from "@/page/order";
 import userAddress from "@/page/userAddress";
 import MapList from "@/components/MapList";
+import mypostings from "@/page/mypostings";
 Vue.use(Router);
 
 export default new Router({
@@ -124,6 +125,12 @@ export default new Router({
       name: "MapList",
       meta: { index: 4 },
       component: MapList
+    },
+    {
+      path: "/mypostings",
+      name: "mypostings",
+      meta: { index: 3 },
+      component: mypostings
     }
   ]
 });

@@ -1,7 +1,7 @@
 <template>
   <div class="follow-box">
     <nav-bar left-text="返回" left-arrow @click-left="onClickLeft"/>
-    <top :prop="user.message"></top>
+    <top :prop="user.message"></top> 
     <postings v-for="i in user.postings" :key="i.id" :prop="i" :user='user'></postings>
   </div>
 </template>

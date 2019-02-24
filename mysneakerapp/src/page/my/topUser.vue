@@ -17,7 +17,7 @@
           <span>{{prop.u_fans}}</span>
           <span>粉丝</span>
         </li>
-        <li @click="like()">
+        <li>
           <span>{{prop.u_like}}</span>
           <span>喜欢</span>
         </li>
@@ -31,7 +31,7 @@ export default {
   props: ["prop"],
   methods: {
     setup() {
-      this.$router.push({ path: '/Setup', query: this.prop});
+      this.$router.push({ path: "/Setup", query: this.prop });
     },
     follow() {
       this.$emit("fol");
