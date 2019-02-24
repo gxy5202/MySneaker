@@ -84,6 +84,7 @@ export default {
       this.FollowUser = !this.FollowUser;
     },
     mypostings(res) {
+      
       this.$router.push({ name: "mypostings", query: res });
     },
     // 退出登录

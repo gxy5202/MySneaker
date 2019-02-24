@@ -5,7 +5,7 @@
       
     </Nav-bar>
     <!-- 顶部导航栏 -->
-    
+    <div class="rock" ></div>
     <div class="select">
       <div class="attend" >
         <Icon class="shape" name="medel" size="20px" color="white" />
@@ -62,13 +62,8 @@ export default {
   },
   methods: {
     toList(item){
-      if(item == 1){
-        this.index = 1;
-      }else if(item == 2){
-        this.index = 2;
-      }else if(item == 3){
-        this.index = 3;
-      }
+     
+      this.index = item
       
       this.$router.push('/MapList');
       this.$store.commit('tabState',1);
@@ -92,7 +87,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
 .map {
-  padding-top: 45px;
+  .rock {
+    height: 50px;
+    width: 100%;
+    
+  }
   .select {
     margin:auto;
     z-index: 999;
@@ -117,7 +116,7 @@ export default {
   }
 }
 .my-position {
-  background: red;
+  
 }
 
   

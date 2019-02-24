@@ -22,11 +22,11 @@
         <div class="bottom-action">
           <div class="bottom-action-left">
             <div class="left-icon" v-if="item.p_city != null">
-              <Icon size="25px" name="location-o"></Icon>
+              <Icon size="20px" name="location-o"></Icon>
               <span>{{item.p_city}}</span>
             </div>
             <div class="left-icon">
-              <Icon size="25px" name="chat-o"></Icon>
+              <Icon size="20px" name="chat-o"></Icon>
               <span>{{item.p_comment}}</span>
             </div>
             
@@ -311,7 +311,7 @@ export default {
   }
   .content-text {
     @include flex-al-center();
-    padding: 5px;
+    padding: 10px 0 5px 10px;
   }
   .bottom-action {
     @include flex-between();
@@ -322,7 +322,7 @@ export default {
         display: flex;
         align-items: center;
         margin-right: 5px;
-
+        font-size: 10px
       }
     }
     .bottom-action-left,

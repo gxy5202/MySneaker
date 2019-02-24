@@ -2,7 +2,7 @@
   <div>
     <nav-bar :title="title" left-arrow @click-left="onClickLeft" fixed/>
     <div class="posting">
-      <postings v-for="i in postings" :key="i.id" :prop="i" :user='user'></postings>
+      <postings v-for="i in user.postings" :key="i.id" :prop="i" :user='user'></postings>
     </div>
   </div>
 </template>
@@ -23,38 +23,44 @@ export default {
   },
   
   created() {
-    let uid = {
-      uid:this.$store.state.uid
-    }
-    axios.post("https://www.gooomi.cn/user_info", uid).then(res => {
-      console.log(res.data)
-      this.user = {
-        message:res.data.user[0],
-        postings:res.data.postings
-      }
-      
-      console.log(this.user);
-    });
+    
     if (this.$route.query == "my") {
+      let uid = {
+        uid:this.$store.state.uid
+      }
+      axios.post("https://www.gooomi.cn/user_info", uid).then(res => {
+        console.log(res.data)
+        this.user = {
+          message:{
+            id:0,
+            info:res.data.user[0]
+          },
+          postings:res.data.postings
+        }
+        
+        console.log(this.user.message);
+      });
       this.title = "我的帖子";
-      axios
-        .post("https://www.gooomi.cn/postings_info", {
-          uid: this.$store.state.uid
-        })
-        .then(res => {
-          console.log(res.data);
-          this.postings = res.data;
-          console.log(this.postings);
-        });
-    } else {
+      
+    } else{
+      
+      
       this.title = "我赞过的";
       axios
         .post("https://www.gooomi.cn/postings", {
           uid: this.$store.state.uid
         })
         .then(res => {
+          
           console.log(res.data);
-          this.postings = res.data.list;
+          this.user = {
+            message:{
+              id:1,
+              icon:res.data.icon
+            },
+            postings:res.data.likeList
+          }
+          console.log(this.user.message);
         });
     }
   },

@@ -231,6 +231,7 @@ export default {
          display: flex;
          justify-content: space-between;
          font-size: 10px;
+         width: 95%;
       }
       img {
         width: 100%;

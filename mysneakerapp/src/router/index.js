@@ -87,7 +87,7 @@ export default new Router({
     {
       path: "/Comment/:id",
       name: "Comment",
-      meta: { index: 1 },
+      meta: { index: 10 },
       component: Comment
     },
     {

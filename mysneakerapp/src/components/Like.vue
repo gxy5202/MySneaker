@@ -1,6 +1,6 @@
 <template>
   <div class="like">
-    <Icon size="25px" :name="likeData.likeState.style" @click.stop="like(likeData)"></Icon>
+    <Icon class="icon" size="20px" :name="likeData.likeState.style" @click.stop="like(likeData)"></Icon>
     <span>{{likeData.p_like}}</span>
             <!-- <span>{{item.p_like}}</span> -->
   </div>
@@ -82,5 +82,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='scss' scoped>
-
+ .like{
+   font-size: 10px;
+  .icon{
+    margin-right: 3px;
+  }
+ }
 </style>

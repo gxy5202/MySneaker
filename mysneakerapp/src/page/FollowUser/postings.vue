@@ -16,49 +16,84 @@ export default {
       console.log(x);
     },
     toPosting(){
-      let uid_query = {
-        uid:this.$store.state.uid
-      };
-      let userInfo = {};
-      axios.post("https://www.gooomi.cn/postings",uid_query)
-      .then(res => {
-        console.log(res.data);
-        let postings = res.data.list;
-        let icon = res.data.icon;
-        postings.map((value,index,arr) => {
-          if(this.prop.pid == value.pid){
-            if(icon.find(v=>v==value.pid)){
-              userInfo.likeState = {
-                    state: true,
-                    style: "like"
+      
+      if(this.user.message.id == 0){
+        let uid_query = {
+          uid:this.$store.state.uid
+        };
+        let userInfo = {};
+        axios.post("https://www.gooomi.cn/postings",uid_query)
+        .then(res => {
+          console.log(res.data);
+          let postings = res.data.list;
+          let icon = res.data.icon;
+          postings.map((value,index,arr) => {
+            if(this.prop.pid == value.pid){
+              if(icon.find(v=>v==value.pid)){
+                userInfo.likeState = {
+                      state: true,
+                      style: "like"
+                  }
+              }else{
+                    userInfo.likeState = {
+                      state: false,
+                      style: "like-o"
+                  } 
                 }
-            }else{
-                  userInfo.likeState = {
-                    state: false,
-                    style: "like-o"
-                } 
-              }
-          }
-          
+            }
+            
+          })
         })
-      })
-      .then(res=>{
+        .then(res=>{
+            
+            this.user.postings.map(value=>{
+              if(value.pid == this.prop.pid){
+                value.p_imgList = value.p_imgList.split(',');
+                userInfo = Object.assign(userInfo,value,this.user.message.info)
+              }
+            })
+            console.log(userInfo);
+            this.$router.push({
+              name: 'Comment',
+              params: {
+                id: JSON.stringify(userInfo)
+              }
+            })
+            this.$store.commit("tabState", 1);
+        })
+      }else if(this.user.message.id == 1){
           
-          this.user.postings.map(value=>{
-            if(value.pid == this.prop.pid){
+          let icon = this.user.message.icon;
+          let userInfo = '';
+          this.user.postings.map((value,index,arr) => {
+            if(this.prop.pid == value.pid){
               value.p_imgList = value.p_imgList.split(',');
-              userInfo = Object.assign(userInfo,value,this.user.message)
+              if(icon.find(v=>v==value.pid)){
+                value.likeState = {
+                      state: true,
+                      style: "like"
+                  }
+              }else{
+                    value.likeState = {
+                      state: false,
+                      style: "like-o"
+                  } 
+                }
+                userInfo = value
             }
+            
           })
-          console.log(userInfo);
+          console.log(userInfo)
           this.$router.push({
-            name: 'Comment',
-            params: {
-              id: JSON.stringify(userInfo)
-            }
-          })
-          this.$store.commit("tabState", 1);
-      })
+              name: 'Comment',
+              params: {
+                id: JSON.stringify(userInfo)
+              }
+            })
+            this.$store.commit("tabState", 1);
+        
+      }
+      
       
       //console.log(this.user.message)
       //console.log(this.user.postings)
@@ -72,6 +107,9 @@ export default {
       
       
     }
+  },
+  created() {
+    console.log(this.user.message)
   },
   computed: {
     bg() {
