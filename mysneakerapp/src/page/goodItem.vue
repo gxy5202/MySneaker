@@ -78,7 +78,7 @@
     <!-- 下单 -->
     <goods-action>
       <goods-action-mini-btn icon="cart-o" text="我的购买" @click="order"/>
-      <goods-action-mini-btn icon="star-o" text="收藏" @click="shoucang"/>
+      <goods-action-mini-btn :icon="star" text="收藏" @click="shoucang"/>
       <goods-action-big-btn class="buy" primary text="立即购买" @click="buy"/>
     </goods-action>
     <buy :prop="buyState" @buy="order()"></buy>
@@ -95,7 +95,8 @@ import {
   GoodsAction,
   GoodsActionBigBtn,
   GoodsActionMiniBtn,
-  Dialog
+  Dialog,
+  Toast
 } from "vant";
 import buy from "./my/buy";
 export default {
@@ -107,7 +108,8 @@ export default {
       size: "",
       sizeItem: "",
       goodSize: false,
-      buyState: false
+      buyState: false,
+      star:'star-o'
     };
   },
   components: {
@@ -121,7 +123,8 @@ export default {
     GoodsActionBigBtn,
     GoodsActionMiniBtn,
     buy,
-    Dialog
+    Dialog,
+    Toast
   },
   methods: {
     onClickLeft() {
@@ -165,11 +168,40 @@ export default {
         });
       }
     },
-    shoucang() {}
+    shoucang() {
+      let data = {
+        uid:this.$store.state.uid,
+        gid:this.good.g_id
+      }
+      axios.post("https://www.gooomi.cn/collection",data)
+      .then(res=>{
+        console.log(res.data)
+        if(res.data == 'like_success'){
+          Toast('收藏成功');
+          this.star = 'star'
+        }else{
+          Toast('取消收藏');
+          this.star = 'star-o'
+        }
+      })
+    }
   },
   created() {
     this.$store.state.tabShow = false;
     this.good = this.$route.query;
+    let data = {
+        uid:this.$store.state.uid,
+        gid:this.good.g_id
+      }
+      axios.post("https://www.gooomi.cn/collection_query",data)
+      .then(res=>{
+        console.log(res.data);
+        if(res.data.icon == 'yes'){
+          this.star = 'star-o'
+        }else if(res.data.icon == 'no'){
+          this.star = 'star'
+        }
+      })
   }
 };
 </script>

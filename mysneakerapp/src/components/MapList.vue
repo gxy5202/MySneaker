@@ -165,9 +165,9 @@ export default {
             this.nearPostings.push(value);
             
           }
-          
+          //this.loadList = this.nearPostings
         });
-        this.loadList = this.nearPostings
+        
         //this.loadList = postings;
         //this.loadingGet(this.loadList,postings,icon,4);
          
