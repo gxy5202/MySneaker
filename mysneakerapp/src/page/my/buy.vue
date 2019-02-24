@@ -5,7 +5,7 @@
       <nav-bar title="我的购买" left-arrow @click-left="onClickLeft"/>
       <!-- 关注列表 -->
       <div class="item" v-for="i in item" :key="i.index">
-        <item :prop="i"></item>
+        <item :prop="i" @del="del()" @get='get'></item>
       </div>
     </Popup>
   </div>
@@ -30,10 +30,35 @@ export default {
   methods: {
     onClickLeft() {
       this.$emit("buy");
+    },
+    del() {
+      axios
+        .post("https://www.gooomi.cn/order_query", {
+          uid: this.$store.state.uid
+        })
+        .then(res => {
+          this.item = res.data;
+          console.log(this.item);
+        });
+    },
+    get(oid) {
+      console.log(oid)
+      axios
+        .post("https://www.gooomi.cn/order_get", {
+          oid: oid
+        })
+        .then(res => {
+          axios
+            .post("https://www.gooomi.cn/order_query", {
+              uid: this.$store.state.uid
+            })
+            .then(res => {
+              this.item = res.data;
+            });
+        });
     }
   },
   created() {
-    console.log(1);
     axios
       .post("https://www.gooomi.cn/order_query", { uid: this.$store.state.uid })
       .then(res => {
@@ -48,24 +73,6 @@ export default {
   background-color: rgb(245, 245, 245);
   height: 100%;
   width: 100%;
-  .item {
-    background-color: rgb(255, 253, 253);
-    p {
-      margin: 0;
-      display: flex;
-      justify-content: flex-end;
-      border-top: 0.5px solid rgb(207, 206, 206);
-      span {
-        border: 0.5px solid rgb(134, 134, 134);
-        padding: 5px 10px;
-        margin: 5px 20px;
-        &:active {
-          color: black;
-          border: 0.5px solid black;
-        }
-      }
-    }
-  }
 }
 </style>
 

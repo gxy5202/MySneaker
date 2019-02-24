@@ -3,7 +3,7 @@
     <popup position="right" class="popup" v-model="prop">
       <!-- 标题 -->
       <nav-bar title="我的收藏" left-arrow @click-left="onClickLeft"/>
-        <item v-for="i in item" :key="i.index" :prop="i"></item>
+      <item v-for="i in item" :key="i.index" :prop="i"></item>
     </popup>
   </div>
 </template>
