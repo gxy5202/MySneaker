@@ -9,7 +9,7 @@
       @save="onSave"
     />
   </div>
-</template>
+</template> 
 <script>
 import { AddressEdit, NavBar } from "vant";
 import { area } from "../components/area";
@@ -30,7 +30,20 @@ export default {
       this.$router.go(-1);
     },
     onSave(content) {
-      this.$store.commit("changeAddress", content);
+      let data = {
+        name: "",
+        tel: "",
+        address: "",
+        areaCode: ""
+      };
+      data.name = content.name;
+      data.tel = content.tel;
+      data.address = `${content.province}/${content.city}/${content.county}/${
+        content.addressDetail
+      }`;
+      data.areaCode = content.areaCode;
+      this.$store.commit("changeAddress", data);
+      this.$router.go(-1);
     }
   }
 };

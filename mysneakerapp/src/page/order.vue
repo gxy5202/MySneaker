@@ -1,10 +1,16 @@
 <template>
   <div class="order">
     <nav-bar title="商品订单" left-arrow @click-left="onClickLeft"/>
-    <!-- 收货人信息 -->
-    <div class="consignee" @click="address()">
+    <!-- 收货人信息未设定 -->
+    <div v-if="!addressState" class="consignee" @click="address()">
       <Icon name="add-o" size="50px"></Icon>
       <span>设置地址</span>
+    </div>
+    <!-- 收货人信息订单设定 -->
+    <div v-if="addressState" class="consignee1" @click="address()">
+      <span>{{this.$store.state.userAddress.name}}</span>
+      <span>{{this.$store.state.userAddress.tel}}</span>
+      <span>{{this.$store.state.userAddress.address}}</span>
     </div>
     <!-- 商品信息 -->
     <div class="good">
@@ -36,7 +42,7 @@
         <span>总金额</span>
         <span>￥ {{good.g_price}}</span>
       </div>
-      <Button type="primary">确认支付</Button>
+      <Button type="primary" @click="upOrder">确认支付</Button>
     </div>
   </div>
 </template>
@@ -54,7 +60,8 @@ export default {
   name: "order",
   data() {
     return {
-      good: {}
+      good: {},
+      addressState: false
     };
   },
   components: {
@@ -74,11 +81,31 @@ export default {
       this.$router.push({
         name: "userAddress"
       });
+    },
+    upOrder() {
+      let data = {
+        uid: this.$store.state.uid,
+        uname: this.$store.state.userAddress.name,
+        tel: this.$store.state.userAddress.tel,
+        address: this.$store.state.userAddress.address,
+        areaCode: this.$store.state.userAddress.areaCode,
+        gid: this.good.g_id,
+        gname: this.good.g_name,
+        gsize: this.good.g_size,
+        gnum: 1,
+        gprice: this.good.g_price
+      };
+      console.log(this.$store.state.uid)
+      axios.post("https://www.gooomi.cn/order_insert", data).then(res => {
+        console.log(res.data);
+      });
     }
   },
   created() {
     this.good = this.$route.query;
-    console.log(this.$route.query);
+    if (this.$store.state.userAddress.tel) {
+      this.addressState = !this.addressState;
+    }
   }
 };
 </script>
@@ -95,6 +122,16 @@ export default {
     margin-left: 20px;
     text-align: left;
   }
+}
+.consignee1 {
+  height: 80px;
+  justify-content: center;
+  border-bottom: 5px solid rgb(231, 231, 231);
+  padding-left: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 14px;
 }
 // 确认订单
 .over-order {

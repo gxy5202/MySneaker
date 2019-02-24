@@ -2,8 +2,6 @@
   <div class="item">
     <div :style="bg" @click="followUser()" class="img"></div>
     <span class="name">{{prop.u_nick_name}}</span>
-    <Button class="btn" v-if="prop.fol==0" type="primary">关注</Button>
-    <Button class="btn" v-if="prop.fol==1" type="default">已关注</Button>
   </div>
 </template>
 <script>
@@ -24,7 +22,7 @@ export default {
   },
   methods: {
     followUser() {
-      this.$router.push({ path: '/FollowUser', query: {uid:this.prop.uid}});
+      this.$router.push({ path: "/FollowUser", query: { uid: this.prop.uid } });
     }
   }
 };
@@ -36,8 +34,9 @@ export default {
   width: 90%;
   margin: 10px auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  // justify-content: space-around;
+  justify-content: flex-start;
   border-bottom: 0.2px solid rgb(196, 193, 193);
   > .img {
     height: 40px;
@@ -45,8 +44,8 @@ export default {
     background-size: cover;
     border-radius: 40px;
   }
-  .name {
-    margin-left: -100px;
+  .name{
+    margin-left: 30px;
   }
   .btn {
     height: 30px;
