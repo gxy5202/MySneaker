@@ -54,7 +54,8 @@ import {
   ContactEdit,
   NavBar,
   Icon,
-  Button
+  Button,
+  Toast
 } from "vant";
 export default {
   name: "order",
@@ -71,7 +72,8 @@ export default {
     ContactEdit,
     NavBar,
     Icon,
-    Button
+    Button,
+    Toast
   },
   methods: {
     onClickLeft() {
@@ -83,24 +85,28 @@ export default {
       });
     },
     upOrder() {
-      let data = {
-        uid: this.$store.state.uid,
-        uname: this.$store.state.userAddress.name,
-        tel: this.$store.state.userAddress.tel,
-        address: this.$store.state.userAddress.address,
-        areaCode: this.$store.state.userAddress.areaCode,
-        gid: this.good.g_id,
-        gimg:this.good.g_img,
-        gname: this.good.g_name,
-        gsize: this.good.g_size,
-        gnum: 1,
-        gprice: this.good.g_price,
-        pState: 1
-      };
-      // console.log(this.$store.state.uid)
-      axios.post("https://www.gooomi.cn/order_insert", data).then(res => {
-        console.log(res.data);
-      });
+      if (!this.$store.state.userAddress.name == "") {
+        let data = {
+          uid: this.$store.state.uid,
+          uname: this.$store.state.userAddress.name,
+          tel: this.$store.state.userAddress.tel,
+          address: this.$store.state.userAddress.address,
+          areaCode: this.$store.state.userAddress.areaCode,
+          gid: this.good.g_id,
+          gimg: this.good.g_img,
+          gname: this.good.g_name,
+          gsize: this.good.g_size,
+          gnum: 1,
+          gprice: this.good.g_price,
+          pState: 1
+        };
+        axios.post("https://www.gooomi.cn/order_insert", data).then(res => {
+          Toast("下单成功");
+          this.$router.go(-1);
+        });
+      } else {
+        Toast("请输入地址");
+      }
     }
   },
   created() {

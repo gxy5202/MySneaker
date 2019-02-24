@@ -17,7 +17,7 @@
   </div>
 </template>
 <script>
-import { Popup, Icon, NavBar } from "vant";
+import { Popup, Icon, NavBar,Toast } from "vant";
 import item from "./good/item";
 export default {
   name: "shoucang",
@@ -31,7 +31,8 @@ export default {
     Popup,
     Icon,
     NavBar,
-    item
+    item,
+    Toast
   },
   methods: {
     onClickLeft() {
@@ -50,6 +51,7 @@ export default {
             })
             .then(res => {
               this.item = res.data;
+              Toast('删除成功')
             });
         });
     }

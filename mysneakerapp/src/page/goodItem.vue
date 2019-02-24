@@ -109,7 +109,7 @@ export default {
       sizeItem: "",
       goodSize: false,
       buyState: false,
-      star:'star-o'
+      star: "star-o"
     };
   },
   components: {
@@ -170,38 +170,36 @@ export default {
     },
     shoucang() {
       let data = {
-        uid:this.$store.state.uid,
-        gid:this.good.g_id
-      }
-      axios.post("https://www.gooomi.cn/collection",data)
-      .then(res=>{
-        console.log(res.data)
-        if(res.data == 'like_success'){
-          Toast('收藏成功');
-          this.star = 'star'
-        }else{
-          Toast('取消收藏');
-          this.star = 'star-o'
+        uid: this.$store.state.uid,
+        gid: this.good.g_id
+      };
+      axios.post("https://www.gooomi.cn/collection", data).then(res => {
+        console.log(res.data);
+        if (res.data == "like_success") {
+          Toast("收藏成功");
+          this.star = "star";
+        } else {
+          Toast("取消收藏");
+          this.star = "star-o";
         }
-      })
+      });
     }
   },
   created() {
     this.$store.state.tabShow = false;
     this.good = this.$route.query;
     let data = {
-        uid:this.$store.state.uid,
-        gid:this.good.g_id
+      uid: this.$store.state.uid,
+      gid: this.good.g_id
+    };
+    axios.post("https://www.gooomi.cn/collection_query", data).then(res => {
+      console.log(res.data);
+      if (res.data.icon == "yes") {
+        this.star = "star-o";
+      } else if (res.data.icon == "no") {
+        this.star = "star";
       }
-      axios.post("https://www.gooomi.cn/collection_query",data)
-      .then(res=>{
-        console.log(res.data);
-        if(res.data.icon == 'yes'){
-          this.star = 'star-o'
-        }else if(res.data.icon == 'no'){
-          this.star = 'star'
-        }
-      })
+    });
   }
 };
 </script>

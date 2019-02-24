@@ -49,7 +49,7 @@ export default {
     axios.get("https://restapi.amap.com/v3/ip?key=e5cff84db8037d2b62a8f0f82a9b1ec7")
       .then(res=>{
           this.$store.commit('setCity',res.data.city)
-          console.log(res.data)
+          // console.log(res.data)
       })
   },
   components:{

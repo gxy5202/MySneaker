@@ -12,7 +12,7 @@ const store = new Vuex.Store({
     tid: "",
     searchValue: "",
     searchList: [],
-    userAddress: {},
+    userAddress: '',
     city:''
   },
   mutations: {
