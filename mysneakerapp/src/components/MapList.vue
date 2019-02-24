@@ -5,12 +5,13 @@
     <!-- 顶部导航栏 -->
     
     <!-- 显示列表 -->
+    
     <List class="list" v-model="loading" :finished="finished" finished-text="没有更多了"  immediate-check @load="onLoad">
-      
       <div class="dynamic" v-for="(item,index) of loadList" :key="index" >
            <img :src="item.p_imgList[0]" alt="">
          
       </div>
+      
     </List>
     <!-- 显示列表 -->
     
@@ -83,17 +84,19 @@ export default {
     onLoad() {
       // 异步更新数据
 
-      this.loading = true;
+      //this.loading = true;
       let uid_query = {
         uid:this.$store.state.uid
       };
       //this.loading = true;
       axios.post("https://www.gooomi.cn/postings",uid_query)
       .then(res => {
-        //console.log(res.data);
-        
-        let postings = res.data.list;
+        console.log(res.data);
         let icon = res.data.icon;
+        let postings = res.data.list;
+        
+        
+        
         // postings.map((value,index,arr) => {
         //   if(this.city == value.p_city){
         //     value.p_imgList = value.p_imgList.split(",");
@@ -113,7 +116,9 @@ export default {
         //   }
           
         // });
+        //this.loadList = postings;
         this.loadingGet(this.loadList,postings,icon,4);
+         
       })
       // .then(res=>{
       //   //console.log(this.nearPostings);
@@ -122,15 +127,15 @@ export default {
     }
   },
   created() {
-  
-    this.onLoad();
+    
+    
       
   },
   mounted() {
-    this.onLoad();
+    
   },
   updated() {
-    this.onLoad();
+    
   },
   components:{
     
