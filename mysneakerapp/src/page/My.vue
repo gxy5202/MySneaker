@@ -5,7 +5,11 @@
     <!-- 用户相关商品 -->
     <good @buy="buy1()" @shoucang="shoucang1()"></good>
     <!-- 其他功能列表 -->
-    <Item></Item>
+    <cell-group>
+      <cell @click="mypostings()" title="我的帖子" is-link/>
+      <cell @click="mylove()" title="我赞过的" is-link/>
+      <cell @click="fol()" title="我的关注" is-link/>
+    </cell-group>
     <Button @click="logout()" class="AllBtn" type="primary">退出登录</Button>
     <!-- 二级内容页 -->
     <follow :prop="follow" @fol="fol()"></follow>
@@ -16,7 +20,17 @@
   </div>
 </template>
 <script>
-import { Tabbar, TabbarItem, NavBar, Uploader, Icon, List, Button } from "vant";
+import {
+  Tabbar,
+  TabbarItem,
+  NavBar,
+  Uploader,
+  Icon,
+  List,
+  Button,
+  Cell,
+  CellGroup
+} from "vant";
 import Item from "./my/Item";
 import topUser from "./my/topUser";
 import good from "./my/good";
@@ -74,7 +88,7 @@ export default {
       console.log(1);
       this.$store.state.isLogin = !this.$store.state.isLogin;
       this.$store.state.uid = "";
-      this.$router.push({ path: "/Home"});
+      this.$router.push({ path: "/Home" });
     }
   },
   components: {
@@ -93,7 +107,9 @@ export default {
     buy,
     shoucang,
     FollowUser,
-    Button
+    Button,
+    Cell,
+    CellGroup
   },
   created() {
     let uid = this.$store.state;

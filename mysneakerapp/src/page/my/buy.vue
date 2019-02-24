@@ -63,7 +63,7 @@ export default {
       .post("https://www.gooomi.cn/order_query", { uid: this.$store.state.uid })
       .then(res => {
         this.item = res.data;
-        console.log(this.item);
+        // console.log(this.item);
       });
   }
 };

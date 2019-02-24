@@ -3,7 +3,7 @@
     <cell-group>
       <cell v-for="i in item" :key="i.id" :title='i' is-link/>
     </cell-group>
-  </div>
+  </div> 
 </template>
 <script>
 import { Cell, CellGroup,Icon } from "vant";

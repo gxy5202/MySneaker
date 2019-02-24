@@ -42,10 +42,10 @@ export default {
         .then(res => {
           res.data;
         });
-      this.$emit('del')
+      this.$emit("del");
     },
-    getGood(){
-      this.$emit('get',this.prop.oid)
+    getGood() {
+      this.$emit("get", this.prop.oid);
     }
   }
 };
@@ -53,6 +53,7 @@ export default {
 
 <style lang="scss" scoped>
 .item {
+  background-color: #fff;
   margin: 15px 0;
   height: 120px;
   p {
