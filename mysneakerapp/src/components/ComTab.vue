@@ -2,9 +2,9 @@
   <div class="hello">
     <Tabbar v-model="active" active-color="#000">
       <TabbarItem icon="home-o" @click="toHome" >鞋圈</TabbarItem>
-      <TabbarItem icon="search"  @click="toShop">购物</TabbarItem>
-      <TabbarItem icon="friends-o"  @click="toMap">附近</TabbarItem>
-      <TabbarItem icon="setting-o"  @click="toMy">我的</TabbarItem>
+      <TabbarItem icon="shop-collect-o"  @click="toShop">购物</TabbarItem>
+      <TabbarItem icon="comment-o"  @click="toMap">附近</TabbarItem>
+      <TabbarItem icon="user-o"  @click="toMy">我的</TabbarItem>
     </Tabbar>
   </div>
 </template>

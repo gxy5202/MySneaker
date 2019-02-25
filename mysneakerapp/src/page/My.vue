@@ -131,8 +131,8 @@ export default {
     //this.$router.go(0);
     //this.$router.go(0);
     if(this.$route.query.id == 1){
-      this.$router.go(0);
-      this.$router.replace('My')
+      
+      this.$router.push('/My')
       
       //return this.$router.go(0);
     }
