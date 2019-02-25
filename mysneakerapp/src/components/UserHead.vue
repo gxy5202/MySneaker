@@ -4,7 +4,7 @@
           <div class="user-info">
             <div class="user-name">{{headData.u_nick_name}}</div>
             <div class="time">{{ headData.p_date | dateForm }}</div>
-    </div>
+          </div>
   </div>
 </template>
 
@@ -45,15 +45,15 @@ export default {
         this.$store.commit('tabState',0);
         this.$store.commit('tabActive',3);
       }else{
-
+        this.$store.commit('tabState',1);
+        this.$store.commit('followUser',item);
         this.$router.push({
           name: 'FollowUser',
           query: {
             uid: item
           }
         })
-        this.$store.commit('tabState',1);
-        this.$store.commit('followUser',item);
+        
       }
       
     }
@@ -97,6 +97,7 @@ export default {
     @include flex-al-center;
     padding: 5px;
     height: 50px;
+    
     .user-img {
       width: 40px;
       height: 40px;
@@ -109,7 +110,7 @@ export default {
       flex-wrap: wrap;
       margin-left: 5px;
       .user-name {
-        width: 70%;
+        width: 100%;
         font-weight: bold;
         display: flex;
       }

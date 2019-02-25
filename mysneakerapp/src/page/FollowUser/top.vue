@@ -3,11 +3,11 @@
     <div class="box1" :style="bg"></div>
       <div class="top">
         <div class="fans">
-          <span class="fans-num">{{prop.u_fans}}</span>
+          <span class="fans-num">{{prop2.u_fans}}</span>
           <span class="fans-text" >粉丝</span>
         </div>
         <div :style="bg" class="img"></div>
-        <div class="follow" @click.stop="isFollow(prop.uid)">
+        <div class="follow" @click.stop="isFollow(prop2.uid)">
           <img v-if="follow == true" src='../../../static/img/guanzhu1.png'>
           <img v-if="follow == false" src='../../../static/img/guanzhu.png'>
           <span v-if="follow == true">已关注</span>
@@ -15,8 +15,8 @@
         </div>
     </div>
     <div class="bottom">
-      <span class="name">{{prop.u_nick_name}}</span>
-      <span class="like">已获得{{prop.u_like}}赞</span>
+      <span class="name">{{prop2.u_nick_name}}</span>
+      <span class="like">已获得{{prop2.u_like}}赞</span>
     </div>
   </div>
 </template> 
@@ -24,7 +24,7 @@
 import {Toast} from 'vant';
 export default {
   name: "top",
-  props: ["prop"],
+  props: ["prop2"],
   data() {
     return {
       follow: false
@@ -32,7 +32,7 @@ export default {
   },
   computed: {
     bg() {
-      return `background-image: url(${this.prop.u_img})`;
+      return `background-image: url(${this.prop2.u_img})`;
     }
   },
   methods: {
@@ -70,12 +70,12 @@ export default {
   created() {
     
     
-      console.log(this.prop.uid)
+      //console.log(this.prop2.uid)
       let followId = {
         fid:this.$store.state.uid,
         tid:this.$store.state.tid
       }
-      console.log(followId)
+      console.log(followId);
       axios.post("https://www.gooomi.cn/follow_query", followId).then(res => {
         console.log(res.data)
         if(res.data.status == '未关注'){

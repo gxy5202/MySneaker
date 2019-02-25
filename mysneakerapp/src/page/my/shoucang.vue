@@ -9,7 +9,7 @@
           <span>{{i.g_name}}</span>
           <div>
             <span>￥{{i.g_newPrice}}</span>
-            <img @click="del(index)" src="../../../static/img/delete.png" alt>
+            <Icon name="clear" @click="del(index)" />
           </div>
         </div>
       </div>

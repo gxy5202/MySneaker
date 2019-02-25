@@ -21,19 +21,16 @@
             <div class="bottom-action">
               <div class="bottom-action-left">
                 <div class="left-icon" v-if="posting.p_city != null">
-                  <Icon size="25px" name="location-o"></Icon>
+                  <Icon size="20px" name="location-o"></Icon>
                   <span>{{posting.p_city}}</span>
                 </div>
-                <div class="left-icon">
-                  <Icon size="25px" name="chat-o"></Icon>
-                  <span>{{posting.p_comment}}</span>
-                </div>
+                
                 
               </div>
               <Like class="bottom-action-right" :likeData="posting"></Like>
             </div>
         </div>
-        <p class="title">全部评论</p>
+        <p class="title">全部评论({{posting.p_comment}})</p>
         <div class="comment-list">
             
             
@@ -361,7 +358,7 @@ export default {
         display: flex;
         align-items: center;
         margin-right: 5px;
-
+        font-size: 10px;
       }
     }
     .bottom-action-left,
@@ -404,6 +401,8 @@ export default {
   }
   .title {
           text-align: left;
+          margin-left: 5px;
+          font-size: 10px;
       }
   .comment-list {
       margin-bottom:60px;

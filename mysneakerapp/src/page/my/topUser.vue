@@ -55,7 +55,10 @@ export default {
     bg() {
       return `background-image: url(${this.prop.u_img})`;
     }
-  }
+  },
+  created() {
+    
+  },
 };
 </script>
 <style scoped lang="scss">

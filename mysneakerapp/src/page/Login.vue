@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
-    <div class="back">
+    <!-- <div class="back">
         <Icon size="20px" name="cross" @click="back"></Icon>
-    </div> 
+    </div>  -->
     <div class="selectButton">
         <Button square type="primary" text="注册" @click="signUp"></Button>
         <Button plain type="primary" text="已有账号登录" @click="signIn"></Button>
@@ -43,6 +43,9 @@ export default {
     signIn(){
         this.$router.push('/signIn')
     }
+  },
+  created() {
+      this.$store.commit('tabState',1);
   },
   components:{
     Icon,

@@ -145,6 +145,7 @@ export default {
     },
   },
   created() {
+    console.log(this.$route.query)
     function compare(property){
         return function(a,b){
             var value1 = a[property];
@@ -160,7 +161,13 @@ export default {
       .then(res => {
         console.log(res.data.list);
         let postings = res.data.list;
-        
+        if(this.$route.query.id == 1){
+              postings.sort(compare('p_date'))
+            }else if(this.$route.query.id  == 2){
+              postings.sort(compare('p_like'))
+            }else if(this.$route.query.id  == 3){
+              postings.sort(compare('p_comment'))
+            }
         
         postings.map((value,index,arr) => {
           if(this.$store.state.city == value.p_city){
@@ -182,13 +189,7 @@ export default {
           
         });
         this.loadList = this.nearPostings
-        if(this.index == 1){
-          this.loadList = this.loadList.sort(compare('p_date'))
-        }else if(this.index == 2){
-          this.loadList = this.loadList.sort(compare('p_like'))
-        }else if(this.index == 3){
-          this.loadList = this.loadList.sort(compare('p_comment'))
-        }
+        
         
       })
   },
@@ -222,6 +223,7 @@ export default {
   
   display: flex;
   justify-content: space-between;
+  
   flex-wrap: wrap;
   padding-bottom: 60px;
   .dynamic {

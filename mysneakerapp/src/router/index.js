@@ -27,7 +27,7 @@ export default new Router({
   routes: [
     {
       path: "/",
-      redirect: "/Home", //设置默认指向的路径
+      redirect: "/Login", //设置默认指向的路径
       name: "Home"
     },
     {

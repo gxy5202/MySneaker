@@ -1,8 +1,9 @@
 <template>
   <div class="wrapper">
     <!-- 顶部导航栏 -->
-    <Nav-bar title="发布动态" fixed right-text="发布" @click-right="onClickRight">
+    <Nav-bar class="nav" title="发布动态" fixed >
       <Icon slot="left" name="arrow-left" size="20px" color="black" @click="back"/>
+      <span slot="right"  @click="onClickRight">发布</span>
     </Nav-bar>
     <!-- 顶部导航栏 -->
 
@@ -18,7 +19,7 @@
             </div>
             <Icon class="clear" name="clear" @click="clear(index)"/>
         </div>
-        <Uploader  class="uploader" :after-read="onRead" :disabled="isUp" accept="image/gif, image/jpeg" multiple @oversize="oversize">
+        <Uploader  class="uploader" :after-read="onRead" :before-read="beforeRead" :disabled="isUp" accept="image/gif, image/jpeg" multiple @oversize="oversize">
             <Icon class="upIcon" name="photo" size="40px"/>
         </Uploader>
         
@@ -74,14 +75,77 @@ export default {
         this.$router.back(-1);
         this.$store.commit('tabState',0);
     },
+    beforeRead(file){
+        console.log(typeof file)
+        if(typeof file.length == 'undefined'){
+            if(this.upImgList.length == 3){
+                this.isUp = true;
+                Toast.loading({
+                    mask: false,
+                    message: '正在加载图片'
+                });
+                return true;
+                
+            }else if(this.upImgList.length == 4){
+                Dialog.alert({
+                message: '最多添加四张图片'
+                }).then(() => {
+                    return false
+                });
+            }else if(this.upImgList.length < 3){
+                Toast.loading({
+                    mask: false,
+                    message: '正在加载图片'
+                });
+                return true
+            }
+        }
+        else if(file.length < 5){
+            
+            
+            if(this.upImgList.length + file.length > 4){
+                Dialog.alert({
+                message: '最多添加四张图片'
+                }).then(() => {
+                    return false
+                });
+            }else if(this.upImgList.length + file.length < 4){
+                Toast.loading({
+                    mask: false,
+                    message: '正在加载图片'
+                });
+                return true
+            }
+            else if(this.upImgList.length + file.length == 4){
+                Toast.loading({
+                    mask: false,
+                    message: '正在加载图片'
+                });
+                return true
+                this.isUp = true
+            }
+        }
+        else if(file.length > 4){
+            Dialog.alert({
+                message: '最多添加四张图片'
+            }).then(() => {
+                
+            });
+            return false
+        }
+        
+        
+        Toast.clear();
+    },
     onRead(file) {
         
-        if(file.length > 1 ){
-            file.map((value,index)=>{
-                this.upImgList.push(value.content)
-            })
+        if(file.length > 0 ){
+                file.map((value,index)=>{
+                    this.upImgList.push(value.content)
+                })
+            
         }else{
-            this.upImgList.push(file.content)
+            this.upImgList.push(file.content);
         }
         console.log(this.upImgList);
         //将原图片显示为选择的图片
@@ -112,15 +176,17 @@ export default {
                 });
         }
         else{
+            Toast.loading({
+                    mask: false,
+                    message: '正在发布...'
+            });
             axios.post('https://www.gooomi.cn/upload',this.Postings)
             .then((res)=>{
                 console.log(res);
-                Toast.loading({
-                    mask: false,
-                    message: '正在发布...'
-                });
+                
                 if(res.data){
                     Toast.clear();
+                    Toast('发布成功');
                     this.$router.back(-1);
                     this.$store.commit('tabState',0);
                 }
@@ -132,7 +198,10 @@ export default {
         
     },
     clear(index){
-        this.upImgList.splice(index,1)
+        this.upImgList.splice(index,1);
+        if(this.upImgList.length < 4){
+            this.isUp = false;
+        }
     }
     
   },
@@ -164,6 +233,9 @@ export default {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
+    }
+    .nav {
+        color:black;
     }
     .wrapper {
         overflow: hidden;

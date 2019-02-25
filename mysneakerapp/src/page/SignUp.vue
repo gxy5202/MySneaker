@@ -6,7 +6,7 @@
     <div>
       <Cell-group>
         <Field type="tel" v-model="user.username" placeholder="请输入手机号码" label="+86"/>
-        <Field center type="text" v-model="user.password" label="密码" placeholder="请输入密码"/>
+        <Field center type="password" v-model="user.password" label="密码" placeholder="请输入密码"/>
       </Cell-group>
       <div class="sign-btn">
         <Button type="primary" @click="signUp()">注册</Button>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { Icon, Button, Field, CellGroup, Popup } from "vant";
+import { Icon, Button, Field, CellGroup, Popup,Toast } from "vant";
 export default {
   name: "Login",
   data() {
@@ -49,25 +49,30 @@ export default {
       console.log(1);
     },
     signUp(){
-        axios.post('https://www.gooomi.cn/signUp',this.user)
-        .then((res)=>{
-            
-            console.log(res.data);
-             if(res.data.status == 'already'){
-                 this.$toast({
-                     message: "用户名已存在",
-                 })
+        if(this.user.password.trim() == ''){
+          Toast('密码不能为空')
+        }else{
+          axios.post('https://www.gooomi.cn/signUp',this.user)
+          .then((res)=>{
               
-            }else{
-                this.$store.commit('tabState',0);
-                this.$router.push('/My');
-                sessionStorage.setItem('uid',JSON.stringify(res.data.results.insertId));
-                this.$store.state.uid = res.data.results.insertId;
-                this.$store.commit('loginState',true);
-            }
-            
-            
-        })
+              console.log(res.data);
+              if(res.data.status == 'already'){
+                  this.$toast({
+                      message: "用户名已存在",
+                  })
+                
+              }else{
+                  this.$store.commit('tabState',0);
+                  this.$router.push('/My');
+                  sessionStorage.setItem('uid',JSON.stringify(res.data.results.insertId));
+                  this.$store.state.uid = res.data.results.insertId;
+                  this.$store.commit('loginState',true);
+              }
+              
+              
+          })
+        }
+        
       
     }
   },
@@ -76,7 +81,8 @@ export default {
     Button,
     Field,
     CellGroup,
-    Popup
+    Popup,
+    Toast
   }
 };
 </script>

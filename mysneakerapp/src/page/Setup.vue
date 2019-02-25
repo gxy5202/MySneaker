@@ -237,7 +237,12 @@ export default {
     upload() {
       console.log(this.user);
       axios.post("https://www.gooomi.cn/updata_user", this.user).then(() => {
-        this.$router.go(-1);
+        this.$router.push({
+          name:"My",
+          query:{
+            id:1
+          }
+        });
       });
     }
   }

@@ -25,9 +25,9 @@
       </div>
     </div>
     <!-- 显示列表 -->
-    <div class="my-position">
+    <!-- <div class="my-position">
       您的位置：{{this.$store.state.city}}
-    </div>
+    </div> -->
 
     <map-list :index="index"></map-list>
     <!-- 显示列表 -->
@@ -64,8 +64,13 @@ export default {
     toList(item){
      
       this.index = item
+      this.$router.push({
+          name: 'MapList',
+          query: {
+            id: JSON.stringify(item)
+          }
+        })
       
-      this.$router.push('/MapList');
       this.$store.commit('tabState',1);
     }
     

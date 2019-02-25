@@ -3,23 +3,26 @@
       <div class="back">
         <Icon size="20px" name="cross" @click="back"></Icon>
       </div> 
-      <div class="logo">
+      <div class="content">
+        <div class="logo">
             
             <img src="../assets/shoeAJ.png" alt="">
             <p>MySneaker</p>
         </div>
-    <div class="signIn">
-        
-        <div class="user-name">
-            <input type="text" placeholder="请输入用户名" v-model="user.username">
+        <div class="signIn">
+            
+            <div class="user-name">
+                <input type="text" placeholder="请输入用户名" v-model="user.username">
+            </div>
+            <div class="user-pwd">
+                <input type="password" placeholder="请输入密码" v-model="user.password">
+            </div>
+            <div class="sign-btn">
+                <Button type="primary"  @click="signIn()">登录</Button>
+            </div>
         </div>
-        <div class="user-pwd">
-            <input type="password" placeholder="请输入密码" v-model="user.password">
-        </div>
-        <div class="sign-btn">
-            <Button type="primary"  @click="signIn()">登录</Button>
-        </div>
-    </div>
+      </div>
+      
     
   </div>
 </template>
@@ -104,7 +107,14 @@ export default {
 }
 
 .wrapper {
-    margin-top: 30%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    .content {
+        width: 100%;
+    }
+    height: 100%;
+    
     .back {
         position: absolute;
         top:30px;
@@ -114,19 +124,21 @@ export default {
     .logo{
         width: 50%;
         text-align: center;
+        margin: auto;
         p{
             font-size: 30px;
             font-weight: bold;
         }
         img {
-            width:100%;
+            width:70%;
             
         }
     }
-    @include flex-center;
+    
     .signIn {
         width: 90%;
         text-align: center;
+        margin: auto;
         div {
             width: 100%;
         }

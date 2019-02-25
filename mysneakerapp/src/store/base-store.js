@@ -8,7 +8,7 @@ const store = new Vuex.Store({
     isLogin: false,
     uid: "",
     tabShow: true,
-    tabActive: 0,
+    tabActive: 3,
     tid: "",
     searchValue: "",
     searchList: [],

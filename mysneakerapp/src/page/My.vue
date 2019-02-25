@@ -97,7 +97,8 @@ export default {
       console.log(1);
       this.$store.state.isLogin = !this.$store.state.isLogin;
       this.$store.state.uid = "";
-      this.$router.push({ path: "/Home" });
+      this.$router.push({ path: "/Login" });
+      this.$store.commit('tabState',1)
     }
   },
   components: {
@@ -127,6 +128,17 @@ export default {
       this.user.postings = res.data.postings;
       // console.log(this.user);
     });
+    //this.$router.go(0);
+    //this.$router.go(0);
+    if(this.$route.query.id == 1){
+      this.$router.go(0);
+      this.$router.replace('My')
+      
+      //return this.$router.go(0);
+    }
+  },
+  activated() {
+    
   }
 };
 </script>
@@ -136,6 +148,8 @@ export default {
 // 公共样式设置
 .hello {
   background-color: rgb(241, 241, 241);
+  height: 100%;
+  
 }
 .AllBtn {
   width: 99%;
