@@ -84,8 +84,13 @@ export default {
       this.FollowUser = !this.FollowUser;
     },
     mypostings(res) {
-      
-      this.$router.push({ name: "mypostings", query: res });
+      if (res == "my") {
+        this.$router.push({ name: "mypostings1", query: res });
+        console.log(1);
+      } else {
+        this.$router.push({ name: "mypostings", query: res });
+        console.log(2);
+      }
     },
     // 退出登录
     logout() {

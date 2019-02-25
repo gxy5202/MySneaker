@@ -19,6 +19,7 @@ import order from "@/page/order";
 import userAddress from "@/page/userAddress";
 import MapList from "@/components/MapList";
 import mypostings from "@/page/mypostings";
+import mypostings1 from "@/page/mypostings1";
 Vue.use(Router);
 
 export default new Router({
@@ -131,6 +132,12 @@ export default new Router({
       name: "mypostings",
       meta: { index: 3 },
       component: mypostings
+    },
+    {
+      path: "/mypostings1",
+      name: "mypostings1",
+      meta: { index: 3 },
+      component: mypostings1
     }
   ]
 });

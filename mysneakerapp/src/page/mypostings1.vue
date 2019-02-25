@@ -10,7 +10,7 @@
 import { NavBar } from "vant";
 import postings from "./FollowUser/postings";
 export default {
-  name: "mypostings",
+  name: "mypostings1",
   data() {
     return {
       postings: [],
@@ -23,23 +23,22 @@ export default {
   },
 
   created() {
-    this.title = "我赞过的";
-    axios
-      .post("https://www.gooomi.cn/postings", {
-        uid: this.$store.state.uid
-      })
-      .then(res => {
-        console.log(res.data);
-        this.user = {
-          message: {
-            id: 1,
-            icon: res.data.icon,
-            text: "like"
-          },
-          postings: res.data.likeList
-        };
-        console.log(this.user.message);
-      });
+    this.title = "我的帖子";
+    let uid = {
+      uid: this.$store.state.uid
+    };
+    axios.post("https://www.gooomi.cn/user_info", uid).then(res => {
+      console.log(res.data);
+      this.user = {
+        message: {
+          id: 0,
+          info: res.data.user[0]
+        },
+        postings: res.data.postings
+      };
+
+      console.log(this.user.message);
+    });
   },
   methods: {
     onClickLeft() {
