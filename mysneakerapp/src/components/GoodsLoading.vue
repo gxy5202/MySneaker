@@ -111,7 +111,7 @@ export default {
         let search = {
           value:this.searchValue
         };
-        axios.post('https://www.gooomi.cn/goods_search',search)
+        axios.post('https://www.gomi.site/goods_search',search)
         .then(res=>{
             let goods = res.data;
             console.log(goods);
@@ -121,7 +121,7 @@ export default {
       }else if(this.tabIndex != -1){
         this.loading = true;
         //console.log(this.loading);
-        axios.get("https://www.gooomi.cn/sneaker_goods")
+        axios.get("https://www.gomi.site/sneaker_goods")
         .then(res=>{
           
           let goods = res.data;
@@ -166,7 +166,7 @@ export default {
       let search = {
           value:this.searchValue
       };
-      axios.post('https://www.gooomi.cn/goods_search',search)
+      axios.post('https://www.gomi.site/goods_search',search)
       .then(res=>{
           this.goods = res.data;
           this.$store.commit('searchList',this.goods);

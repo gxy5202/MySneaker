@@ -52,7 +52,7 @@ export default {
         if(this.user.password.trim() == ''){
           Toast('密码不能为空')
         }else{
-          axios.post('https://www.gooomi.cn/signUp',this.user)
+          axios.post('https://www.gomi.site/signUp',this.user)
           .then((res)=>{
               
               console.log(res.data);

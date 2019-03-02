@@ -236,7 +236,7 @@ export default {
     // 确认修改
     upload() {
       console.log(this.user);
-      axios.post("https://www.gooomi.cn/updata_user", this.user).then(() => {
+      axios.post("https://www.gomi.site/updata_user", this.user).then(() => {
         this.$router.push({
           name:"My",
           query:{

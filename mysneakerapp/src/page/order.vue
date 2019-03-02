@@ -100,7 +100,7 @@ export default {
           gprice: this.good.g_price,
           pState: 1
         };
-        axios.post("https://www.gooomi.cn/order_insert", data).then(res => {
+        axios.post("https://www.gomi.site/order_insert", data).then(res => {
           Toast("下单成功");
           this.$router.go(-1);
         });

@@ -27,7 +27,7 @@ export default {
     let uid = {
       uid: this.$store.state.uid
     };
-    axios.post("https://www.gooomi.cn/user_info", uid).then(res => {
+    axios.post("https://www.gomi.site/user_info", uid).then(res => {
       console.log(res.data);
       this.user = {
         message: {

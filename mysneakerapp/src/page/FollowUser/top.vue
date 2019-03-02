@@ -45,7 +45,7 @@ export default {
           tid:this.$store.state.tid
         }
       if(this.follow == false) {
-        axios.post("https://www.gooomi.cn/follow_insert", followId).then(res => {
+        axios.post("https://www.gomi.site/follow_insert", followId).then(res => {
           if(res.data.status == 'success'){
             this.follow = true;
             Toast.success('关注成功')
@@ -55,7 +55,7 @@ export default {
           }
         });
       }else{
-        axios.post("https://www.gooomi.cn/follow_delete", followId).then(res => {
+        axios.post("https://www.gomi.site/follow_delete", followId).then(res => {
           if(res.data.status == 'success'){
             this.follow = false;
             Toast.success('已取消关注该用户')
@@ -76,7 +76,7 @@ export default {
         tid:this.$store.state.tid
       }
       console.log(followId);
-      axios.post("https://www.gooomi.cn/follow_query", followId).then(res => {
+      axios.post("https://www.gomi.site/follow_query", followId).then(res => {
         console.log(res.data)
         if(res.data.status == '未关注'){
           this.follow = false

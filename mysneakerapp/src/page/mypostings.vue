@@ -25,7 +25,7 @@ export default {
   created() {
     this.title = "我赞过的";
     axios
-      .post("https://www.gooomi.cn/postings", {
+      .post("https://www.gomi.site/postings", {
         uid: this.$store.state.uid
       })
       .then(res => {

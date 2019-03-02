@@ -173,7 +173,7 @@ export default {
         uid: this.$store.state.uid,
         gid: this.good.g_id
       };
-      axios.post("https://www.gooomi.cn/collection", data).then(res => {
+      axios.post("https://www.gomi.site/collection", data).then(res => {
         console.log(res.data);
         if (res.data == "like_success") {
           Toast("收藏成功");
@@ -192,7 +192,7 @@ export default {
       uid: this.$store.state.uid,
       gid: this.good.g_id
     };
-    axios.post("https://www.gooomi.cn/collection_query", data).then(res => {
+    axios.post("https://www.gomi.site/collection_query", data).then(res => {
       console.log(res.data);
       if (res.data.icon == "yes") {
         this.star = "star-o";

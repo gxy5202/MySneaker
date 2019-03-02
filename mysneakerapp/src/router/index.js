@@ -23,6 +23,7 @@ import mypostings1 from "@/page/mypostings1";
 Vue.use(Router);
 
 export default new Router({
+  base: '/MySneaker',
   mode: "history",
   routes: [
     {

@@ -47,7 +47,7 @@ export default {
         this.$router.push('/Login');
         this.$store.commit('tabState',1);
       }else{
-        axios.post("https://www.gooomi.cn/postings_like",posting_like)
+        axios.post("https://www.gomi.site/postings_like",posting_like)
         .then(res=>{
             if(res.data == 'already_like'){
               likeData.likeState = {

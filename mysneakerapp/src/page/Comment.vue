@@ -170,7 +170,7 @@ export default {
           alert('请输入内容')
         }else{
           //获取评论数据
-          axios.post('https://www.gooomi.cn/comment',content)
+          axios.post('https://www.gomi.site/comment',content)
           .then(res=>{
             if(res.data.state == 'success'){
               console.log(res.data)
@@ -203,7 +203,7 @@ export default {
     let pid = {
       pid:this.posting.pid
     }
-    axios.post('https://www.gooomi.cn/comment_query',pid)
+    axios.post('https://www.gomi.site/comment_query',pid)
     .then(res=>{
       console.log(res.data);
       this.commentList = res.data

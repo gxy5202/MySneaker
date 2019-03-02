@@ -180,7 +180,7 @@ export default {
                     mask: false,
                     message: '正在发布...'
             });
-            axios.post('https://www.gooomi.cn/upload',this.Postings)
+            axios.post('https://www.gomi.site/upload',this.Postings)
             .then((res)=>{
                 console.log(res);
                 

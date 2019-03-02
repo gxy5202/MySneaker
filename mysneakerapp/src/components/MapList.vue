@@ -103,7 +103,7 @@ export default {
         uid:this.$store.state.uid
       };
       //this.loading = true;
-      axios.post("https://www.gooomi.cn/postings",uid_query)
+      axios.post("https://www.gomi.site/postings",uid_query)
       .then(res => {
         console.log(res.data);
         let icon = res.data.icon;
@@ -157,7 +157,7 @@ export default {
         uid:this.$store.state.uid
       };
       //this.loading = true;
-      axios.post("https://www.gooomi.cn/postings",uid_query)
+      axios.post("https://www.gomi.site/postings",uid_query)
       .then(res => {
         console.log(res.data.list);
         let postings = res.data.list;

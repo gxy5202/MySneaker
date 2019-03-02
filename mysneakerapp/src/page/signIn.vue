@@ -6,7 +6,7 @@
       <div class="content">
         <div class="logo">
             
-            <img src="../assets/shoeAJ.png" alt="">
+            <!-- <img src="../../static/img/shoeAJ.png" alt=""> -->
             <p>MySneaker</p>
         </div>
         <div class="signIn">
@@ -64,7 +64,7 @@ export default {
         console.log(1)
     },
     signIn(){
-        axios.post('https://www.gooomi.cn/signIn',this.user)
+        axios.post('https://www.gomi.site/signIn',this.user)
         .then((res)=>{
             
             console.log(res);

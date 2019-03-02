@@ -34,7 +34,7 @@ export default {
     },
     del() {
       axios
-        .post("https://www.gooomi.cn/order_query", {
+        .post("https://www.gomi.site/order_query", {
           uid: this.$store.state.uid
         })
         .then(res => {
@@ -45,12 +45,12 @@ export default {
     get(oid) {
       console.log(oid);
       axios
-        .post("https://www.gooomi.cn/order_get", {
+        .post("https://www.gomi.site/order_get", {
           oid: oid
         })
         .then(res => {
           axios
-            .post("https://www.gooomi.cn/order_query", {
+            .post("https://www.gomi.site/order_query", {
               uid: this.$store.state.uid
             })
             .then(res => {
@@ -62,7 +62,7 @@ export default {
   },
   created() {
     axios
-      .post("https://www.gooomi.cn/order_query", { uid: this.$store.state.uid })
+      .post("https://www.gomi.site/order_query", { uid: this.$store.state.uid })
       .then(res => {
         this.item = res.data;
         // console.log(this.item);

@@ -40,13 +40,13 @@ export default {
     },
     del(index) {
       axios
-        .post("https://www.gooomi.cn/collection", {
+        .post("https://www.gomi.site/collection", {
           uid: this.$store.state.uid,
           gid: this.item[index].g_id
         })
         .then(res => {
           axios
-            .post("https://www.gooomi.cn/collection_info", {
+            .post("https://www.gomi.site/collection_info", {
               uid: this.$store.state.uid
             })
             .then(res => {
@@ -58,7 +58,7 @@ export default {
   },
   created() {
     axios
-      .post("https://www.gooomi.cn/collection_info", {
+      .post("https://www.gomi.site/collection_info", {
         uid: this.$store.state.uid
       })
       .then(res => {

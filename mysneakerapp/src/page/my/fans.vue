@@ -50,7 +50,7 @@ export default {
     let followId = {
       fid:this.$store.state.uid
     }
-    axios.post("https://www.gooomi.cn/fans_data", followId).then(res => {
+    axios.post("https://www.gomi.site/fans_data", followId).then(res => {
           console.log(res.data)
           this.item = res.data.results
       });

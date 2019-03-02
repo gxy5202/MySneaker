@@ -38,7 +38,7 @@ export default {
   methods: {
     del() {
       axios
-        .post("https://www.gooomi.cn/order_delete", { oid: this.prop.oid })
+        .post("https://www.gomi.site/order_delete", { oid: this.prop.oid })
         .then(res => {
           res.data;
         });

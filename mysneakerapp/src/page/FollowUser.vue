@@ -35,7 +35,7 @@ export default {
   },
   created: function() {
     let uid=this.$route.query
-    axios.post("https://www.gooomi.cn/user_info", uid).then(res => {
+    axios.post("https://www.gomi.site/user_info", uid).then(res => {
       console.log(res.data)
       this.user = {
         message2:res.data.user[0],

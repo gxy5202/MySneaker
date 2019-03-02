@@ -123,7 +123,7 @@ export default {
   },
   created() {
     let uid = this.$store.state;
-    axios.post("https://www.gooomi.cn/user_info", uid).then(res => {
+    axios.post("https://www.gomi.site/user_info", uid).then(res => {
       this.user.message = res.data.user[0];
       this.user.postings = res.data.postings;
       // console.log(this.user);

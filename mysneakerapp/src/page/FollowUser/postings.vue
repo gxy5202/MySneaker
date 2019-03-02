@@ -22,7 +22,7 @@ export default {
           uid:this.$store.state.uid
         };
         let userInfo = {};
-        axios.post("https://www.gooomi.cn/postings",uid_query)
+        axios.post("https://www.gomi.site/postings",uid_query)
         .then(res => {
           console.log(res.data);
           let postings = res.data.list;
